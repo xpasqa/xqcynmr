@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCR Process - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    },
+                    animation: {
+                        'slide-in': 'slide-in 0.3s ease-out',
+                        'slide-out': 'slide-out 0.3s ease-in',
+                        'fade-in': 'fade-in 0.2s ease-out'
+                    },
+                    keyframes: {
+                        'slide-in': {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0)' }
+                        },
+                        'slide-out': {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+
+        .sidebar-expanded {
+            width: 16rem;
+        }
+
+        .sidebar-transition {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item-hover:hover {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
+            border-right: 3px solid #DC2626;
+        }
+
+        .tooltip {
+            transform: translateX(0.5rem);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show-tooltip .tooltip {
+            transform: translateX(1rem);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-expanded .menu-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .menu-icon {
+            width: 1.25rem;
+            min-width: 1.25rem;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .filter-card.active {
+            ring: 2px;
+            ring-color: #DC2626;
+            ring-opacity: 0.5;
+            transform: scale(1.02);
+        }
+
+        /* Improved icon alignment for collapsed sidebar */
+        .sidebar-collapsed nav a {
+            justify-content: center;
+            /* center icon horizontally */
+            padding-left: 0.5rem;
+            /* reduce left padding when collapsed */
+            padding-right: 0.5rem;
+        }
+
+        .sidebar-collapsed .menu-icon {
+            margin-right: 0;
+            /* remove right margin */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 1.15rem;
+            /* slightly larger icon for visibility */
+        }
+
+        /* hide the text when collapsed (keeps space clean) */
+        .sidebar-collapsed .menu-text {
+            display: none !important;
+        }
+
+        /* position tooltips just outside the slim sidebar */
+        .sidebar-collapsed .tooltip {
+            left: 4rem;
+            /* hover tooltip appears aligned to collapsed width */
+        }
+
+        /* Restore left-aligned layout when expanded */
+        .sidebar-expanded nav a {
+            justify-content: flex-start;
+            /* icon + text aligned to left */
+            padding-left: 0.75rem;
+        }
+
+        .sidebar-expanded .menu-icon {
+            width: auto;
+            margin-right: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .sidebar-expanded .menu-text {
+            display: inline-block !important;
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 mt-16 transition-all duration-300 ease-in-out">
+
+        <!-- Process Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-yanmar-dark mb-2">NCR Process Management</h2>
+                <p class="text-slate-600">Manage NCR that have been inspected by QC team</p>
+            </div>
+
+            <!-- Status Filter Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Critical Status Card (Red) -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 filter-card active"
+                    data-status="critical" onclick="filterByStatus('critical')">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-slate-600 mb-1">Critical Status</p>
+                                <p class="text-3xl font-bold text-slate-900" id="criticalCount">18</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-white"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                    Send Back, NG, Hold Part
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-red-50 px-6 py-3 border-t border-red-100">
+                        <p class="text-xs text-red-600 font-medium">Click to filter</p>
+                    </div>
+                </div>
+
+                <!-- Rework Status Card (Yellow) -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
+                    data-status="rework" onclick="filterByStatus('rework')">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-slate-600 mb-1">Rework Status</p>
+                                <p class="text-3xl font-bold text-slate-900" id="reworkCount">12</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-tools text-white"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                    Requires Rework
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-50 px-6 py-3 border-t border-yellow-100">
+                        <p class="text-xs text-yellow-600 font-medium">Click to filter</p>
+                    </div>
+                </div>
+
+                <!-- Part OK Status Card (Green) -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
+                    data-status="part-ok" onclick="filterByStatus('part-ok')">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-slate-600 mb-1">Part OK Status</p>
+                                <p class="text-3xl font-bold text-slate-900" id="partOkCount">25</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-white"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center text-sm">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    Approved Parts
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 px-6 py-3 border-t border-green-100">
+                        <p class="text-xs text-green-600 font-medium">Click to filter</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Status Display -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <h3 class="text-lg font-semibold text-yanmar-dark" id="currentFilter">Showing: Critical Status</h3>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800" id="filterBadge">
+                            <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                            18 Parts
+                        </span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="inline-flex items-center px-4 py-2 text-sm bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors" onclick="showAllRecords()">
+                            <i class="fas fa-list mr-2"></i>
+                            Show All
+                        </button>
+                        <button class="inline-flex items-center px-4 py-2 bg-yanmar-red text-white rounded-lg hover:bg-yanmar-dark transition-colors">
+                            <i class="fas fa-download mr-2"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+                    <h4 class="text-lg font-semibold text-yanmar-dark">NCR Process Records</h4>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">No</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Part Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Part Number</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Forwarded To</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Latest Update</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Priority</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="processTableBody" class="bg-white divide-y divide-slate-200">
+                            <!-- Table content will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="bg-white px-6 py-3 border-t border-slate-200">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-slate-500">
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">18</span> of <span id="totalRecords">55</span> results
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1 text-sm bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors" disabled>
+                                Previous
+                            </button>
+                            <span class="px-3 py-1 text-sm bg-yanmar-red text-white rounded">1</span>
+                            <button class="px-3 py-1 text-sm bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Modal -->
+        <div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-yanmar-dark">NCR Process Details</h3>
+                    <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="modalContent" class="p-6">
+                    <!-- Modal content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Dummy Data for NCR Process
+        const processData = [
+            // Critical Status (18 records)
+            { id: 1, partName: "Engine Block", partNumber: "YM-001", forwardedTo: "ABC Manufacturing Co.", forwardType: "supplier", status: "Send Back", latestUpdate: "2024-02-10", priority: "High", inspector: "John Smith", problem: "Casting defect", category: "critical" },
+            { id: 2, partName: "Piston Ring", partNumber: "YM-002", forwardedTo: "Production Dept", forwardType: "internal", status: "NG", latestUpdate: "2024-02-11", priority: "Critical", inspector: "Sarah Chen", problem: "Dimension out of tolerance", category: "critical" },
+            { id: 3, partName: "Cylinder Head", partNumber: "YM-003", forwardedTo: "DEF Components Ltd", forwardType: "supplier", status: "Hold Part", latestUpdate: "2024-02-09", priority: "High", inspector: "Mike Johnson", problem: "Surface roughness", category: "critical" },
+            { id: 4, partName: "Connecting Rod", partNumber: "YM-004", forwardedTo: "Engineering Dept", forwardType: "internal", status: "Send Back", latestUpdate: "2024-02-12", priority: "Critical", inspector: "Lisa Wang", problem: "Material hardness", category: "critical" },
+            { id: 5, partName: "Crankshaft", partNumber: "YM-005", forwardedTo: "GHI Precision Co.", forwardType: "supplier", status: "NG", latestUpdate: "2024-02-08", priority: "High", inspector: "Tom Brown", problem: "Balancing issue", category: "critical" },
+            { id: 6, partName: "Valve Guide", partNumber: "YM-006", forwardedTo: "Production Dept", forwardType: "internal", status: "Hold Part", latestUpdate: "2024-02-13", priority: "Medium", inspector: "Emma Davis", problem: "Installation interference", category: "critical" },
+            { id: 7, partName: "Gasket Set", partNumber: "YM-007", forwardedTo: "JKL Supply Chain", forwardType: "supplier", status: "Send Back", latestUpdate: "2024-02-07", priority: "Low", inspector: "Robert Taylor", problem: "Packaging damage", category: "critical" },
+            { id: 8, partName: "Oil Pump", partNumber: "YM-008", forwardedTo: "Quality Control Dept", forwardType: "internal", status: "NG", latestUpdate: "2024-02-14", priority: "Critical", inspector: "Jennifer Lee", problem: "Pressure test failure", category: "critical" },
+            { id: 9, partName: "Timing Belt", partNumber: "YM-009", forwardedTo: "MNO Industries", forwardType: "supplier", status: "Hold Part", latestUpdate: "2024-02-06", priority: "High", inspector: "Alex Kim", problem: "Tension specification", category: "critical" },
+            { id: 10, partName: "Fuel Injector", partNumber: "YM-010", forwardedTo: "Engineering Dept", forwardType: "internal", status: "Send Back", latestUpdate: "2024-02-15", priority: "Critical", inspector: "Rachel Green", problem: "Flow rate deviation", category: "critical" },
+            { id: 11, partName: "Air Filter", partNumber: "YM-011", forwardedTo: "PQR Manufacturing", forwardType: "supplier", status: "NG", latestUpdate: "2024-02-05", priority: "Medium", inspector: "Kevin Park", problem: "Filtration efficiency", category: "critical" },
+            { id: 12, partName: "Spark Plug", partNumber: "YM-012", forwardedTo: "Production Dept", forwardType: "internal", status: "Hold Part", latestUpdate: "2024-02-16", priority: "High", inspector: "Sophie Miller", problem: "Gap setting incorrect", category: "critical" },
+            { id: 13, partName: "Radiator", partNumber: "YM-013", forwardedTo: "STU Cooling Systems", forwardType: "supplier", status: "Send Back", latestUpdate: "2024-02-04", priority: "Critical", inspector: "James Wilson", problem: "Cooling capacity", category: "critical" },
+            { id: 14, partName: "Exhaust Valve", partNumber: "YM-014", forwardedTo: "Maintenance Dept", forwardType: "internal", status: "NG", latestUpdate: "2024-02-17", priority: "High", inspector: "Anna Thompson", problem: "Surface coating defect", category: "critical" },
+            { id: 15, partName: "Water Pump", partNumber: "YM-015", forwardedTo: "VWX Pumps Ltd", forwardType: "supplier", status: "Hold Part", latestUpdate: "2024-02-03", priority: "Medium", inspector: "Chris Martin", problem: "Seal leakage", category: "critical" },
+            { id: 16, partName: "Alternator", partNumber: "YM-016", forwardedTo: "Electrical Dept", forwardType: "internal", status: "Send Back", latestUpdate: "2024-02-18", priority: "Critical", inspector: "Nicole Davis", problem: "Output voltage fluctuation", category: "critical" },
+            { id: 17, partName: "Bearing", partNumber: "YM-017", forwardedTo: "YZ Bearings Co.", forwardType: "supplier", status: "NG", latestUpdate: "2024-02-02", priority: "High", inspector: "Ryan Clark", problem: "Wear pattern abnormal", category: "critical" },
+            { id: 18, partName: "Flywheel", partNumber: "YM-018", forwardedTo: "Production Dept", forwardType: "internal", status: "Hold Part", latestUpdate: "2024-02-19", priority: "Medium", inspector: "Helen Rodriguez", problem: "Balance tolerance", category: "critical" },
+
+            // Rework Status (12 records)
+            { id: 19, partName: "Turbocharger", partNumber: "YM-019", forwardedTo: "ABC Turbo Systems", forwardType: "supplier", status: "Rework", latestUpdate: "2024-02-10", priority: "High", inspector: "Peter Wong", problem: "Boost pressure irregular", category: "rework" },
+            { id: 20, partName: "Camshaft", partNumber: "YM-020", forwardedTo: "Machining Dept", forwardType: "internal", status: "Rework", latestUpdate: "2024-02-11", priority: "Medium", inspector: "Laura Evans", problem: "Profile measurement error", category: "rework" },
+            { id: 21, partName: "Intake Manifold", partNumber: "YM-021", forwardedTo: "DEF Casting Co.", forwardType: "supplier", status: "Rework", latestUpdate: "2024-02-09", priority: "High", inspector: "Daniel Lee", problem: "Casting porosity", category: "rework" },
+            { id: 22, partName: "Filter Element", partNumber: "YM-022", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Rework", latestUpdate: "2024-02-12", priority: "Low", inspector: "Michelle White", problem: "Pleating inconsistent", category: "rework" },
+            { id: 23, partName: "ECU Unit", partNumber: "YM-023", forwardedTo: "GHI Electronics", forwardType: "supplier", status: "Rework", latestUpdate: "2024-02-08", priority: "Critical", inspector: "Steven Johnson", problem: "Software calibration", category: "rework" },
+            { id: 24, partName: "Injection Nozzle", partNumber: "YM-024", forwardedTo: "Fuel Systems Dept", forwardType: "internal", status: "Rework", latestUpdate: "2024-02-13", priority: "High", inspector: "Amanda Wilson", problem: "Spray pattern defect", category: "rework" },
+            { id: 25, partName: "Cooling Fan", partNumber: "YM-025", forwardedTo: "JKL Fan Technologies", forwardType: "supplier", status: "Rework", latestUpdate: "2024-02-07", priority: "Medium", inspector: "Brian Martinez", problem: "Blade imbalance", category: "rework" },
+            { id: 26, partName: "Transmission Case", partNumber: "YM-026", forwardedTo: "Production Dept", forwardType: "internal", status: "Rework", latestUpdate: "2024-02-14", priority: "High", inspector: "Caroline Garcia", problem: "Machining tolerance", category: "rework" },
+            { id: 27, partName: "Hydraulic Pump", partNumber: "YM-027", forwardedTo: "MNO Hydraulics", forwardType: "supplier", status: "Rework", latestUpdate: "2024-02-06", priority: "Medium", inspector: "David Rodriguez", problem: "Pressure regulation", category: "rework" },
+            { id: 28, partName: "Starter Motor", partNumber: "YM-028", forwardedTo: "Electrical Dept", forwardType: "internal", status: "Rework", latestUpdate: "2024-02-15", priority: "Low", inspector: "Emily Chen", problem: "Torque specification", category: "rework" },
+            { id: 29, partName: "Clutch Disc", partNumber: "YM-029", forwardedTo: "PQR Clutch Systems", forwardType: "supplier", status: "Rework", latestUpdate: "2024-02-05", priority: "High", inspector: "Frank Miller", problem: "Friction material", category: "rework" },
+            { id: 30, partName: "Brake Caliper", partNumber: "YM-030", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Rework", latestUpdate: "2024-02-16", priority: "Medium", inspector: "Grace Thompson", problem: "Piston alignment", category: "rework" },
+
+            // Part OK Status (25 records) - sampling key ones
+            { id: 31, partName: "Drive Belt", partNumber: "YM-031", forwardedTo: "Production Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-10", priority: "Low", inspector: "Henry Davis", problem: "All specifications met", category: "part-ok" },
+            { id: 32, partName: "Shock Absorber", partNumber: "YM-032", forwardedTo: "STU Suspension Co.", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-11", priority: "Low", inspector: "Isabella Lopez", problem: "Quality check passed", category: "part-ok" },
+            { id: 33, partName: "Fuel Tank", partNumber: "YM-033", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-09", priority: "Low", inspector: "Jack Wilson", problem: "Leak test successful", category: "part-ok" },
+            { id: 34, partName: "Exhaust Pipe", partNumber: "YM-034", forwardedTo: "VWX Exhaust Systems", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-12", priority: "Low", inspector: "Kate Anderson", problem: "Dimensional accuracy verified", category: "part-ok" },
+            { id: 35, partName: "Dashboard Panel", partNumber: "YM-035", forwardedTo: "Interior Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-08", priority: "Low", inspector: "Liam Taylor", problem: "Finish quality approved", category: "part-ok" },
+            // Continue with more Part OK records...
+            { id: 36, partName: "Seat Frame", partNumber: "YM-036", forwardedTo: "YZ Seating Co.", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-13", priority: "Low", inspector: "Mia Johnson", problem: "Structural test passed", category: "part-ok" },
+            { id: 37, partName: "Steering Wheel", partNumber: "YM-037", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-07", priority: "Low", inspector: "Noah Brown", problem: "Grip test successful", category: "part-ok" },
+            { id: 38, partName: "Window Glass", partNumber: "YM-038", forwardedTo: "ABC Glass Co.", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-14", priority: "Low", inspector: "Olivia Williams", problem: "Optical clarity verified", category: "part-ok" },
+            { id: 39, partName: "Wiring Harness", partNumber: "YM-039", forwardedTo: "Electrical Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-06", priority: "Low", inspector: "Paul Martinez", problem: "Continuity test passed", category: "part-ok" },
+            { id: 40, partName: "Rubber Seal", partNumber: "YM-040", forwardedTo: "DEF Rubber Co.", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-15", priority: "Low", inspector: "Quinn Garcia", problem: "Elasticity test approved", category: "part-ok" },
+            { id: 41, partName: "Control Knob", partNumber: "YM-041", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-05", priority: "Low", inspector: "Ruby Chen", problem: "Tactile response verified", category: "part-ok" },
+            { id: 42, partName: "Mirror Assembly", partNumber: "YM-042", forwardedTo: "GHI Mirrors Ltd", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-16", priority: "Low", inspector: "Sam Rodriguez", problem: "Reflection quality approved", category: "part-ok" },
+            { id: 43, partName: "Floor Mat", partNumber: "YM-043", forwardedTo: "Interior Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-04", priority: "Low", inspector: "Tina Wilson", problem: "Material durability verified", category: "part-ok" },
+            { id: 44, partName: "Hood Latch", partNumber: "YM-044", forwardedTo: "JKL Hardware Co.", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-17", priority: "Low", inspector: "Uma Thompson", problem: "Locking mechanism tested", category: "part-ok" },
+            { id: 45, partName: "Antenna", partNumber: "YM-045", forwardedTo: "Electronics Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-03", priority: "Low", inspector: "Victor Lee", problem: "Signal reception verified", category: "part-ok" },
+            { id: 46, partName: "Cup Holder", partNumber: "YM-046", forwardedTo: "MNO Plastics", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-18", priority: "Low", inspector: "Wendy Davis", problem: "Load capacity tested", category: "part-ok" },
+            { id: 47, partName: "Gear Shift Knob", partNumber: "YM-047", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-02", priority: "Low", inspector: "Xander Kim", problem: "Ergonomic test passed", category: "part-ok" },
+            { id: 48, partName: "Air Vent", partNumber: "YM-048", forwardedTo: "PQR Ventilation", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-19", priority: "Low", inspector: "Yara Miller", problem: "Airflow test successful", category: "part-ok" },
+            { id: 49, partName: "Pedal Pad", partNumber: "YM-049", forwardedTo: "Production Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-02-01", priority: "Low", inspector: "Zach Anderson", problem: "Friction coefficient verified", category: "part-ok" },
+            { id: 50, partName: "Headlight Lens", partNumber: "YM-050", forwardedTo: "STU Lighting Co.", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-20", priority: "Low", inspector: "Amy Johnson", problem: "Light transmission approved", category: "part-ok" },
+            { id: 51, partName: "Door Handle", partNumber: "YM-051", forwardedTo: "Hardware Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-01-30", priority: "Low", inspector: "Ben Wilson", problem: "Durability test passed", category: "part-ok" },
+            { id: 52, partName: "Battery Terminal", partNumber: "YM-052", forwardedTo: "VWX Electrical", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-21", priority: "Low", inspector: "Chloe Garcia", problem: "Conductivity verified", category: "part-ok" },
+            { id: 53, partName: "Fuse Box", partNumber: "YM-053", forwardedTo: "Electrical Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-01-29", priority: "Low", inspector: "Dylan Martinez", problem: "Circuit protection tested", category: "part-ok" },
+            { id: 54, partName: "Tail Light", partNumber: "YM-054", forwardedTo: "YZ Automotive Lights", forwardType: "supplier", status: "Part OK", latestUpdate: "2024-02-22", priority: "Low", inspector: "Eva Thompson", problem: "Illumination test approved", category: "part-ok" },
+            { id: 55, partName: "Washer Nozzle", partNumber: "YM-055", forwardedTo: "Assembly Dept", forwardType: "internal", status: "Part OK", latestUpdate: "2024-01-28", priority: "Low", inspector: "Felix Chen", problem: "Spray pattern verified", category: "part-ok" }
+        ];
+
+        let currentFilter = 'critical';
+        let filteredData = [];
+
+        // Initialize page
+        function initializePage() {
+            filterByStatus('critical');
+        }
+
+        // Filter data by status category
+        function filterByStatus(category) {
+            currentFilter = category;
+            filteredData = processData.filter(item => item.category === category);
+
+            // Update active card
+            document.querySelectorAll('.filter-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`[data-status="${category}"]`).classList.add('active');
+
+            // Update filter display
+            updateFilterDisplay(category);
+
+            // Update table
+            updateTable();
+        }
+
+        // Show all records
+        function showAllRecords() {
+            currentFilter = 'all';
+            filteredData = processData;
+
+            // Remove active state from cards
+            document.querySelectorAll('.filter-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // Update filter display
+            document.getElementById('currentFilter').textContent = 'Showing: All Records';
+            document.getElementById('filterBadge').innerHTML = `
+                <span class="w-2 h-2 bg-slate-500 rounded-full mr-2"></span>
+                ${filteredData.length} Parts
+            `;
+            document.getElementById('filterBadge').className = 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-800';
+
+            // Update table
+            updateTable();
+        }
+
+        // Update filter display
+        function updateFilterDisplay(category) {
+            const statusConfig = {
+                critical: { name: 'Critical Status', color: 'red', bgColor: 'bg-red-100', textColor: 'text-red-800' },
+                rework: { name: 'Rework Status', color: 'yellow', bgColor: 'bg-yellow-100', textColor: 'text-yellow-800' },
+                'part-ok': { name: 'Part OK Status', color: 'green', bgColor: 'bg-green-100', textColor: 'text-green-800' }
+            };
+
+            const config = statusConfig[category];
+            document.getElementById('currentFilter').textContent = `Showing: ${config.name}`;
+            document.getElementById('filterBadge').innerHTML = `
+                <span class="w-2 h-2 bg-${config.color}-500 rounded-full mr-2"></span>
+                ${filteredData.length} Parts
+            `;
+            document.getElementById('filterBadge').className = `inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.textColor}`;
+        }
+
+        // Update table with filtered data
+        function updateTable() {
+            const tbody = document.getElementById('processTableBody');
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-50 transition-colors';
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">${index + 1}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">${item.partName}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-slate-600">${item.partNumber}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <i class="fas ${item.forwardType === 'supplier' ? 'fa-building' : 'fa-users'} text-slate-400 mr-2"></i>
+                            <div>
+                                <div class="text-sm font-medium text-slate-900">${item.forwardedTo}</div>
+                                <div class="text-xs text-slate-500">${item.forwardType === 'supplier' ? 'External Supplier' : 'Internal Department'}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">${getStatusBadge(item.status)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${formatDate(item.latestUpdate)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${getPriorityBadge(item.priority)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="viewDetails(${item.id})" class="inline-flex items-center px-3 py-1.5 bg-yanmar-red text-white text-xs font-medium rounded-md hover:bg-yanmar-dark transition-colors">
+                            <i class="fas fa-eye mr-1"></i>
+                            View
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update pagination info
+            document.getElementById('showingStart').textContent = filteredData.length > 0 ? 1 : 0;
+            document.getElementById('showingEnd').textContent = filteredData.length;
+            document.getElementById('totalRecords').textContent = processData.length;
+
+            // Update counts
+            updateCounts();
+        }
+
+        // Update counts in cards
+        function updateCounts() {
+            document.getElementById('criticalCount').textContent = processData.filter(item => item.category === 'critical').length;
+            document.getElementById('reworkCount').textContent = processData.filter(item => item.category === 'rework').length;
+            document.getElementById('partOkCount').textContent = processData.filter(item => item.category === 'part-ok').length;
+        }
+
+        // Get status badge HTML
+        function getStatusBadge(status) {
+            const badges = {
+                'Send Back': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Send Back</span>',
+                'NG': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">NG</span>',
+                'Hold Part': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Hold Part</span>',
+                'Rework': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Rework</span>',
+                'Part OK': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Part OK</span>'
+            };
+            return badges[status];
+        }
+
+        // Get priority badge HTML
+        function getPriorityBadge(priority) {
+            const badges = {
+                'Critical': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"><i class="fas fa-exclamation-triangle mr-1"></i>Critical</span>',
+                'High': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800"><i class="fas fa-chevron-up mr-1"></i>High</span>',
+                'Medium': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"><i class="fas fa-minus mr-1"></i>Medium</span>',
+                'Low': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"><i class="fas fa-chevron-down mr-1"></i>Low</span>'
+            };
+            return badges[priority];
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: '2-digit' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // View details modal
+        function viewDetails(id) {
+            const item = processData.find(record => record.id === id);
+            if (!item) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <h4 class="text-lg font-semibold text-yanmar-dark mb-4">Process Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Part Number</label>
+                                <p class="text-sm font-mono text-slate-900">${item.partNumber}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Part Name</label>
+                                <p class="text-sm text-slate-900">${item.partName}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Inspector</label>
+                                <p class="text-sm text-slate-900">${item.inspector}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Latest Update</label>
+                                <p class="text-sm text-slate-900">${formatDate(item.latestUpdate)}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Forwarded To</label>
+                                <div class="flex items-center">
+                                    <i class="fas ${item.forwardType === 'supplier' ? 'fa-building' : 'fa-users'} text-slate-400 mr-2"></i>
+                                    <div>
+                                        <p class="text-sm font-medium text-slate-900">${item.forwardedTo}</p>
+                                        <p class="text-xs text-slate-500">${item.forwardType === 'supplier' ? 'External Supplier' : 'Internal Department'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Priority</label>
+                                <div>${getPriorityBadge(item.priority)}</div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Current Status</label>
+                                <div>${getStatusBadge(item.status)}</div>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Problem Description</label>
+                                <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                    <p class="text-sm text-slate-900">${item.problem}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button onclick="closeModal()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors">
+                            Close
+                        </button>
+                        <button onclick="updateStatus(${item.id})" class="px-4 py-2 bg-yanmar-red text-white rounded-lg hover:bg-yanmar-dark transition-colors">
+                            <i class="fas fa-edit mr-2"></i>
+                            Update Status
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('viewModal').classList.remove('hidden');
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('viewModal').classList.add('hidden');
+        }
+
+        // Update status (placeholder function)
+        function updateStatus(id) {
+            alert(`Update status functionality for item ${id} - To be implemented`);
+            closeModal();
+        }
+
+        // Initialize page on load
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Table hover effects */
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+
+    </main>
+
+</body>
+
+</html>

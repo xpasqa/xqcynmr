@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCR Report - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    },
+                    animation: {
+                        'slide-in': 'slide-in 0.3s ease-out',
+                        'slide-out': 'slide-out 0.3s ease-in',
+                        'fade-in': 'fade-in 0.2s ease-out'
+                    },
+                    keyframes: {
+                        'slide-in': {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0)' }
+                        },
+                        'slide-out': {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+
+        .sidebar-expanded {
+            width: 16rem;
+        }
+
+        .sidebar-transition {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item-hover:hover {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
+            border-right: 3px solid #DC2626;
+        }
+
+        .tooltip {
+            transform: translateX(0.5rem);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show-tooltip .tooltip {
+            transform: translateX(1rem);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-expanded .menu-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .menu-icon {
+            min-width: 1.25rem;
+            text-align: center;
+        }
+
+        /* Improved icon alignment for collapsed sidebar */
+        .sidebar-collapsed nav a {
+            justify-content: center;
+            /* center icon horizontally */
+            padding-left: 0.5rem;
+            /* reduce left padding when collapsed */
+            padding-right: 0.5rem;
+        }
+
+        .sidebar-collapsed .menu-icon {
+            margin-right: 0;
+            /* remove right margin */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 1.15rem;
+            /* slightly larger icon for visibility */
+        }
+
+        /* hide the text when collapsed (keeps space clean) */
+        .sidebar-collapsed .menu-text {
+            display: none !important;
+        }
+
+        /* position tooltips just outside the slim sidebar */
+        .sidebar-collapsed .tooltip {
+            left: 4rem;
+            /* hover tooltip appears aligned to collapsed width */
+        }
+
+        /* Restore left-aligned layout when expanded */
+        .sidebar-expanded nav a {
+            justify-content: flex-start;
+            /* icon + text aligned to left */
+            padding-left: 0.75rem;
+        }
+
+        .sidebar-expanded .menu-icon {
+            width: auto;
+            margin-right: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .sidebar-expanded .menu-text {
+            display: inline-block !important;
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 mt-16 transition-all duration-300 ease-in-out">
+
+        <!-- Report Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-yanmar-dark mb-2">NCR Report</h2>
+                <p class="text-slate-600">Non-Conformance Reports submitted by users</p>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <!-- Total Reports -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-file-alt text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-slate-600">Total Reports</p>
+                            <p class="text-2xl font-bold text-slate-900" id="totalReports">25</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- This Week -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-calendar-week text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-slate-600">This Week</p>
+                            <p class="text-2xl font-bold text-slate-900" id="weeklyReports">8</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Inspect -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-search text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-slate-600">Pending Inspect</p>
+                            <p class="text-2xl font-bold text-slate-900" id="pendingInspect">12</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Completed -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-yanmar-red rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check-circle text-white"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-slate-600">Completed</p>
+                            <p class="text-2xl font-bold text-slate-900" id="completedReports">13</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 p-6">
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <h3 class="text-lg font-semibold text-yanmar-dark">NCR Reports List</h3>
+
+                    <div class="flex flex-col sm:flex-row gap-3 items-center">
+                        <!-- Date Filter -->
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-slate-700">Date Range:</label>
+                            <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+                        </div>
+
+                        <!-- Department Filter -->
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-slate-700">Department:</label>
+                            <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
+                                <option value="all">All Departments</option>
+                                <option value="production">Production</option>
+                                <option value="quality">Quality Control</option>
+                                <option value="engineering">Engineering</option>
+                                <option value="maintenance">Maintenance</option>
+                            </select>
+                        </div>
+
+                        <!-- Export Button -->
+                        <button class="inline-flex items-center px-4 py-2 bg-yanmar-red text-white rounded-lg hover:bg-yanmar-dark transition-colors">
+                            <i class="fas fa-download mr-2"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">No</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Part Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date Submitted</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody" class="bg-white divide-y divide-slate-200">
+                            <!-- Table content will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="bg-white px-6 py-3 border-t border-slate-200">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-slate-500">
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">25</span> of <span id="totalRecordsCount">25</span> results
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1 text-sm bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors" disabled>
+                                Previous
+                            </button>
+                            <span class="px-3 py-1 text-sm bg-yanmar-red text-white rounded">1</span>
+                            <button class="px-3 py-1 text-sm bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors" disabled>
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inspect Modal -->
+        <div id="inspectModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-yanmar-dark">NCR Inspection Details</h3>
+                    <button onclick="closeInspectModal()" class="text-slate-400 hover:text-slate-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="inspectModalContent" class="p-6">
+                    <!-- Modal content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Dummy Data for NCR Reports
+        const reportData = [
+            { id: 1, name: "John Smith", department: "Quality Control", partName: "Engine Block", dateSubmitted: "2024-01-15", location: "Claim QC Incoming", partNumber: "YM-001", problem: "Casting defect found on engine block surface", status: "Pending" },
+            { id: 2, name: "Sarah Johnson", department: "Production", partName: "Piston Ring", dateSubmitted: "2024-01-16", location: "Assembly Line A", partNumber: "YM-002", problem: "Dimension out of tolerance", status: "Under Review" },
+            { id: 3, name: "Mike Chen", department: "Quality Control", partName: "Cylinder Head", dateSubmitted: "2024-01-17", location: "Incoming Inspection", partNumber: "YM-003", problem: "Surface roughness exceeds specification", status: "Pending" },
+            { id: 4, name: "Lisa Wang", department: "Engineering", partName: "Connecting Rod", dateSubmitted: "2024-01-18", location: "Machining Center", partNumber: "YM-004", problem: "Material hardness below requirement", status: "Completed" },
+            { id: 5, name: "David Brown", department: "Production", partName: "Crankshaft", dateSubmitted: "2024-01-19", location: "Assembly Line B", partNumber: "YM-005", problem: "Balancing issue detected", status: "Under Review" },
+            { id: 6, name: "Emma Wilson", department: "Quality Control", partName: "Valve Guide", dateSubmitted: "2024-01-20", location: "Final Inspection", partNumber: "YM-006", problem: "Installation interference problem", status: "Pending" },
+            { id: 7, name: "Tom Anderson", department: "Maintenance", partName: "Gasket Set", dateSubmitted: "2024-01-21", location: "Warehouse", partNumber: "YM-007", problem: "Packaging damage observed", status: "Completed" },
+            { id: 8, name: "Jennifer Lee", department: "Quality Control", partName: "Oil Pump", dateSubmitted: "2024-01-22", location: "Test Cell", partNumber: "YM-008", problem: "Pressure test failure", status: "Under Review" },
+            { id: 9, name: "Robert Taylor", department: "Production", partName: "Timing Belt", dateSubmitted: "2024-01-23", location: "Assembly Line C", partNumber: "YM-009", problem: "Tension specification not met", status: "Pending" },
+            { id: 10, name: "Maria Garcia", department: "Engineering", partName: "Fuel Injector", dateSubmitted: "2024-01-24", location: "R&D Lab", partNumber: "YM-010", problem: "Flow rate deviation", status: "Completed" },
+            { id: 11, name: "Alex Kim", department: "Quality Control", partName: "Air Filter", dateSubmitted: "2024-01-25", location: "Supplier Site", partNumber: "YM-011", problem: "Filtration efficiency below standard", status: "Pending" },
+            { id: 12, name: "Rachel Green", department: "Production", partName: "Spark Plug", dateSubmitted: "2024-01-26", location: "Assembly Line D", partNumber: "YM-012", problem: "Gap setting incorrect", status: "Under Review" },
+            { id: 13, name: "Kevin Park", department: "Engineering", partName: "Radiator", dateSubmitted: "2024-01-27", location: "Test Facility", partNumber: "YM-013", problem: "Cooling capacity insufficient", status: "Completed" },
+            { id: 14, name: "Sophie Miller", department: "Quality Control", partName: "Exhaust Valve", dateSubmitted: "2024-01-28", location: "Incoming QC", partNumber: "YM-014", problem: "Surface coating defect", status: "Pending" },
+            { id: 15, name: "James Wilson", department: "Production", partName: "Water Pump", dateSubmitted: "2024-01-29", location: "Final Assembly", partNumber: "YM-015", problem: "Seal leakage detected", status: "Completed" },
+            { id: 16, name: "Anna Thompson", department: "Quality Control", partName: "Alternator", dateSubmitted: "2024-01-30", location: "Electrical Test", partNumber: "YM-016", problem: "Output voltage fluctuation", status: "Under Review" },
+            { id: 17, name: "Chris Martin", department: "Maintenance", partName: "Bearing", dateSubmitted: "2024-02-01", location: "Service Area", partNumber: "YM-017", problem: "Wear pattern abnormal", status: "Pending" },
+            { id: 18, name: "Nicole Davis", department: "Production", partName: "Flywheel", dateSubmitted: "2024-02-02", location: "Assembly Line A", partNumber: "YM-018", problem: "Balance tolerance exceeded", status: "Completed" },
+            { id: 19, name: "Ryan Clark", department: "Engineering", partName: "Turbocharger", dateSubmitted: "2024-02-03", location: "Test Bench", partNumber: "YM-019", problem: "Boost pressure irregular", status: "Under Review" },
+            { id: 20, name: "Helen Rodriguez", department: "Quality Control", partName: "Camshaft", dateSubmitted: "2024-02-04", location: "Machining QC", partNumber: "YM-020", problem: "Profile measurement error", status: "Pending" },
+            { id: 21, name: "Peter Wong", department: "Production", partName: "Intake Manifold", dateSubmitted: "2024-02-05", location: "Assembly Line B", partNumber: "YM-021", problem: "Casting porosity found", status: "Completed" },
+            { id: 22, name: "Laura Evans", department: "Maintenance", partName: "Filter Element", dateSubmitted: "2024-02-06", location: "Filter Shop", partNumber: "YM-022", problem: "Pleating inconsistent", status: "Under Review" },
+            { id: 23, name: "Daniel Lee", department: "Engineering", partName: "ECU Unit", dateSubmitted: "2024-02-07", location: "Electronics Lab", partNumber: "YM-023", problem: "Software calibration issue", status: "Pending" },
+            { id: 24, name: "Michelle White", department: "Quality Control", partName: "Injection Nozzle", dateSubmitted: "2024-02-08", location: "Fuel System QC", partNumber: "YM-024", problem: "Spray pattern defect", status: "Completed" },
+            { id: 25, name: "Steven Johnson", department: "Production", partName: "Cooling Fan", dateSubmitted: "2024-02-09", location: "Final Assembly", partNumber: "YM-025", problem: "Blade imbalance detected", status: "Under Review" }
+        ];
+
+        // Initialize page
+        function initializePage() {
+            updateTable();
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalReports').textContent = reportData.length;
+            document.getElementById('weeklyReports').textContent = reportData.filter(item =>
+                new Date(item.dateSubmitted) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+            ).length;
+            document.getElementById('pendingInspect').textContent = reportData.filter(item =>
+                item.status === 'Pending'
+            ).length;
+            document.getElementById('completedReports').textContent = reportData.filter(item =>
+                item.status === 'Completed'
+            ).length;
+        }
+
+        // Update table
+        function updateTable() {
+            const tbody = document.getElementById('reportTableBody');
+            tbody.innerHTML = '';
+
+            reportData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-50 transition-colors';
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">${index + 1}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="w-8 h-8 bg-yanmar-red rounded-full flex items-center justify-center text-white text-xs font-medium">
+                                ${item.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-slate-900">${item.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getDepartmentBadge(item.department)}">${item.department}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">${item.partName}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${formatDate(item.dateSubmitted)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${item.location}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="openInspectModal(${item.id})" class="inline-flex items-center px-3 py-1.5 bg-yanmar-red text-white text-xs font-medium rounded-md hover:bg-yanmar-dark transition-colors">
+                            <i class="fas fa-search mr-1"></i>
+                            Inspect
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            // Update pagination info
+            document.getElementById('showingStart').textContent = reportData.length > 0 ? 1 : 0;
+            document.getElementById('showingEnd').textContent = reportData.length;
+            document.getElementById('totalRecordsCount').textContent = reportData.length;
+        }
+
+        // Get department badge class
+        function getDepartmentBadge(department) {
+            const badges = {
+                'Quality Control': 'bg-blue-100 text-blue-800',
+                'Production': 'bg-green-100 text-green-800',
+                'Engineering': 'bg-purple-100 text-purple-800',
+                'Maintenance': 'bg-orange-100 text-orange-800'
+            };
+            return badges[department] || 'bg-gray-100 text-gray-800';
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: '2-digit' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Open inspect modal
+        function openInspectModal(id) {
+            const item = reportData.find(report => report.id === id);
+            if (!item) return;
+
+            const modalContent = document.getElementById('inspectModalContent');
+            modalContent.innerHTML = `
+                <div class="space-y-6">
+                    <div class="bg-slate-50 rounded-lg p-4">
+                        <h4 class="text-lg font-semibold text-yanmar-dark mb-4">Report Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Report ID</label>
+                                <p class="text-sm text-slate-900 font-mono">#NCR-${item.id.toString().padStart(3, '0')}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Date Submitted</label>
+                                <p class="text-sm text-slate-900">${formatDate(item.dateSubmitted)}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Reporter Name</label>
+                                <p class="text-sm text-slate-900">${item.name}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getDepartmentBadge(item.department)}">${item.department}</span>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Part Number</label>
+                                <p class="text-sm font-mono text-slate-900">${item.partNumber}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Part Name</label>
+                                <p class="text-sm text-slate-900">${item.partName}</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Location</label>
+                                <p class="text-sm text-slate-900">${item.location}</p>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Current Status</label>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadge(item.status).class}">${item.status}</span>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Problem Description</label>
+                                <div class="bg-white p-3 rounded-lg border border-slate-200">
+                                    <p class="text-sm text-slate-900">${item.problem}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button onclick="closeInspectModal()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors">
+                            Close
+                        </button>
+                        <button onclick="proceedToInspection(${item.id})" class="px-4 py-2 bg-yanmar-red text-white rounded-lg hover:bg-yanmar-dark transition-colors">
+                            <i class="fas fa-arrow-right mr-2"></i>
+                            Proceed to Inspection
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('inspectModal').classList.remove('hidden');
+        }
+
+        // Get status badge
+        function getStatusBadge(status) {
+            const badges = {
+                'Pending': { class: 'bg-yellow-100 text-yellow-800' },
+                'Under Review': { class: 'bg-blue-100 text-blue-800' },
+                'Completed': { class: 'bg-green-100 text-green-800' }
+            };
+            return badges[status] || { class: 'bg-gray-100 text-gray-800' };
+        }
+
+        // Close inspect modal
+        function closeInspectModal() {
+            document.getElementById('inspectModal').classList.add('hidden');
+        }
+
+        // Proceed to inspection (redirect to inspection page)
+        function proceedToInspection(id) {
+            window.location.href = `inspection.html?id=${id}`;
+        }
+
+        // Initialize page on load
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Table hover effects */
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+
+</body>
+
+</html>

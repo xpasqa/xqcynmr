@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QC Verification - Yanmar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <div class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img src="https://via.placeholder.com/150x50/DC2626/FFFFFF?text=YANMAR" alt="Yanmar" class="h-10">
+                    <h1 class="text-xl font-semibold text-gray-900">QC Verification</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-500">NCR ID: #NCR-2024-001</span>
+                    <div class="flex items-center space-x-2">
+                        <span class="px-3 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Pending
+                            Verification</span>
+                    </div>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Supplier Information -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Supplier Information</h2>
+            </div>
+            <div class="p-6">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Supplier</th>
+                                <th
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Supplier Code</th>
+                                <th
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Name</th>
+                                <th
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Phone</th>
+                                <th
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Email</th>
+                                <th
+                                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Address</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-3 text-sm font-medium text-gray-900">ABC Manufacturing Co.</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">SUP-ABC-001</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">John Smith</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">+1-555-0101</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">john@abc-mfg.com</td>
+                                <td class="px-4 py-3 text-sm text-gray-900">1234 Industrial Ave, Detroit, Michigan 48201
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Original Problem Data -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Problem: NUT LEPAS (SPOT WELDING TIDAK KUAT)</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column - Part Data -->
+                    <div class="space-y-4">
+                        <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2">Part
+                            Information</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <label class="font-medium text-gray-700">Part Number:</label>
+                                <p class="text-gray-900">YM-ENG-001-2024</p>
+                            </div>
+                            <div>
+                                <label class="font-medium text-gray-700">Part Name:</label>
+                                <p class="text-gray-900">Engine Block Assembly</p>
+                            </div>
+                            <div>
+                                <label class="font-medium text-gray-700">Model:</label>
+                                <p class="text-gray-900">TNV Series</p>
+                            </div>
+                            <div>
+                                <label class="font-medium text-gray-700">Class Part:</label>
+                                <p class="text-gray-900">Safety</p>
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="font-medium text-gray-700">Location:</label>
+                                <p class="text-gray-900">Assembly Line A</p>
+                            </div>
+                        </div>
+
+                        <!-- Defect Information -->
+                        <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2 mt-6">Defect
+                            Information</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <label class="font-medium text-gray-700">Date Create:</label>
+                                <p class="text-gray-900">2024-03-15</p>
+                            </div>
+                            <div>
+                                <label class="font-medium text-gray-700">Defect Qty Found:</label>
+                                <p class="text-gray-900">5</p>
+                            </div>
+                            <div>
+                                <label class="font-medium text-gray-700">Total Defect Ratio:</label>
+                                <p class="text-gray-900">0.05</p>
+                            </div>
+                            <div>
+                                <label class="font-medium text-gray-700">Replacement Part:</label>
+                                <p class="text-gray-900">Yes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Problem & Media -->
+                    <div class="space-y-4">
+                        <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2">Problem
+                            Description</h3>
+                        <div class="text-sm">
+                            <label class="font-medium text-gray-700">Problem Statement:</label>
+                            <p class="text-gray-900 mt-1">Nut lepas dari spot welding pada engine block assembly karena
+                                kekuatan welding tidak memadai.</p>
+                        </div>
+                        <div class="text-sm">
+                            <label class="font-medium text-gray-700">Problem Detail:</label>
+                            <p class="text-gray-900 mt-1">Selama inspeksi rutin, ditemukan bahwa nut pada engine block
+                                assembly lepas akibat spot welding yang tidak kuat. Hal ini dapat mengakibatkan
+                                kegagalan komponen dan membahayakan keselamatan operasi.</p>
+                        </div>
+
+                        <!-- Attachments -->
+                        <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2 mt-6">
+                            Attachments</h3>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="border border-gray-200 rounded-lg p-2 text-center">
+                                <img src="https://via.placeholder.com/100x100/f3f4f6/9ca3af?text=IMG1" alt="Image 1"
+                                    class="w-full h-16 object-cover rounded">
+                                <p class="text-xs text-gray-500 mt-1">welding_defect.jpg</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-2 text-center">
+                                <img src="https://via.placeholder.com/100x100/f3f4f6/9ca3af?text=IMG2" alt="Image 2"
+                                    class="w-full h-16 object-cover rounded">
+                                <p class="text-xs text-gray-500 mt-1">nut_loose.jpg</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-2 text-center">
+                                <div class="w-full h-16 bg-gray-100 rounded flex items-center justify-center">
+                                    <i class="fas fa-play text-gray-500"></i>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">inspection.mp4</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem Analysis Results -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Problem Analysis Results</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- MAN -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">MAN</h3>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Operator tidak mengikuti standar prosedur welding dengan
+                                benar, kurang training mengenai parameter welding yang optimal.</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Supervisor tidak melakukan checking berkala terhadap hasil
+                                welding operator.</p>
+                        </div>
+                    </div>
+
+                    <!-- METHOD -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">METHOD</h3>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Parameter welding (ampere, timing, pressure) tidak sesuai
+                                dengan spesifikasi untuk material thickness yang digunakan.</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Work instruction tidak detail mengenai setting welding
+                                machine untuk berbagai jenis material.</p>
+                        </div>
+                    </div>
+
+                    <!-- MATERIAL -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">MATERIAL</h3>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Kualitas material nut dan base metal tidak sesuai dengan
+                                standar, terdapat coating yang mengganggu proses welding.</p>
+                        </div>
+                    </div>
+
+                    <!-- MACHINE -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">MACHINE</h3>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Welding machine tidak dikalibrasi secara rutin, electrode
+                                welding sudah aus dan perlu diganti.</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-md">
+                            <p class="text-sm text-gray-900">Maintenance schedule tidak diikuti dengan konsisten.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Problem Flow Out Analysis -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Why Problem Flow Out Analysis</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- MAN -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">MAN</h3>
+                        <div class="bg-red-50 p-3 rounded-md border-l-4 border-red-400">
+                            <p class="text-sm text-gray-900">Quality inspector tidak melakukan visual check terhadap
+                                hasil welding secara menyeluruh.</p>
+                        </div>
+                        <div class="bg-red-50 p-3 rounded-md border-l-4 border-red-400">
+                            <p class="text-sm text-gray-900">Operator final assembly tidak aware terhadap pentingnya
+                                checking kekuatan welding.</p>
+                        </div>
+                    </div>
+
+                    <!-- METHOD -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">METHOD</h3>
+                        <div class="bg-red-50 p-3 rounded-md border-l-4 border-red-400">
+                            <p class="text-sm text-gray-900">Check sheet inspection tidak mencakup test kekuatan welding
+                                secara sampling.</p>
+                        </div>
+                        <div class="bg-red-50 p-3 rounded-md border-l-4 border-red-400">
+                            <p class="text-sm text-gray-900">Tidak ada prosedur destructive test untuk validasi kekuatan
+                                welding.</p>
+                        </div>
+                    </div>
+
+                    <!-- MATERIAL -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">MATERIAL</h3>
+                        <div class="bg-red-50 p-3 rounded-md border-l-4 border-red-400">
+                            <p class="text-sm text-gray-900">Incoming inspection material tidak mendeteksi adanya
+                                coating yang berlebihan pada nut.</p>
+                        </div>
+                    </div>
+
+                    <!-- MACHINE -->
+                    <div class="space-y-3">
+                        <h3 class="text-md font-semibold text-yanmar-dark">MACHINE</h3>
+                        <div class="bg-red-50 p-3 rounded-md border-l-4 border-red-400">
+                            <p class="text-sm text-gray-900">Warning system pada welding machine tidak berfungsi untuk
+                                memberikan alert jika parameter tidak optimal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Countermeasures -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Countermeasures Implemented</h2>
+            </div>
+            <div class="p-6">
+                <!-- Countermeasure for Occurs -->
+                <div class="mb-8">
+                    <h3 class="text-md font-semibold text-yanmar-dark mb-4">Countermeasure for Occurs</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Description</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Responsible</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Effective Date</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Remarks
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Re-training operator welding dengan
+                                        parameter yang benar</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Supervisor Welding</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2024-03-25</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Training 8 jam, include praktek</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Update work instruction welding dengan
+                                        parameter detail</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Engineering Dept</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2024-03-30</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Include setting untuk berbagai material
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Kalibrasi dan maintenance welding
+                                        machine</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Maintenance Team</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2024-03-20</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Ganti electrode, kalibrasi parameter
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Countermeasure for Flow Out -->
+                <div>
+                    <h3 class="text-md font-semibold text-yanmar-dark mb-4">Countermeasure for Flow Out</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Description</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Responsible</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Effective Date</th>
+                                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Remarks
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Tambah check point welding strength test
+                                        di inspection</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">QC Inspector</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2024-03-28</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Sampling 10% setiap shift</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Implement destructive test untuk
+                                        validasi weekly</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">QA Engineer</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2024-04-01</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Test 5 pcs per week random sampling</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Install warning system pada welding
+                                        machine</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Maintenance Team</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2024-04-05</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Alert jika parameter diluar range</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QC Verification Section -->
+        <div class="bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">QC Verification Assessment</h2>
+            </div>
+            <div class="p-6">
+                <!-- Part Status Selection -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Part Status Decision</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+                        <label
+                            class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer has-[:checked]:bg-green-50 has-[:checked]:border-green-300">
+                            <input type="radio" name="part_status" value="part_ok"
+                                class="text-green-600 focus:ring-green-600">
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">Part OK</div>
+                                <div class="text-xs text-gray-500">Can be used</div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer has-[:checked]:bg-yellow-200 has-[:checked]:border-yellow-300">
+                            <input type="radio" name="part_status" value="rework"
+                                class="text-blue-600 focus:ring-blue-600">
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">Rework</div>
+                                <div class="text-xs text-gray-500">Need repair</div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer has-[:checked]:bg-red-200 has-[:checked]:border-red-300">
+                            <input type="radio" name="part_status" value="hold_part"
+                                class="text-yellow-600 focus:ring-red-600">
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">Hold Part</div>
+                                <div class="text-xs text-gray-500">On hold</div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer has-[:checked]:bg-red-200 has-[:checked]:border-red-300">
+                            <input type="radio" name="part_status" value="ng" class="text-red-600 focus:ring-red-600">
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">NG</div>
+                                <div class="text-xs text-gray-500">Not Good</div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer has-[:checked]:bg-red-200 has-[:checked]:border-red-300">
+                            <input type="radio" name="part_status" value="send_back"
+                                class="text-orange-600 focus:ring-red-600">
+                            <div class="ml-3">
+                                <div class="text-sm font-medium text-gray-900">Send Back</div>
+                                <div class="text-xs text-gray-500">Return</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">QC Verification Remarks</label>
+                    <textarea id="qcRemarks"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
+                        rows="6"
+                        placeholder="Berikan assessment QC terhadap problem analysis, countermeasures, dan effectiveness yang telah dilakukan..."></textarea>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                    <button onclick="requestRevision()"
+                        class="px-6 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 flex items-center space-x-2">
+                        <i class="fas fa-edit"></i>
+                        <span>Request Revision</span>
+                    </button>
+                    <button onclick="approveNCR()"
+                        class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center space-x-2">
+                        <i class="fas fa-check"></i>
+                        <span>Update Status</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function requestRevision() {
+            const remarks = document.getElementById('qcRemarks').value;
+            const partStatus = document.querySelector('input[name="part_status"]:checked');
+
+            if (!partStatus) {
+                alert('Mohon pilih Part Status Decision terlebih dahulu.');
+                return;
+            }
+
+            if (!remarks.trim()) {
+                alert('Mohon berikan remarks mengenai hal yang perlu direvisi sebelum mengirim permintaan revisi.');
+                return;
+            }
+
+            if (confirm('Apakah Anda yakin akan mengirim permintaan revisi untuk NCR ini? Engineer akan mendapat notifikasi untuk melakukan perbaikan.')) {
+                const partStatusText = partStatus.nextElementSibling.querySelector('.text-sm').textContent;
+
+                // Show revision alert with remarks and part status
+                alert(`Permintaan Revisi Terkirim!\n\nPart Status: ${partStatusText}\nRemarks: ${remarks}\n\nNCR akan dikembalikan ke Engineer untuk perbaikan. Status akan berubah menjadi "Under Revision".`);
+
+                // Here you would typically send data to backend to update NCR status
+                // and send notification to engineer
+
+                // Update status indicator for demo
+                const statusIndicator = document.querySelector('.bg-yellow-100');
+                statusIndicator.textContent = 'Under Revision';
+                statusIndicator.className = 'px-3 py-1 text-xs font-medium bg-orange-100 text-orange-800 rounded-full';
+            }
+        }
+
+        function approveNCR() {
+            const remarks = document.getElementById('qcRemarks').value;
+            const partStatus = document.querySelector('input[name="part_status"]:checked');
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+
+            if (!partStatus) {
+                alert('Mohon pilih Part Status Decision terlebih dahulu.');
+                return;
+            }
+
+            if (!remarks.trim()) {
+                alert('Mohon berikan QC verification remarks sebelum approve.');
+                return;
+            }
+
+            if (!allChecked) {
+                if (!confirm('Tidak semua checklist item telah dicentang. Apakah Anda yakin akan melanjutkan approval?')) {
+                    return;
+                }
+            }
+
+            if (confirm('Apakah Anda yakin akan meng-approve dan menutup NCR ini? Setelah di-approve, NCR akan berstatus DONE dan tidak dapat diubah lagi.')) {
+                const partStatusText = partStatus.nextElementSibling.querySelector('.text-sm').textContent;
+
+                // Show approval success message with part status
+                alert(`NCR Berhasil Di-Approve!\n\nNCR-2024-001 telah disetujui dan ditutup.\nPart Status: ${partStatusText}\nStatus: DONE\nVerified by: QC Manager\n\nNotifikasi akan dikirim ke semua stakeholder terkait.`);
+
+                // Here you would typically send data to backend to close the NCR
+
+                // Update status indicator for demo
+                const statusIndicator = document.querySelector('.bg-yellow-100, .bg-orange-100');
+                statusIndicator.textContent = 'NCR Closed';
+                statusIndicator.className = 'px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full';
+
+                // Disable form elements after approval
+                document.querySelector('button[onclick="requestRevision()"]').disabled = true;
+                document.querySelector('button[onclick="approveNCR()"]').disabled = true;
+                document.getElementById('qcRemarks').disabled = true;
+                document.querySelectorAll('input[name="part_status"]').forEach(input => input.disabled = true);
+            }
+        }
+
+        // Auto-save remarks
+        let autoSaveTimer;
+        document.getElementById('qcRemarks').addEventListener('input', function () {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                // Auto-save logic here
+                console.log('Auto-saving remarks...');
+            }, 5000);
+        });
+
+        // Initialize checklist change handlers
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    // Save checklist state
+                    localStorage.setItem(`checklist-${this.id}`, this.checked);
+                });
+
+                // Load saved state
+                const savedState = localStorage.getItem(`checklist-${checkbox.id}`);
+                if (savedState === 'true') {
+                    checkbox.checked = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Done NCR - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-collapsed {
+            width: 64px;
+        }
+
+        .sidebar-expanded {
+            width: 256px;
+        }
+
+        .sidebar-transition {
+            transition: width 100ms linear;
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .menu-text {
+            white-space: nowrap;
+        }
+
+        .sidebar-collapsed .menu-text {
+            display: none;
+        }
+
+        .sidebar-expanded .menu-text {
+            display: inline;
+        }
+
+        .tooltip {
+            display: none;
+        }
+
+        .group.show-tooltip .tooltip {
+            display: block;
+        }
+
+        .menu-item-hover:hover {
+            background-color: #f3f4f6;
+        }
+
+        .response-rate-fast {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .response-rate-medium {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .response-rate-slow {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Completed NCR</h2>
+                        <p class="text-gray-600 mt-1">NCR parts that have been successfully processed and completed</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-sm text-gray-500">Total Completed:</span>
+                            <span class="font-semibold text-green-600 ml-2" id="totalCompleted">42</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-building text-blue-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Internal Departments</p>
+                            <p class="text-lg font-semibold text-gray-900">18</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-truck text-green-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">External Suppliers</p>
+                            <p class="text-lg font-semibold text-gray-900">24</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-yellow-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Avg Response Time</p>
+                            <p class="text-lg font-semibold text-gray-900">2.3 days</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-purple-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Success Rate</p>
+                            <p class="text-lg font-semibold text-gray-900">94.8%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Filter by:</label>
+                        <select id="typeFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="all">All Types</option>
+                            <option value="internal">Internal Only</option>
+                            <option value="external">External Only</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Response Time:</label>
+                        <select id="responseFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="all">All Response Times</option>
+                            <option value="fast">Fast (≤1 day)</option>
+                            <option value="medium">Medium (1-3 days)</option>
+                            <option value="slow">Slow (>3 days)</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 max-w-xs">
+                        <input type="text" id="searchInput" placeholder="Search by part number or supplier..."
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Done NCR Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-lg font-medium text-gray-900">Completed NCR Records</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    No</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Part Number</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Supplier/Department</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Avg Response Rate</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Completed Date</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doneTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-700">
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span
+                                id="totalRecords">42</span> results
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="prevPage"
+                                class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                            <button id="nextPage"
+                                class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- View Details Modal -->
+    <div id="viewModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">NCR Completion Details</h3>
+                        <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-6 py-4" id="modalContent">
+                    <!-- Modal content will be populated by JavaScript -->
+                </div>
+                <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                    <button id="closeModalBtn"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Sidebar Component -->
+    <script src="components/sidebar.js"></script>
+
+    <script>
+        // Dummy data for completed NCR records
+        const doneNCRData = [
+            // Internal Departments
+            { id: 1, partNumber: "ENG-2024-001", supplier: "Engineering Dept", type: "internal", responseRate: "6 hours", responseClass: "fast", completedDate: "2024-01-15", problem: "Dimensional deviation", resolution: "Specification adjusted", inspector: "John Smith" },
+            { id: 2, partNumber: "QC-2024-008", supplier: "Quality Control", type: "internal", responseRate: "1.2 days", responseClass: "medium", completedDate: "2024-01-14", problem: "Surface finish issue", resolution: "Process parameter updated", inspector: "Sarah Johnson" },
+            { id: 3, partNumber: "PROD-2024-015", supplier: "Production Dept", type: "internal", responseRate: "4.5 days", responseClass: "slow", completedDate: "2024-01-13", problem: "Assembly tolerance", resolution: "Tooling calibrated", inspector: "Mike Wilson" },
+            { id: 4, partNumber: "MAINT-2024-003", supplier: "Maintenance", type: "internal", responseRate: "8 hours", responseClass: "fast", completedDate: "2024-01-12", problem: "Equipment malfunction", resolution: "Component replaced", inspector: "Lisa Chen" },
+            { id: 5, partNumber: "WELD-2024-021", supplier: "Welding Dept", type: "internal", responseRate: "2.1 days", responseClass: "medium", completedDate: "2024-01-11", problem: "Weld quality issue", resolution: "Procedure revised", inspector: "Tom Brown" },
+            { id: 6, partNumber: "PAINT-2024-007", supplier: "Paint Shop", type: "internal", responseRate: "1.8 days", responseClass: "medium", completedDate: "2024-01-10", problem: "Coating defect", resolution: "Material changed", inspector: "Anna Lee" },
+            { id: 7, partNumber: "ASSY-2024-012", supplier: "Assembly Line 1", type: "internal", responseRate: "12 hours", responseClass: "fast", completedDate: "2024-01-09", problem: "Part orientation", resolution: "Jig modified", inspector: "David Kim" },
+            { id: 8, partNumber: "MACH-2024-018", supplier: "Machining Dept", type: "internal", responseRate: "3.2 days", responseClass: "slow", completedDate: "2024-01-08", problem: "Roughness issue", resolution: "Cutting tool changed", inspector: "Emma Davis" },
+            { id: 9, partNumber: "INSP-2024-005", supplier: "Inspection Dept", type: "internal", responseRate: "4 hours", responseClass: "fast", completedDate: "2024-01-07", problem: "Measurement error", resolution: "Gauge calibrated", inspector: "James Miller" },
+            { id: 10, partNumber: "PACK-2024-014", supplier: "Packaging", type: "internal", responseRate: "2.7 days", responseClass: "medium", completedDate: "2024-01-06", problem: "Package damage", resolution: "Material upgraded", inspector: "Sophie Wang" },
+            { id: 11, partNumber: "LOG-2024-009", supplier: "Logistics", type: "internal", responseRate: "1.4 days", responseClass: "medium", completedDate: "2024-01-05", problem: "Handling damage", resolution: "Process improved", inspector: "Chris Taylor" },
+            { id: 12, partNumber: "TEST-2024-016", supplier: "Test Lab", type: "internal", responseRate: "5.1 days", responseClass: "slow", completedDate: "2024-01-04", problem: "Performance issue", resolution: "Design optimized", inspector: "Rachel Green" },
+            { id: 13, partNumber: "TOOL-2024-011", supplier: "Tool Room", type: "internal", responseRate: "16 hours", responseClass: "fast", completedDate: "2024-01-03", problem: "Tool wear", resolution: "Maintenance scheduled", inspector: "Mark Johnson" },
+            { id: 14, partNumber: "ELEC-2024-006", supplier: "Electrical Dept", type: "internal", responseRate: "2.3 days", responseClass: "medium", completedDate: "2024-01-02", problem: "Wiring issue", resolution: "Harness redesigned", inspector: "Kelly Liu" },
+            { id: 15, partNumber: "STORE-2024-020", supplier: "Store Room", type: "internal", responseRate: "3.8 days", responseClass: "slow", completedDate: "2024-01-01", problem: "Storage condition", resolution: "Environment controlled", inspector: "Alex Chen" },
+            { id: 16, partNumber: "SAFETY-2024-004", supplier: "Safety Dept", type: "internal", responseRate: "2 hours", responseClass: "fast", completedDate: "2023-12-31", problem: "Safety compliance", resolution: "Procedure updated", inspector: "Maria Garcia" },
+            { id: 17, partNumber: "PLAN-2024-017", supplier: "Planning Dept", type: "internal", responseRate: "1.9 days", responseClass: "medium", completedDate: "2023-12-30", problem: "Schedule conflict", resolution: "Timeline adjusted", inspector: "Peter Wong" },
+            { id: 18, partNumber: "HR-2024-002", supplier: "Human Resources", type: "internal", responseRate: "4.2 days", responseClass: "slow", completedDate: "2023-12-29", problem: "Training gap", resolution: "Training provided", inspector: "Jennifer Adams" },
+
+            // External Suppliers
+            { id: 19, partNumber: "SUP-A001-2024", supplier: "Suzuki Metal Works", type: "external", responseRate: "2.1 days", responseClass: "medium", completedDate: "2024-01-20", problem: "Material defect", resolution: "Batch replaced", inspector: "John Smith" },
+            { id: 20, partNumber: "SUP-B008-2024", supplier: "Tokyo Precision Co", type: "external", responseRate: "1.3 days", responseClass: "medium", completedDate: "2024-01-19", problem: "Tolerance issue", resolution: "Process adjusted", inspector: "Sarah Johnson" },
+            { id: 21, partNumber: "SUP-C015-2024", supplier: "Osaka Engineering", type: "external", responseRate: "5.2 days", responseClass: "slow", completedDate: "2024-01-18", problem: "Design mismatch", resolution: "Drawing updated", inspector: "Mike Wilson" },
+            { id: 22, partNumber: "SUP-D003-2024", supplier: "Kobe Steel Industries", type: "external", responseRate: "18 hours", responseClass: "fast", completedDate: "2024-01-17", problem: "Chemical composition", resolution: "Certificate provided", inspector: "Lisa Chen" },
+            { id: 23, partNumber: "SUP-E021-2024", supplier: "Nagoya Components", type: "external", responseRate: "3.4 days", responseClass: "slow", completedDate: "2024-01-16", problem: "Packaging issue", resolution: "Method improved", inspector: "Tom Brown" },
+            { id: 24, partNumber: "SUP-F007-2024", supplier: "Hiroshima Tech", type: "external", responseRate: "1.7 days", responseClass: "medium", completedDate: "2024-01-15", problem: "Quality variation", resolution: "SPC implemented", inspector: "Anna Lee" },
+            { id: 25, partNumber: "SUP-G012-2024", supplier: "Fukuoka Manufacturing", type: "external", responseRate: "22 hours", responseClass: "fast", completedDate: "2024-01-14", problem: "Delivery delay", resolution: "Schedule revised", inspector: "David Kim" },
+            { id: 26, partNumber: "SUP-H018-2024", supplier: "Sendai Automotive", type: "external", responseRate: "4.8 days", responseClass: "slow", completedDate: "2024-01-13", problem: "Performance issue", resolution: "Material changed", inspector: "Emma Davis" },
+            { id: 27, partNumber: "SUP-I005-2024", supplier: "Sapporo Electric", type: "external", responseRate: "14 hours", responseClass: "fast", completedDate: "2024-01-12", problem: "Electrical fault", resolution: "Component upgraded", inspector: "James Miller" },
+            { id: 28, partNumber: "SUP-J014-2024", supplier: "Yokohama Systems", type: "external", responseRate: "2.9 days", responseClass: "medium", completedDate: "2024-01-11", problem: "Software bug", resolution: "Firmware updated", inspector: "Sophie Wang" },
+            { id: 29, partNumber: "SUP-K009-2024", supplier: "Chiba Plastics", type: "external", responseRate: "1.2 days", responseClass: "medium", completedDate: "2024-01-10", problem: "Color variation", resolution: "Batch controlled", inspector: "Chris Taylor" },
+            { id: 30, partNumber: "SUP-L016-2024", supplier: "Kawasaki Heavy Ind", type: "external", responseRate: "6.3 days", responseClass: "slow", completedDate: "2024-01-09", problem: "Structural issue", resolution: "Design reinforced", inspector: "Rachel Green" },
+            { id: 31, partNumber: "SUP-M011-2024", supplier: "Niigata Machinery", type: "external", responseRate: "1.8 days", responseClass: "medium", completedDate: "2024-01-08", problem: "Vibration issue", resolution: "Balancing improved", inspector: "Mark Johnson" },
+            { id: 32, partNumber: "SUP-N006-2024", supplier: "Shizuoka Precision", type: "external", responseRate: "3.1 days", responseClass: "slow", completedDate: "2024-01-07", problem: "Surface quality", resolution: "Finishing enhanced", inspector: "Kelly Liu" },
+            { id: 33, partNumber: "SUP-O020-2024", supplier: "Kanazawa Industries", type: "external", responseRate: "8 hours", responseClass: "fast", completedDate: "2024-01-06", problem: "Missing components", resolution: "Shipment completed", inspector: "Alex Chen" },
+            { id: 34, partNumber: "SUP-P004-2024", supplier: "Matsuyama Corp", type: "external", responseRate: "2.6 days", responseClass: "medium", completedDate: "2024-01-05", problem: "Dimension error", resolution: "Tooling adjusted", inspector: "Maria Garcia" },
+            { id: 35, partNumber: "SUP-Q017-2024", supplier: "Kumamoto Metal", type: "external", responseRate: "4.7 days", responseClass: "slow", completedDate: "2024-01-04", problem: "Heat treatment", resolution: "Process verified", inspector: "Peter Wong" },
+            { id: 36, partNumber: "SUP-R002-2024", supplier: "Okinawa Electronics", type: "external", responseRate: "1.1 days", responseClass: "medium", completedDate: "2024-01-03", problem: "Connection issue", resolution: "Connector changed", inspector: "Jennifer Adams" },
+            { id: 37, partNumber: "SUP-S013-2024", supplier: "Akita Components", type: "external", responseRate: "3.7 days", responseClass: "slow", completedDate: "2024-01-02", problem: "Assembly error", resolution: "Instruction clarified", inspector: "John Smith" },
+            { id: 38, partNumber: "SUP-T019-2024", supplier: "Mie Manufacturing", type: "external", responseRate: "16 hours", responseClass: "fast", completedDate: "2024-01-01", problem: "Quality documentation", resolution: "Records updated", inspector: "Sarah Johnson" },
+            { id: 39, partNumber: "SUP-U010-2024", supplier: "Tochigi Systems", type: "external", responseRate: "2.4 days", responseClass: "medium", completedDate: "2023-12-31", problem: "Calibration issue", resolution: "Equipment certified", inspector: "Mike Wilson" },
+            { id: 40, partNumber: "SUP-V022-2024", supplier: "Gunma Automotive", type: "external", responseRate: "5.5 days", responseClass: "slow", completedDate: "2023-12-30", problem: "Testing failure", resolution: "Test method revised", inspector: "Lisa Chen" },
+            { id: 41, partNumber: "SUP-W001-2024", supplier: "Ibaraki Industries", type: "external", responseRate: "12 hours", responseClass: "fast", completedDate: "2023-12-29", problem: "Shipping damage", resolution: "Packaging improved", inspector: "Tom Brown" },
+            { id: 42, partNumber: "SUP-X023-2024", supplier: "Yamanashi Tech", type: "external", responseRate: "2.8 days", responseClass: "medium", completedDate: "2023-12-28", problem: "Specification update", resolution: "Documentation revised", inspector: "Anna Lee" }
+        ];
+
+        let filteredData = [...doneNCRData];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        // Render table data
+        function renderTable() {
+            const tableBody = document.getElementById('doneTableBody');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            tableBody.innerHTML = pageData.map(item => `
+                <tr class="hover:bg-gray-50 fade-in">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.partNumber}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.supplier}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${item.type === 'internal' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                }">
+                            <i class="fas ${item.type === 'internal' ? 'fa-building' : 'fa-truck'} mr-1"></i>
+                            ${item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm response-rate-${item.responseClass}">${item.responseRate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.completedDate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="viewDetails(${item.id})" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-md transition-colors">
+                            <i class="fas fa-eye mr-1"></i>View
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            updatePagination();
+        }
+
+        // Update pagination info
+        function updatePagination() {
+            const totalRecords = filteredData.length;
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(currentPage * itemsPerPage, totalRecords);
+
+            document.getElementById('showingStart').textContent = totalRecords > 0 ? startIndex : 0;
+            document.getElementById('showingEnd').textContent = endIndex;
+            document.getElementById('totalRecords').textContent = totalRecords;
+            document.getElementById('totalCompleted').textContent = totalRecords;
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = endIndex >= totalRecords;
+        }
+
+        // Filter data
+        function filterData() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const responseFilter = document.getElementById('responseFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredData = doneNCRData.filter(item => {
+                const typeMatch = typeFilter === 'all' || item.type === typeFilter;
+                const responseMatch = responseFilter === 'all' || item.responseClass === responseFilter;
+                const searchMatch = item.partNumber.toLowerCase().includes(searchTerm) ||
+                    item.supplier.toLowerCase().includes(searchTerm);
+
+                return typeMatch && responseMatch && searchMatch;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        // View details modal
+        function viewDetails(id) {
+            const item = doneNCRData.find(record => record.id === id);
+            if (!item) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-500 mb-2">Part Information</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-xs text-gray-500">Part Number:</span>
+                                <p class="font-medium text-gray-900">${item.partNumber}</p>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500">${item.type === 'internal' ? 'Department' : 'Supplier'}:</span>
+                                <p class="font-medium text-gray-900">${item.supplier}</p>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${item.type === 'internal' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                }">
+                                    <i class="fas ${item.type === 'internal' ? 'fa-building' : 'fa-truck'} mr-1"></i>
+                                    ${item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-medium text-gray-500 mb-2">Resolution Details</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <span class="text-xs text-gray-500">Problem:</span>
+                                <p class="font-medium text-gray-900">${item.problem}</p>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500">Resolution:</span>
+                                <p class="font-medium text-gray-900">${item.resolution}</p>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-500">Inspector:</span>
+                                <p class="font-medium text-gray-900">${item.inspector}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <span class="text-xs text-gray-500">Response Time</span>
+                            <p class="text-lg font-semibold response-rate-${item.responseClass}">${item.responseRate}</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-xs text-gray-500">Completed Date</span>
+                            <p class="text-lg font-semibold text-gray-900">${item.completedDate}</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-xs text-gray-500">Status</span>
+                            <p class="text-lg font-semibold text-green-600">
+                                <i class="fas fa-check-circle mr-1"></i>Completed
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('viewModal').classList.remove('hidden');
+        }
+
+        // Event listeners
+        document.getElementById('typeFilter').addEventListener('change', filterData);
+        document.getElementById('responseFilter').addEventListener('change', filterData);
+        document.getElementById('searchInput').addEventListener('input', filterData);
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage * itemsPerPage < filteredData.length) {
+                currentPage++;
+                renderTable();
+            }
+        });
+
+        // Modal event listeners
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('viewModal').classList.add('hidden');
+        });
+
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            document.getElementById('viewModal').classList.add('hidden');
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable();
+        });
+    </script>
+</body>
+
+</html>

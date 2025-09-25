@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QC Verification Assessment - Yanmar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .phase-card {
+            transition: all 0.3s ease;
+        }
+        .phase-card.active {
+            border-color: #DC2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+        .supplier-item:hover {
+            background-color: #FEF2F2;
+        }
+        .attachment-preview {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <div class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img src="https://via.placeholder.com/150x50/DC2626/FFFFFF?text=YANMAR" alt="Yanmar" class="h-10">
+                    <h1 class="text-xl font-semibold text-gray-900">QC Verification Assessment</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-500">NCR ID: #NCR-2024-001</span>
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Original Submission Data -->
+        <div class="bg-white rounded-lg shadow mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">Original Submission Details</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Column - Form Data -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Part Number</label>
+                            <p class="mt-1 text-sm text-gray-900">YM-ENG-001-2024</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Part Name</label>
+                            <p class="mt-1 text-sm text-gray-900">Engine Block Assembly</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Model</label>
+                            <p class="mt-1 text-sm text-gray-900">TNV Series</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Class Part</label>
+                            <p class="mt-1 text-sm text-gray-900">Engine Components</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Location</label>
+                            <p class="mt-1 text-sm text-gray-900">Assembly Line A</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Problem Description</label>
+                            <p class="mt-1 text-sm text-gray-900">Surface defect detected on cylinder head. Visible crack approximately 2mm in length.</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Attachments -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Attachments</label>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="border border-gray-200 rounded-lg p-2 text-center">
+                                    <img src="https://via.placeholder.com/100x100/f3f4f6/9ca3af?text=IMG1" alt="Image 1" class="attachment-preview mx-auto rounded">
+                                    <p class="text-xs text-gray-500 mt-1">defect_01.jpg</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-2 text-center">
+                                    <img src="https://via.placeholder.com/100x100/f3f4f6/9ca3af?text=IMG2" alt="Image 2" class="attachment-preview mx-auto rounded">
+                                    <p class="text-xs text-gray-500 mt-1">defect_02.jpg</p>
+                                </div>
+                                <div class="border border-gray-200 rounded-lg p-2 text-center">
+                                    <div class="attachment-preview mx-auto bg-gray-100 rounded flex items-center justify-center">
+                                        <i class="fas fa-play text-gray-500 text-2xl"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">inspection.mp4</p>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-microphone text-gray-400"></i>
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-2">
+                                            <button id="playVoiceNote" class="text-yanmar-red hover:text-yanmar-dark">
+                                                <i class="fas fa-play"></i>
+                                            </button>
+                                            <div class="flex-1 bg-gray-200 rounded-full h-2">
+                                                <div class="bg-yanmar-red h-2 rounded-full" style="width: 0%"></div>
+                                            </div>
+                                            <span class="text-xs text-gray-500">0:00 / 0:45</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 1: NCR Validation -->
+        <div id="phase1" class="bg-white rounded-lg shadow mb-8 phase-card active">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">
+                    <span class="bg-yanmar-red text-white rounded-full w-6 h-6 inline-flex items-center justify-center text-sm mr-2">1</span>
+                    NCR Validation & Classification
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="space-y-6">
+                    <!-- NCR Validation -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Is this a valid NCR?</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="ncr_valid" value="yes" class="text-yanmar-red focus:ring-yanmar-red">
+                                <span class="ml-2 text-sm text-gray-700">Yes</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="ncr_valid" value="no" class="text-yanmar-red focus:ring-yanmar-red">
+                                <span class="ml-2 text-sm text-gray-700">No</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Status Classification -->
+                    <div id="statusClassification" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Status Classification</label>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="status_classification" value="external" class="text-yanmar-red focus:ring-yanmar-red">
+                                <div class="ml-3">
+                                    <div class="text-sm font-medium text-gray-900">External</div>
+                                    <div class="text-sm text-gray-500">QC Product (Forward to supplier)</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="status_classification" value="internal" class="text-yanmar-red focus:ring-yanmar-red">
+                                <div class="ml-3">
+                                    <div class="text-sm font-medium text-gray-900">Internal</div>
+                                    <div class="text-sm text-gray-500">QC Parts (Forward to internal department)</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Rejection Reason (if NCR is invalid) -->
+                    <div id="rejectionReason" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Rejection Reason</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red focus:border-yanmar-red" rows="3" placeholder="Please provide reason for NCR rejection..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button id="proceedToPhase2" class="px-6 py-2 bg-yanmar-red text-white rounded-md hover:bg-yanmar-dark focus:outline-none focus:ring-2 focus:ring-yanmar-red disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Proceed to Phase 2
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: External Supplier Form -->
+        <div id="phase2External" class="bg-white rounded-lg shadow mb-8 phase-card hidden">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">
+                    <span class="bg-yanmar-red text-white rounded-full w-6 h-6 inline-flex items-center justify-center text-sm mr-2">2</span>
+                    External Supplier Assignment
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="space-y-6">
+                    <!-- Supplier Search -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Search Supplier</label>
+                        <div class="relative">
+                            <input type="text" id="supplierSearch" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red focus:border-yanmar-red" placeholder="Type supplier name or ID...">
+                            <div id="supplierDropdown" class="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1 hidden max-h-60 overflow-auto">
+                                <!-- Supplier results will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selected Supplier -->
+                    <div id="selectedSupplier" class="hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Selected Supplier</label>
+                        <div class="bg-gray-50 border border-gray-200 rounded-md p-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-medium text-gray-900" id="supplierName"></h4>
+                                    <p class="text-sm text-gray-500" id="supplierDetails"></p>
+                                </div>
+                                <button id="removeSupplier" class="text-red-600 hover:text-red-800">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add New Supplier -->
+                    <div class="border-t pt-6">
+                        <button id="addNewSupplier" class="text-yanmar-red hover:text-yanmar-dark text-sm font-medium">
+                            <i class="fas fa-plus mr-1"></i> Add New Supplier to Database
+                        </button>
+                    </div>
+
+                    <!-- Message/Remarks -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Message to Supplier</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red focus:border-yanmar-red" rows="4" placeholder="Additional message or instructions for the supplier..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button class="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+                            Save Draft
+                        </button>
+                        <button class="px-6 py-2 bg-yanmar-red text-white rounded-md hover:bg-yanmar-dark">
+                            Forward to Supplier
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Internal Department Form -->
+        <div id="phase2Internal" class="bg-white rounded-lg shadow mb-8 phase-card hidden">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-medium text-gray-900">
+                    <span class="bg-yanmar-red text-white rounded-full w-6 h-6 inline-flex items-center justify-center text-sm mr-2">2</span>
+                    Internal Department Assignment
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="space-y-6">
+                    <!-- Department Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Select Department</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="department" value="production" class="text-yanmar-red focus:ring-yanmar-red">
+                                <div class="ml-3">
+                                    <div class="text-sm font-medium text-gray-900">Production Department</div>
+                                    <div class="text-xs text-gray-500">Manufacturing & Assembly</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="department" value="engineering" class="text-yanmar-red focus:ring-yanmar-red">
+                                <div class="ml-3">
+                                    <div class="text-sm font-medium text-gray-900">Engineering Department</div>
+                                    <div class="text-xs text-gray-500">Design & Development</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="department" value="maintenance" class="text-yanmar-red focus:ring-yanmar-red">
+                                <div class="ml-3">
+                                    <div class="text-sm font-medium text-gray-900">Maintenance Department</div>
+                                    <div class="text-xs text-gray-500">Equipment & Facility</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                <input type="radio" name="department" value="procurement" class="text-yanmar-red focus:ring-yanmar-red">
+                                <div class="ml-3">
+                                    <div class="text-sm font-medium text-gray-900">Procurement Department</div>
+                                    <div class="text-xs text-gray-500">Purchasing & Supply Chain</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Priority Level -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Priority Level</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red focus:border-yanmar-red">
+                            <option value="">Select Priority</option>
+                            <option value="critical">Critical - Immediate Action Required</option>
+                            <option value="high">High - Within 24 Hours</option>
+                            <option value="medium">Medium - Within 3 Days</option>
+                            <option value="low">Low - Within 1 Week</option>
+                        </select>
+                    </div>
+
+                    <!-- Assignment Details -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Assignment Details</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red focus:border-yanmar-red" rows="4" placeholder="Provide specific instructions or requirements for the assigned department..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button class="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+                            Save Draft
+                        </button>
+                        <button class="px-6 py-2 bg-yanmar-red text-white rounded-md hover:bg-yanmar-dark">
+                            Forward to Department
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Supplier Modal -->
+    <div id="supplierModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Add New Supplier</h3>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Supplier Name</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Contact Person</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                    <input type="tel" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yanmar-red">
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                <button id="cancelSupplier" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button id="saveSupplier" class="px-4 py-2 bg-yanmar-red text-white rounded-md hover:bg-yanmar-dark">
+                    Add Supplier
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample supplier database
+        const suppliers = [
+            { id: 1, name: "ABC Manufacturing Co.", contact: "John Smith", email: "john@abc-mfg.com", phone: "+1-555-0101" },
+            { id: 2, name: "XYZ Components Ltd.", contact: "Sarah Johnson", email: "sarah@xyz-components.com", phone: "+1-555-0102" },
+            { id: 3, name: "Global Parts Solutions", contact: "Mike Chen", email: "mike@globalparts.com", phone: "+1-555-0103" },
+            { id: 4, name: "Premium Steel Works", contact: "Anna Rodriguez", email: "anna@premiumsteel.com", phone: "+1-555-0104" },
+            { id: 5, name: "Tech Assembly Inc.", contact: "David Kim", email: "david@techassembly.com", phone: "+1-555-0105" }
+        ];
+
+        // Phase 1 Logic
+        const ncrValidRadios = document.querySelectorAll('input[name="ncr_valid"]');
+        const statusClassification = document.getElementById('statusClassification');
+        const rejectionReason = document.getElementById('rejectionReason');
+        const proceedBtn = document.getElementById('proceedToPhase2');
+
+        ncrValidRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'yes') {
+                    statusClassification.classList.remove('hidden');
+                    rejectionReason.classList.add('hidden');
+                } else {
+                    statusClassification.classList.add('hidden');
+                    rejectionReason.classList.remove('hidden');
+                    proceedBtn.disabled = false;
+                }
+            });
+        });
+
+        const statusRadios = document.querySelectorAll('input[name="status_classification"]');
+        statusRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                proceedBtn.disabled = false;
+            });
+        });
+
+        // Phase 2 Logic
+        proceedBtn.addEventListener('click', function() {
+            const selectedStatus = document.querySelector('input[name="status_classification"]:checked');
+            const ncrValid = document.querySelector('input[name="ncr_valid"]:checked');
+
+            document.getElementById('phase1').classList.remove('active');
+
+            if (ncrValid && ncrValid.value === 'no') {
+                // Handle rejection case
+                alert('NCR has been rejected. Notification sent to submitter.');
+                return;
+            }
+
+            if (selectedStatus) {
+                if (selectedStatus.value === 'external') {
+                    document.getElementById('phase2External').classList.remove('hidden');
+                    document.getElementById('phase2External').classList.add('active');
+                } else {
+                    document.getElementById('phase2Internal').classList.remove('hidden');
+                    document.getElementById('phase2Internal').classList.add('active');
+                }
+            }
+        });
+
+        // Supplier Search Logic
+        const supplierSearch = document.getElementById('supplierSearch');
+        const supplierDropdown = document.getElementById('supplierDropdown');
+        const selectedSupplierDiv = document.getElementById('selectedSupplier');
+        let selectedSupplier = null;
+
+        supplierSearch.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+
+            if (query.length < 2) {
+                supplierDropdown.classList.add('hidden');
+                return;
+            }
+
+            const filteredSuppliers = suppliers.filter(supplier =>
+                supplier.name.toLowerCase().includes(query) ||
+                supplier.contact.toLowerCase().includes(query)
+            );
+
+            supplierDropdown.innerHTML = '';
+
+            if (filteredSuppliers.length > 0) {
+                filteredSuppliers.forEach(supplier => {
+                    const div = document.createElement('div');
+                    div.className = 'supplier-item p-3 cursor-pointer border-b border-gray-200 last:border-b-0';
+                    div.innerHTML = `
+                        <div class="font-medium text-gray-900">${supplier.name}</div>
+                        <div class="text-sm text-gray-500">${supplier.contact} • ${supplier.email}</div>
+                    `;
+                    div.addEventListener('click', () => selectSupplier(supplier));
+                    supplierDropdown.appendChild(div);
+                });
+                supplierDropdown.classList.remove('hidden');
+            } else {
+                supplierDropdown.classList.add('hidden');
+            }
+        });
+
+        function selectSupplier(supplier) {
+            selectedSupplier = supplier;
+            supplierSearch.value = supplier.name;
+            supplierDropdown.classList.add('hidden');
+
+            document.getElementById('supplierName').textContent = supplier.name;
+            document.getElementById('supplierDetails').textContent = `${supplier.contact} • ${supplier.email} • ${supplier.phone}`;
+            selectedSupplierDiv.classList.remove('hidden');
+        }
+
+        document.getElementById('removeSupplier').addEventListener('click', function() {
+            selectedSupplier = null;
+            supplierSearch.value = '';
+            selectedSupplierDiv.classList.add('hidden');
+        });
+
+        // Add New Supplier Modal
+        const supplierModal = document.getElementById('supplierModal');
+        document.getElementById('addNewSupplier').addEventListener('click', function() {
+            supplierModal.classList.remove('hidden');
+            supplierModal.classList.add('flex');
+        });
+
+        document.getElementById('cancelSupplier').addEventListener('click', function() {
+            supplierModal.classList.add('hidden');
+            supplierModal.classList.remove('flex');
+        });
+
+        document.getElementById('saveSupplier').addEventListener('click', function() {
+            // Here you would typically save to database
+            alert('New supplier added successfully!');
+            supplierModal.classList.add('hidden');
+            supplierModal.classList.remove('flex');
+        });
+
+        // Voice note player simulation
+        document.getElementById('playVoiceNote').addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            const progressBar = this.parentElement.querySelector('.bg-yanmar-red');
+
+            if (icon.classList.contains('fa-play')) {
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+
+                // Simulate playing
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 2;
+                    progressBar.style.width = progress + '%';
+
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        icon.classList.remove('fa-pause');
+                        icon.classList.add('fa-play');
+                        progressBar.style.width = '0%';
+                    }
+                }, 100);
+            }
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!supplierSearch.contains(e.target) && !supplierDropdown.contains(e.target)) {
+                supplierDropdown.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

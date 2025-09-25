@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanmar QC Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    },
+                    animation: {
+                        'slide-in': 'slide-in 0.3s ease-out',
+                        'slide-out': 'slide-out 0.3s ease-in',
+                        'fade-in': 'fade-in 0.2s ease-out'
+                    },
+                    keyframes: {
+                        'slide-in': {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0)' }
+                        },
+                        'slide-out': {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+
+        .sidebar-expanded {
+            width: 16rem;
+        }
+
+        .sidebar-transition {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item-hover:hover {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
+            border-right: 3px solid #DC2626;
+        }
+
+        .tooltip {
+            transform: translateX(0.5rem);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show-tooltip .tooltip {
+            transform: translateX(1rem);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-expanded .menu-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Navbar template -->
+    <template id="template-navbar">
+        <nav class="bg-white border-b border-gray-200 fixed top-0 left-0 right-0 z-50 h-16">
+            <div class="flex items-center justify-between px-6 h-full">
+                <!-- Left Section -->
+                <div class="flex items-center space-x-4">
+                    <button id="sidebarToggle" class="p-2 rounded-md hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://via.placeholder.com/40x40/DC2626/FFFFFF?text=Y" alt="Yanmar"
+                            class="w-8 h-8 rounded">
+                        <div>
+                            <h1 class="text-lg font-bold text-yanmar-dark">YANMAR</h1>
+                            <p class="text-xs text-gray-500 -mt-1">QC Management</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Search -->
+                <div class="hidden md:flex flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <input type="text" placeholder="Search..."
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="flex items-center space-x-4">
+                    <!-- Notifications -->
+                    <button class="relative p-2 text-gray-600 hover:text-yanmar-red transition-colors">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span
+                            class="absolute -top-1 -right-1 w-5 h-5 bg-yanmar-red text-white text-xs rounded-full flex items-center justify-center">3</span>
+                    </button>
+
+                    <!-- User Menu -->
+                    <div class="relative group">
+                        <button class="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition-colors">
+                            <img src="https://via.placeholder.com/32x32/EA580C/FFFFFF?text=JD" alt="User"
+                                class="w-8 h-8 rounded-full">
+                            <div class="hidden md:block text-left">
+                                <p class="text-sm font-medium text-gray-900">John Doe</p>
+                                <p class="text-xs text-gray-500">QC Manager</p>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs text-gray-400"></i>
+                        </button>
+
+                        <!-- Dropdown Menu -->
+                        <div
+                            class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="py-1">
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-user mr-3"></i>Profile
+                                </a>
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-cog mr-3"></i>Settings
+                                </a>
+                                <hr class="my-1">
+                                <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-sign-out-alt mr-3"></i>Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </template>
+
+    <!-- Navbar render container -->
+    <div id="navbar-container"></div>
+
+    <!-- Sidebar template -->
+    <template id="template-sidebar">
+        <aside id="sidebar"
+            class="sidebar-collapsed sidebar-transition bg-white border-r border-gray-200 fixed left-0 top-16 bottom-0 z-40 overflow-hidden">
+            <div class="h-full flex flex-col">
+                <!-- Menu Items -->
+                <nav class="flex-1 py-4">
+                    <!-- NCR Section -->
+                    <div class="px-2 mb-6">
+                        <h3 class="menu-text text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-2">NCR
+                            Management</h3>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="dashboard">
+                            <i class="fas fa-tachometer-alt w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">NCR Dashboard</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                NCR Dashboard
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="create">
+                            <i class="fas fa-plus-circle w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Create NCR</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                Create NCR
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="report">
+                            <i class="fas fa-chart-line w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Report</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                NCR Reports
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="process">
+                            <i class="fas fa-cogs w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Process</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                Process NCR
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="done">
+                            <i class="fas fa-check-circle w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Done</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                Completed NCR
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- QC Section -->
+                    <div class="px-2 mb-6">
+                        <h3 class="menu-text text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-2">
+                            Quality Control</h3>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="qc-product">
+                            <i class="fas fa-box w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">QC Product</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                QC Product List
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="qc-part">
+                            <i class="fas fa-puzzle-piece w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">QC Part</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                QC Part List
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Management Section -->
+                    <div class="px-2">
+                        <h3 class="menu-text text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-2">
+                            Management</h3>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="ppic">
+                            <i class="fas fa-eye w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">PPIC View</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                PPIC View
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="analytics">
+                            <i class="fas fa-analytics w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Analytics</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                Analytics Dashboard
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="user">
+                            <i class="fas fa-users w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">User</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                User Management
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="department">
+                            <i class="fas fa-building w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Department</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                Department List
+                            </div>
+                        </a>
+
+                        <a href="#"
+                            class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group"
+                            data-page="supplier">
+                            <i class="fas fa-truck w-5 text-center"></i>
+                            <span class="menu-text ml-3 font-medium">Supplier</span>
+                            <div
+                                class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">
+                                Supplier Database
+                            </div>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+    </template>
+
+    <!-- Sidebar render container -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 mt-16 transition-all duration-300 ease-in-out">
+        <div class="p-6">
+            <!-- Dashboard Content -->
+            <div id="dashboard" class="content-section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">NCR Dashboard</h1>
+                    <p class="text-gray-600">Overview of Non-Conformance Reports and Quality Control metrics</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total NCR</p>
+                                <p class="text-3xl font-bold text-gray-900">247</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-file-alt text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <span class="text-green-600 text-sm font-medium">+12%</span>
+                            <span class="text-gray-500 text-sm ml-1">vs last month</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">In Process</p>
+                                <p class="text-3xl font-bold text-yellow-600">64</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-yellow-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <span class="text-yellow-600 text-sm font-medium">-3%</span>
+                            <span class="text-gray-500 text-sm ml-1">vs last month</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Completed</p>
+                                <p class="text-3xl font-bold text-green-600">156</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <span class="text-green-600 text-sm font-medium">+8%</span>
+                            <span class="text-gray-500 text-sm ml-1">vs last month</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Critical</p>
+                                <p class="text-3xl font-bold text-red-600">27</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <span class="text-red-600 text-sm font-medium">+2</span>
+                            <span class="text-gray-500 text-sm ml-1">vs last week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-900">Recent NCR Activities</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-plus text-blue-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">New NCR Created</p>
+                                        <p class="text-xs text-gray-500">NCR-2024-001 - Engine Block Defect</p>
+                                        <p class="text-xs text-gray-400">2 minutes ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-green-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">NCR Completed</p>
+                                        <p class="text-xs text-gray-500">NCR-2024-045 - Hydraulic System</p>
+                                        <p class="text-xs text-gray-400">15 minutes ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-edit text-yellow-600"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-900">NCR Updated</p>
+                                        <p class="text-xs text-gray-500">NCR-2024-023 - Transmission Parts</p>
+                                        <p class="text-xs text-gray-400">1 hour ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                        <div class="p-6 border-b border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-900">Quality Metrics</h3>
+                        </div>
+                        <div class="p-6">
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Defect Rate</span>
+                                        <span class="text-sm text-gray-500">2.3%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-red-500 h-2 rounded-full" style="width: 23%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">Resolution Rate</span>
+                                        <span class="text-sm text-gray-500">85.7%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 86%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-gray-700">On-Time Completion</span>
+                                        <span class="text-sm text-gray-500">92.1%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Content Sections (Hidden by default) -->
+            <div id="create" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Create NCR</h1>
+                    <p class="text-gray-600">Create a new Non-Conformance Report</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">NCR Creation form will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="report" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">NCR Reports</h1>
+                    <p class="text-gray-600">View and analyze NCR reports and trends</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">NCR Reports will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="process" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Process NCR</h1>
+                    <p class="text-gray-600">Manage NCR processing workflow</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">NCR Process table will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="done" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Completed NCR</h1>
+                    <p class="text-gray-600">View completed NCR records</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">Completed NCR table will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="qc-product" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">QC Product</h1>
+                    <p class="text-gray-600">Quality control for product categories</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">QC Product list will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="qc-part" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">QC Part</h1>
+                    <p class="text-gray-600">Quality control for part categories</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">QC Part list will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="ppic" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">PPIC View</h1>
+                    <p class="text-gray-600">Production Planning and Inventory Control overview</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">PPIC dashboard will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="analytics" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Analytics</h1>
+                    <p class="text-gray-600">Advanced analytics and insights</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">Analytics dashboard will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="user" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">User Management</h1>
+                    <p class="text-gray-600">Manage system users and permissions</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">User management table will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="department" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Department</h1>
+                    <p class="text-gray-600">Manage departments and organizational structure</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">Department list will be displayed here...</p>
+                </div>
+            </div>
+
+            <div id="supplier" class="content-section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Supplier Database</h1>
+                    <p class="text-gray-600">Manage supplier information and performance</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+                    <p class="text-gray-500">Supplier database will be displayed here...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+            // Render navbar and sidebar templates into the page
+            (function renderComponents() {
+                try {
+                    const navT = document.getElementById('template-navbar');
+                    const sideT = document.getElementById('template-sidebar');
+                    const navContainer = document.getElementById('navbar-container');
+                    const sideContainer = document.getElementById('sidebar-container');
+
+                    if (navT && navContainer) {
+                        navContainer.appendChild(navT.content.cloneNode(true));
+                    }
+                    if (sideT && sideContainer) {
+                        sideContainer.appendChild(sideT.content.cloneNode(true));
+                    }
+                } catch (err) {
+                    console.error('Error rendering components', err);
+                }
+            })();
+
+        // Sidebar functionality
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        let isExpanded = false;
+        let hoverTimeout;
+
+        // Sidebar hover expand
+        sidebar.addEventListener('mouseenter', () => {
+            if (!isExpanded) {
+                clearTimeout(hoverTimeout);
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                mainContent.classList.remove('ml-16');
+                mainContent.classList.add('ml-64');
+
+                // Hide tooltips when expanded
+                const tooltips = sidebar.querySelectorAll('.group');
+                tooltips.forEach(group => {
+                    group.classList.remove('show-tooltip');
+                });
+            }
+        });
+
+        sidebar.addEventListener('mouseleave', () => {
+            if (!isExpanded) {
+                hoverTimeout = setTimeout(() => {
+                    sidebar.classList.remove('sidebar-expanded');
+                    sidebar.classList.add('sidebar-collapsed');
+                    mainContent.classList.remove('ml-64');
+                    mainContent.classList.add('ml-16');
+                }, 300);
+            }
+        });
+
+        // Show tooltips on collapsed state
+        const menuItems = sidebar.querySelectorAll('.group');
+        menuItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                if (sidebar.classList.contains('sidebar-collapsed')) {
+                    item.classList.add('show-tooltip');
+                }
+            });
+
+            item.addEventListener('mouseleave', () => {
+                item.classList.remove('show-tooltip');
+            });
+        });
+
+        // Toggle sidebar (sticky state)
+        sidebarToggle.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            clearTimeout(hoverTimeout);
+
+            if (isExpanded) {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                mainContent.classList.remove('ml-16');
+                mainContent.classList.add('ml-64');
+            } else {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                mainContent.classList.remove('ml-64');
+                mainContent.classList.add('ml-16');
+            }
+        });
+
+        // Menu item activation and page switching
+        const menuLinks = document.querySelectorAll('aside a[data-page]');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Remove active class from all menu items
+                menuLinks.forEach(item => {
+                    item.classList.remove('bg-yanmar-light', 'text-yanmar-dark', 'border-r-2', 'border-yanmar-red');
+                });
+
+                // Add active class to clicked item
+                link.classList.add('bg-yanmar-light', 'text-yanmar-dark');
+
+                // Hide all content sections
+                contentSections.forEach(section => {
+                    section.classList.add('hidden');
+                });
+
+                // Show selected content section
+                const targetPage = link.getAttribute('data-page');
+                const targetSection = document.getElementById(targetPage);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Set initial active state
+        document.querySelector('a[data-page="dashboard"]').classList.add('bg-yanmar-light', 'text-yanmar-dark');
+
+        // Mobile responsiveness
+        function handleResize() {
+            if (window.innerWidth < 1024) {
+                // Mobile behavior
+                sidebar.classList.add('sidebar-collapsed');
+                sidebar.classList.remove('sidebar-expanded');
+                mainContent.classList.remove('ml-64');
+                mainContent.classList.add('ml-16');
+                isExpanded = false;
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial check
+
+        // Add smooth animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate cards on load
+            const cards = document.querySelectorAll('.bg-white');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+
+</html>

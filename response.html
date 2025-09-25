@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Response Rate - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-collapsed {
+            width: 64px;
+        }
+
+        .sidebar-expanded {
+            width: 256px;
+        }
+
+        .sidebar-transition {
+            transition: width 100ms linear;
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .menu-text {
+            white-space: nowrap;
+        }
+
+        .sidebar-collapsed .menu-text {
+            display: none;
+        }
+
+        .sidebar-expanded .menu-text {
+            display: inline;
+        }
+
+        .tooltip {
+            display: none;
+        }
+
+        .group.show-tooltip .tooltip {
+            display: block;
+        }
+
+        .menu-item-hover:hover {
+            background-color: #f3f4f6;
+        }
+
+        .response-excellent {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        .response-good {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .response-average {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .response-poor {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .response-very-poor {
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-bar {
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Header -->
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Response Rate Analysis</h2>
+                        <p class="text-gray-600 mt-1">Average response time performance by suppliers and internal departments</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-sm text-gray-500">Total Companies:</span>
+                            <span class="font-semibold text-blue-600 ml-2" id="totalCompanies">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-trophy text-green-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Top Performer</p>
+                            <p class="text-lg font-semibold text-gray-900" id="topPerformer">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-blue-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Overall Average</p>
+                            <p class="text-lg font-semibold text-gray-900" id="overallAverage">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-building text-yellow-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Internal Departments</p>
+                            <p class="text-lg font-semibold text-gray-900" id="internalCount">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-truck text-purple-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">External Suppliers</p>
+                            <p class="text-lg font-semibold text-gray-900" id="externalCount">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Rate Legend -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Response Rate Categories</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-green-600 rounded mr-2"></div>
+                        <span class="text-sm text-gray-700">Excellent (d6 hours)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-green-400 rounded mr-2"></div>
+                        <span class="text-sm text-gray-700">Good (6-24 hours)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+                        <span class="text-sm text-gray-700">Average (1-3 days)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-red-500 rounded mr-2"></div>
+                        <span class="text-sm text-gray-700">Poor (3-7 days)</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-red-700 rounded mr-2"></div>
+                        <span class="text-sm text-gray-700">Very Poor (>7 days)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Filter by Type:</label>
+                        <select id="typeFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="all">All Types</option>
+                            <option value="internal">Internal Only</option>
+                            <option value="external">External Only</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Performance:</label>
+                        <select id="performanceFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="all">All Performance</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="good">Good</option>
+                            <option value="average">Average</option>
+                            <option value="poor">Poor</option>
+                            <option value="very-poor">Very Poor</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 max-w-xs">
+                        <input type="text" id="searchInput" placeholder="Search by company name..."
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Rate Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-lg font-medium text-gray-900">Company Response Rate Performance</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company/Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Parts</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Response Time</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Response</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="responseTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-700">
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalRecords">0</span> results
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="prevPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                            <button id="nextPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- View History Modal -->
+    <div id="historyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-6xl w-full max-h-screen overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900" id="modalTitle">Response History</h3>
+                            <p class="text-sm text-gray-600" id="modalSubtitle">Detailed response history for parts</p>
+                        </div>
+                        <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-6 py-4">
+                    <!-- Company Summary -->
+                    <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <span class="text-xs text-gray-500">Total Parts</span>
+                                <p class="text-lg font-semibold text-gray-900" id="modalTotalParts">0</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-xs text-gray-500">Average Response</span>
+                                <p class="text-lg font-semibold" id="modalAvgResponse">0</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-xs text-gray-500">Fastest Response</span>
+                                <p class="text-lg font-semibold text-green-600" id="modalFastest">0</p>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-xs text-gray-500">Slowest Response</span>
+                                <p class="text-lg font-semibold text-red-600" id="modalSlowest">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parts History Table -->
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Part Number</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Problem</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Report Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Response Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Response Time</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                    <button id="closeModalBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Company/Department response data with part history
+        const responseData = [
+            // Internal Departments
+            {
+                id: 1, name: "Engineering Department", type: "internal", avgResponseHours: 4.2,
+                totalParts: 28, lastResponse: "2024-01-20",
+                parts: [
+                    { partNumber: "ENG-001", problem: "Dimensional issue", reportDate: "2024-01-15", responseDate: "2024-01-15", responseHours: 6 },
+                    { partNumber: "ENG-002", problem: "Material specification", reportDate: "2024-01-10", responseDate: "2024-01-10", responseHours: 3 },
+                    { partNumber: "ENG-003", problem: "Design review", reportDate: "2024-01-08", responseDate: "2024-01-08", responseHours: 2 },
+                    { partNumber: "ENG-004", problem: "Tolerance check", reportDate: "2024-01-05", responseDate: "2024-01-05", responseHours: 8 }
+                ]
+            },
+            {
+                id: 2, name: "Quality Control", type: "internal", avgResponseHours: 2.8,
+                totalParts: 35, lastResponse: "2024-01-19",
+                parts: [
+                    { partNumber: "QC-001", problem: "Test failure", reportDate: "2024-01-18", responseDate: "2024-01-18", responseHours: 1 },
+                    { partNumber: "QC-002", problem: "Calibration issue", reportDate: "2024-01-15", responseDate: "2024-01-15", responseHours: 4 },
+                    { partNumber: "QC-003", problem: "Inspection error", reportDate: "2024-01-12", responseDate: "2024-01-12", responseHours: 3 }
+                ]
+            },
+            {
+                id: 3, name: "Production Department", type: "internal", avgResponseHours: 18.5,
+                totalParts: 42, lastResponse: "2024-01-18",
+                parts: [
+                    { partNumber: "PROD-001", problem: "Assembly issue", reportDate: "2024-01-16", responseDate: "2024-01-17", responseHours: 24 },
+                    { partNumber: "PROD-002", problem: "Machine setup", reportDate: "2024-01-14", responseDate: "2024-01-14", responseHours: 12 },
+                    { partNumber: "PROD-003", problem: "Process variation", reportDate: "2024-01-10", responseDate: "2024-01-10", responseHours: 18 }
+                ]
+            },
+            {
+                id: 4, name: "Maintenance", type: "internal", avgResponseHours: 12.3,
+                totalParts: 19, lastResponse: "2024-01-17",
+                parts: [
+                    { partNumber: "MAINT-001", problem: "Equipment failure", reportDate: "2024-01-16", responseDate: "2024-01-16", responseHours: 8 },
+                    { partNumber: "MAINT-002", problem: "Preventive maintenance", reportDate: "2024-01-14", responseDate: "2024-01-14", responseHours: 16 }
+                ]
+            },
+            {
+                id: 5, name: "Welding Department", type: "internal", avgResponseHours: 36.7,
+                totalParts: 15, lastResponse: "2024-01-16",
+                parts: [
+                    { partNumber: "WELD-001", problem: "Weld defect", reportDate: "2024-01-14", responseDate: "2024-01-15", responseHours: 30 },
+                    { partNumber: "WELD-002", problem: "Penetration issue", reportDate: "2024-01-12", responseDate: "2024-01-13", responseHours: 48 }
+                ]
+            },
+
+            // External Suppliers
+            {
+                id: 6, name: "Suzuki Metal Works", type: "external", avgResponseHours: 28.4,
+                totalParts: 32, lastResponse: "2024-01-20",
+                parts: [
+                    { partNumber: "SUP-A001", problem: "Material defect", reportDate: "2024-01-18", responseDate: "2024-01-19", responseHours: 26 },
+                    { partNumber: "SUP-A002", problem: "Surface finish", reportDate: "2024-01-15", responseDate: "2024-01-16", responseHours: 32 },
+                    { partNumber: "SUP-A003", problem: "Dimension error", reportDate: "2024-01-12", responseDate: "2024-01-13", responseHours: 28 }
+                ]
+            },
+            {
+                id: 7, name: "Tokyo Precision Co", type: "external", avgResponseHours: 22.1,
+                totalParts: 25, lastResponse: "2024-01-19",
+                parts: [
+                    { partNumber: "SUP-B001", problem: "Tolerance issue", reportDate: "2024-01-17", responseDate: "2024-01-18", responseHours: 20 },
+                    { partNumber: "SUP-B002", problem: "Coating defect", reportDate: "2024-01-14", responseDate: "2024-01-15", responseHours: 24 }
+                ]
+            },
+            {
+                id: 8, name: "Osaka Engineering", type: "external", avgResponseHours: 96.8,
+                totalParts: 18, lastResponse: "2024-01-15",
+                parts: [
+                    { partNumber: "SUP-C001", problem: "Design mismatch", reportDate: "2024-01-10", responseDate: "2024-01-14", responseHours: 96 },
+                    { partNumber: "SUP-C002", problem: "Specification change", reportDate: "2024-01-08", responseDate: "2024-01-12", responseHours: 100 }
+                ]
+            },
+            {
+                id: 9, name: "Kobe Steel Industries", type: "external", avgResponseHours: 14.6,
+                totalParts: 29, lastResponse: "2024-01-20",
+                parts: [
+                    { partNumber: "SUP-D001", problem: "Chemical composition", reportDate: "2024-01-19", responseDate: "2024-01-19", responseHours: 8 },
+                    { partNumber: "SUP-D002", problem: "Heat treatment", reportDate: "2024-01-16", responseDate: "2024-01-17", responseHours: 18 },
+                    { partNumber: "SUP-D003", problem: "Hardness test", reportDate: "2024-01-14", responseDate: "2024-01-14", responseHours: 16 }
+                ]
+            },
+            {
+                id: 10, name: "Nagoya Components", type: "external", avgResponseHours: 54.3,
+                totalParts: 21, lastResponse: "2024-01-18",
+                parts: [
+                    { partNumber: "SUP-E001", problem: "Assembly error", reportDate: "2024-01-15", responseDate: "2024-01-17", responseHours: 48 },
+                    { partNumber: "SUP-E002", problem: "Component missing", reportDate: "2024-01-12", responseDate: "2024-01-15", responseHours: 60 }
+                ]
+            },
+            {
+                id: 11, name: "Hiroshima Tech", type: "external", avgResponseHours: 31.2,
+                totalParts: 27, lastResponse: "2024-01-17",
+                parts: [
+                    { partNumber: "SUP-F001", problem: "Quality variation", reportDate: "2024-01-15", responseDate: "2024-01-16", responseHours: 28 },
+                    { partNumber: "SUP-F002", problem: "Process control", reportDate: "2024-01-13", responseDate: "2024-01-14", responseHours: 32 }
+                ]
+            },
+            {
+                id: 12, name: "Fukuoka Manufacturing", type: "external", avgResponseHours: 16.8,
+                totalParts: 24, lastResponse: "2024-01-19",
+                parts: [
+                    { partNumber: "SUP-G001", problem: "Delivery delay", reportDate: "2024-01-17", responseDate: "2024-01-18", responseHours: 18 },
+                    { partNumber: "SUP-G002", problem: "Packaging issue", reportDate: "2024-01-15", responseDate: "2024-01-15", responseHours: 14 }
+                ]
+            },
+            {
+                id: 13, name: "Sendai Automotive", type: "external", avgResponseHours: 78.5,
+                totalParts: 16, lastResponse: "2024-01-14",
+                parts: [
+                    { partNumber: "SUP-H001", problem: "Performance issue", reportDate: "2024-01-10", responseDate: "2024-01-13", responseHours: 72 },
+                    { partNumber: "SUP-H002", problem: "Durability test", reportDate: "2024-01-08", responseDate: "2024-01-12", responseHours: 84 }
+                ]
+            },
+            {
+                id: 14, name: "Sapporo Electric", type: "external", avgResponseHours: 8.7,
+                totalParts: 22, lastResponse: "2024-01-20",
+                parts: [
+                    { partNumber: "SUP-I001", problem: "Electrical fault", reportDate: "2024-01-19", responseDate: "2024-01-19", responseHours: 6 },
+                    { partNumber: "SUP-I002", problem: "Connection issue", reportDate: "2024-01-17", responseDate: "2024-01-17", responseHours: 10 }
+                ]
+            },
+            {
+                id: 15, name: "Yokohama Systems", type: "external", avgResponseHours: 43.2,
+                totalParts: 19, lastResponse: "2024-01-16",
+                parts: [
+                    { partNumber: "SUP-J001", problem: "Software bug", reportDate: "2024-01-14", responseDate: "2024-01-16", responseHours: 48 },
+                    { partNumber: "SUP-J002", problem: "Interface error", reportDate: "2024-01-12", responseDate: "2024-01-14", responseHours: 40 }
+                ]
+            }
+        ];
+
+        let filteredData = [...responseData];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        // Helper function to get performance category
+        function getPerformanceCategory(hours) {
+            if (hours <= 6) return { class: 'response-excellent', text: 'Excellent', category: 'excellent' };
+            if (hours <= 24) return { class: 'response-good', text: 'Good', category: 'good' };
+            if (hours <= 72) return { class: 'response-average', text: 'Average', category: 'average' };
+            if (hours <= 168) return { class: 'response-poor', text: 'Poor', category: 'poor' };
+            return { class: 'response-very-poor', text: 'Very Poor', category: 'very-poor' };
+        }
+
+        // Helper function to format response time
+        function formatResponseTime(hours) {
+            if (hours < 24) return hours.toFixed(1) + ' hours';
+            const days = (hours / 24).toFixed(1);
+            return days + ' days';
+        }
+
+        // Render table data
+        function renderTable() {
+            const tableBody = document.getElementById('responseTableBody');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            tableBody.innerHTML = pageData.map(company => {
+                const performance = getPerformanceCategory(company.avgResponseHours);
+                return `
+                    <tr class="hover:bg-gray-50 fade-in">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">${company.name}</div>
+                                <div class="text-sm text-gray-500">${company.type === 'internal' ? 'Internal Department' : 'External Supplier'}</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                company.type === 'internal' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                            }">
+                                <i class="fas ${company.type === 'internal' ? 'fa-building' : 'fa-truck'} mr-1"></i>
+                                ${company.type.charAt(0).toUpperCase() + company.type.slice(1)}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">${company.totalParts}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm ${performance.class}">${formatResponseTime(company.avgResponseHours)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${performance.class}">
+                                ${performance.text}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${company.lastResponse}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="viewHistory(${company.id})" class="text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-md transition-colors">
+                                <i class="fas fa-history mr-1"></i>View History
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            updatePagination();
+        }
+
+        // Update pagination info
+        function updatePagination() {
+            const totalRecords = filteredData.length;
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(currentPage * itemsPerPage, totalRecords);
+
+            document.getElementById('showingStart').textContent = totalRecords > 0 ? startIndex : 0;
+            document.getElementById('showingEnd').textContent = endIndex;
+            document.getElementById('totalRecords').textContent = totalRecords;
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = endIndex >= totalRecords;
+        }
+
+        // Filter data
+        function filterData() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const performanceFilter = document.getElementById('performanceFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredData = responseData.filter(company => {
+                const typeMatch = typeFilter === 'all' || company.type === typeFilter;
+                const performance = getPerformanceCategory(company.avgResponseHours);
+                const performanceMatch = performanceFilter === 'all' || performance.category === performanceFilter;
+                const searchMatch = company.name.toLowerCase().includes(searchTerm);
+
+                return typeMatch && performanceMatch && searchMatch;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        // View company history
+        function viewHistory(companyId) {
+            const company = responseData.find(c => c.id === companyId);
+            if (!company) return;
+
+            const avgPerformance = getPerformanceCategory(company.avgResponseHours);
+            const fastestResponse = Math.min(...company.parts.map(p => p.responseHours));
+            const slowestResponse = Math.max(...company.parts.map(p => p.responseHours));
+
+            // Update modal header
+            document.getElementById('modalTitle').textContent = `${company.name} - Response History`;
+            document.getElementById('modalSubtitle').textContent = `${company.type === 'internal' ? 'Internal Department' : 'External Supplier'} " ${company.parts.length} parts reported`;
+
+            // Update summary
+            document.getElementById('modalTotalParts').textContent = company.parts.length;
+            document.getElementById('modalAvgResponse').textContent = formatResponseTime(company.avgResponseHours);
+            document.getElementById('modalAvgResponse').className = `text-lg font-semibold ${avgPerformance.class}`;
+            document.getElementById('modalFastest').textContent = formatResponseTime(fastestResponse);
+            document.getElementById('modalSlowest').textContent = formatResponseTime(slowestResponse);
+
+            // Populate parts history
+            const historyBody = document.getElementById('historyTableBody');
+            historyBody.innerHTML = company.parts.map(part => {
+                const performance = getPerformanceCategory(part.responseHours);
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3 text-sm font-medium text-gray-900">${part.partNumber}</td>
+                        <td class="px-4 py-3 text-sm text-gray-900">${part.problem}</td>
+                        <td class="px-4 py-3 text-sm text-gray-900">${part.reportDate}</td>
+                        <td class="px-4 py-3 text-sm text-gray-900">${part.responseDate}</td>
+                        <td class="px-4 py-3 text-sm ${performance.class} font-semibold">${formatResponseTime(part.responseHours)}</td>
+                        <td class="px-4 py-3">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${performance.class}">
+                                ${performance.text}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('historyModal').classList.remove('hidden');
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const totalCompanies = responseData.length;
+            const internalCount = responseData.filter(c => c.type === 'internal').length;
+            const externalCount = responseData.filter(c => c.type === 'external').length;
+
+            const totalResponseTime = responseData.reduce((sum, company) => sum + company.avgResponseHours, 0);
+            const overallAverage = totalResponseTime / totalCompanies;
+
+            const topPerformer = responseData.reduce((best, company) =>
+                company.avgResponseHours < best.avgResponseHours ? company : best
+            );
+
+            document.getElementById('totalCompanies').textContent = totalCompanies;
+            document.getElementById('internalCount').textContent = internalCount;
+            document.getElementById('externalCount').textContent = externalCount;
+            document.getElementById('overallAverage').textContent = formatResponseTime(overallAverage);
+            document.getElementById('topPerformer').textContent = topPerformer.name;
+        }
+
+        // Event listeners
+        document.getElementById('typeFilter').addEventListener('change', filterData);
+        document.getElementById('performanceFilter').addEventListener('change', filterData);
+        document.getElementById('searchInput').addEventListener('input', filterData);
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage * itemsPerPage < filteredData.length) {
+                currentPage++;
+                renderTable();
+            }
+        });
+
+        // Modal event listeners
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('historyModal').classList.add('hidden');
+        });
+
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            document.getElementById('historyModal').classList.add('hidden');
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatistics();
+            renderTable();
+        });
+    </script>
+</body>
+
+</html>
