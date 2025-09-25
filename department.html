@@ -1,150 +1,821 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yanmar QC Dashboard</title>
+    <title>Department Management - Yanmar Quality Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'yanmar-red': '#DC2626',
-                        'yanmar-light': '#FEF2F2',
-                        'yanmar-dark': '#991B1B'
-                    },
-                    animation: {
-                        'slide-in': 'slide-in 0.3s ease-out',
-                        'slide-out': 'slide-out 0.3s ease-in',
-                        'fade-in': 'fade-in 0.2s ease-out'
-                    },
-                    keyframes: {
-                        'slide-in': {
-                            '0%': { transform: 'translateX(-100%)' },
-                            '100%': { transform: 'translateX(0)' }
-                        },
-                        'slide-out': {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-100%)' }
-                        },
-                        'fade-in': {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         .sidebar-collapsed {
-            width: 4rem;
+            width: 64px;
         }
 
         .sidebar-expanded {
-            width: 16rem;
+            width: 256px;
         }
 
         .sidebar-transition {
-            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .menu-item-hover:hover {
-            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
-            border-right: 3px solid #DC2626;
-        }
-
-        .tooltip {
-            transform: translateX(0.5rem);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .show-tooltip .tooltip {
-            transform: translateX(1rem);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .menu-text {
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .sidebar-expanded .menu-text {
-            opacity: 1;
-            transform: translateX(0);
+            transition: width 100ms linear;
         }
 
         .menu-icon {
-            min-width: 1.25rem;
+            width: 20px;
             text-align: center;
         }
 
-        /* Improved icon alignment for collapsed sidebar */
-        .sidebar-collapsed nav a {
-            justify-content: center;
-            /* center icon horizontally */
-            padding-left: 0.5rem;
-            /* reduce left padding when collapsed */
-            padding-right: 0.5rem;
+        .menu-text {
+            white-space: nowrap;
         }
 
-        .sidebar-collapsed .menu-icon {
-            margin-right: 0;
-            /* remove right margin */
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            font-size: 1.15rem;
-            /* slightly larger icon for visibility */
-        }
-
-        /* hide the text when collapsed (keeps space clean) */
         .sidebar-collapsed .menu-text {
-            display: none !important;
-        }
-
-        /* position tooltips just outside the slim sidebar */
-        .sidebar-collapsed .tooltip {
-            left: 4rem;
-            /* hover tooltip appears aligned to collapsed width */
-        }
-
-        /* Restore left-aligned layout when expanded */
-        .sidebar-expanded nav a {
-            justify-content: flex-start;
-            /* icon + text aligned to left */
-            padding-left: 0.75rem;
-        }
-
-        .sidebar-expanded .menu-icon {
-            width: auto;
-            margin-right: 0.75rem;
-            font-size: 1rem;
+            display: none;
         }
 
         .sidebar-expanded .menu-text {
-            display: inline-block !important;
-            opacity: 1;
-            transform: translateX(0);
+            display: inline;
+        }
+
+        .tooltip {
+            display: none;
+        }
+
+        .group.show-tooltip .tooltip {
+            display: block;
+        }
+
+        .menu-item-hover:hover {
+            background-color: #f3f4f6;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-active {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .status-inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .form-error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .department-card {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .department-card:hover {
+            transform: translateY(-2px);
         }
     </style>
-    <script src="components/header.js"></script>
-    <script src="components/sidebar.js"></script>
 </head>
 
-<body class="bg-gray-50 font-sans">
+<body class="bg-gray-50">
+    <!-- Header -->
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
 
     <!-- Main Content -->
-    <main id="mainContent" class="ml-16 mt-16 transition-all duration-300 ease-in-out">
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Department Management</h2>
+                        <p class="text-gray-600 mt-1">Manage internal departments for Quality Control system</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button id="addDeptBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+                            <i class="fas fa-plus"></i>
+                            <span>Add Department</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-building text-blue-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Total Departments</p>
+                            <p class="text-lg font-semibold text-gray-900" id="totalDepartments">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Active Departments</p>
+                            <p class="text-lg font-semibold text-gray-900" id="activeDepartments">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-yellow-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Total Employees</p>
+                            <p class="text-lg font-semibold text-gray-900" id="totalEmployees">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-user-tie text-purple-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Managers</p>
+                            <p class="text-lg font-semibold text-gray-900" id="totalManagers">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Status:</label>
+                        <select id="statusFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="all">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Type:</label>
+                        <select id="typeFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
+                            <option value="all">All Types</option>
+                            <option value="production">Production</option>
+                            <option value="quality">Quality Control</option>
+                            <option value="engineering">Engineering</option>
+                            <option value="support">Support</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 max-w-xs">
+                        <input type="text" id="searchInput" placeholder="Search departments..."
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Department Cards View -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6" id="departmentCards">
+                <!-- Cards will be populated by JavaScript -->
+            </div>
+
+            <!-- Departments Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900">Department Directory</h3>
+                        <div class="flex items-center space-x-2">
+                            <button id="cardViewBtn" class="px-3 py-1 bg-blue-600 text-white rounded text-sm">
+                                <i class="fas fa-th-large mr-1"></i>Cards
+                            </button>
+                            <button id="tableViewBtn" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm">
+                                <i class="fas fa-table mr-1"></i>Table
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-x-auto" id="tableView">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Manager</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="departmentTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-700">
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalRecords">0</span> results
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="prevPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                            <button id="nextPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
+    <!-- Add/Edit Department Modal -->
+    <div id="departmentModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-medium text-gray-900" id="modalTitle">Add New Department</h3>
+                        <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-6 py-4">
+                    <form id="departmentForm" class="space-y-4">
+                        <input type="hidden" id="departmentId" name="departmentId">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="deptName" class="block text-sm font-medium text-gray-700 mb-1">Department Name *</label>
+                                <input type="text" id="deptName" name="deptName" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <div class="text-red-500 text-xs mt-1 hidden" id="deptNameError"></div>
+                            </div>
+
+                            <div>
+                                <label for="deptCode" class="block text-sm font-medium text-gray-700 mb-1">Department Code *</label>
+                                <input type="text" id="deptCode" name="deptCode" required placeholder="e.g., QC, ENG, PROD"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <div class="text-red-500 text-xs mt-1 hidden" id="deptCodeError"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="manager" class="block text-sm font-medium text-gray-700 mb-1">Department Manager *</label>
+                                <input type="text" id="manager" name="manager" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <div class="text-red-500 text-xs mt-1 hidden" id="managerError"></div>
+                            </div>
+
+                            <div>
+                                <label for="managerEmail" class="block text-sm font-medium text-gray-700 mb-1">Manager Email</label>
+                                <input type="email" id="managerEmail" name="managerEmail"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <div class="text-red-500 text-xs mt-1 hidden" id="managerEmailError"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="employeeCount" class="block text-sm font-medium text-gray-700 mb-1">Employee Count</label>
+                                <input type="number" id="employeeCount" name="employeeCount" min="0"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+
+                            <div>
+                                <label for="deptType" class="block text-sm font-medium text-gray-700 mb-1">Department Type *</label>
+                                <select id="deptType" name="deptType" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Select Type</option>
+                                    <option value="production">Production</option>
+                                    <option value="quality">Quality Control</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="support">Support</option>
+                                </select>
+                                <div class="text-red-500 text-xs mt-1 hidden" id="deptTypeError"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <textarea id="description" name="description" rows="3" placeholder="Department responsibilities and overview..."
+                                class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                <input type="text" id="location" name="location" placeholder="Building/Floor/Area"
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                                <select id="status" name="status" required
+                                    class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                    <button id="cancelBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</button>
+                    <button id="saveDeptBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save Department</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Departments data with comprehensive information
+        let departmentsData = [
+            {
+                id: 1, name: "Quality Control", code: "QC", manager: "Takeshi Yamamoto",
+                managerEmail: "t.yamamoto@yanmar.co.jp", employeeCount: 15, type: "quality",
+                description: "Responsible for quality assurance, testing, and inspection of all products and processes.",
+                location: "Building A - Floor 2", status: "active", createdDate: "2020-01-15"
+            },
+            {
+                id: 2, name: "Machine Shop", code: "MACH", manager: "Hiroshi Tanaka",
+                managerEmail: "h.tanaka@yanmar.co.jp", employeeCount: 28, type: "production",
+                description: "Handles machining operations, tool maintenance, and precision manufacturing.",
+                location: "Building B - Floor 1", status: "active", createdDate: "2020-01-20"
+            },
+            {
+                id: 3, name: "Assembly Line", code: "ASSY", manager: "Kenji Sato",
+                managerEmail: "k.sato@yanmar.co.jp", employeeCount: 42, type: "production",
+                description: "Final assembly operations and product integration for all engine models.",
+                location: "Building C - Floor 1-2", status: "active", createdDate: "2020-02-01"
+            },
+            {
+                id: 4, name: "Painting", code: "PAINT", manager: "Akira Suzuki",
+                managerEmail: "a.suzuki@yanmar.co.jp", employeeCount: 18, type: "production",
+                description: "Surface preparation, painting, coating, and finishing operations.",
+                location: "Building D - Floor 1", status: "active", createdDate: "2020-02-10"
+            },
+            {
+                id: 5, name: "Welding", code: "WELD", manager: "Masahiro Ito",
+                managerEmail: "m.ito@yanmar.co.jp", employeeCount: 22, type: "production",
+                description: "Welding operations, structural fabrication, and metal joining processes.",
+                location: "Building B - Floor 2", status: "active", createdDate: "2020-02-15"
+            },
+            {
+                id: 6, name: "Engineering", code: "ENG", manager: "Noboru Kato",
+                managerEmail: "n.kato@yanmar.co.jp", employeeCount: 35, type: "engineering",
+                description: "Product design, development, testing, and engineering support services.",
+                location: "Building A - Floor 3-4", status: "active", createdDate: "2020-01-10"
+            },
+            {
+                id: 7, name: "Production Planning", code: "PPIC", manager: "Yuki Watanabe",
+                managerEmail: "y.watanabe@yanmar.co.jp", employeeCount: 12, type: "support",
+                description: "Production planning, inventory control, and manufacturing scheduling.",
+                location: "Building A - Floor 1", status: "active", createdDate: "2020-03-01"
+            },
+            {
+                id: 8, name: "Maintenance", code: "MAINT", manager: "Taro Kobayashi",
+                managerEmail: "t.kobayashi@yanmar.co.jp", employeeCount: 20, type: "support",
+                description: "Equipment maintenance, facility management, and preventive maintenance programs.",
+                location: "Building E - All Floors", status: "active", createdDate: "2020-01-25"
+            },
+            {
+                id: 9, name: "Purchasing", code: "PURCH", manager: "Satoshi Hayashi",
+                managerEmail: "s.hayashi@yanmar.co.jp", employeeCount: 8, type: "support",
+                description: "Supplier management, procurement, and materials purchasing operations.",
+                location: "Building A - Floor 1", status: "active", createdDate: "2020-04-01"
+            },
+            {
+                id: 10, name: "Logistics", code: "LOG", manager: "Ryuji Matsui",
+                managerEmail: "r.matsui@yanmar.co.jp", employeeCount: 16, type: "support",
+                description: "Warehouse management, shipping, receiving, and material handling operations.",
+                location: "Building F - Floor 1", status: "active", createdDate: "2020-03-15"
+            },
+            {
+                id: 11, name: "Research & Development", code: "RND", manager: "Hideo Fujiwara",
+                managerEmail: "h.fujiwara@yanmar.co.jp", employeeCount: 25, type: "engineering",
+                description: "Advanced research, product innovation, and new technology development.",
+                location: "Building G - All Floors", status: "active", createdDate: "2020-01-05"
+            },
+            {
+                id: 12, name: "Test Laboratory", code: "LAB", manager: "Shinji Nakamura",
+                managerEmail: "s.nakamura@yanmar.co.jp", employeeCount: 10, type: "quality",
+                description: "Product testing, material analysis, and quality validation services.",
+                location: "Building A - Floor 5", status: "inactive", createdDate: "2020-05-01"
+            }
+        ];
+
+        let filteredData = [...departmentsData];
+        let currentPage = 1;
+        let isEditMode = false;
+        let editingDeptId = null;
+        let currentView = 'cards'; // 'cards' or 'table'
+        const itemsPerPage = 10;
+
+        // Get type icon and color
+        function getTypeInfo(type) {
+            const typeMap = {
+                'production': { icon: 'fa-cogs', color: 'blue' },
+                'quality': { icon: 'fa-check-circle', color: 'green' },
+                'engineering': { icon: 'fa-drafting-compass', color: 'purple' },
+                'support': { icon: 'fa-hands-helping', color: 'yellow' }
+            };
+            return typeMap[type] || { icon: 'fa-building', color: 'gray' };
+        }
+
+        // Render department cards
+        function renderCards() {
+            const cardsContainer = document.getElementById('departmentCards');
+            cardsContainer.innerHTML = filteredData.map(dept => {
+                const typeInfo = getTypeInfo(dept.type);
+                return `
+                    <div class="department-card bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-${typeInfo.color}-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas ${typeInfo.icon} text-${typeInfo.color}-600 text-lg"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">${dept.name}</h3>
+                                    <p class="text-sm text-gray-500">${dept.code}</p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                dept.status === 'active' ? 'status-active' : 'status-inactive'
+                            }">
+                                ${dept.status.charAt(0).toUpperCase() + dept.status.slice(1)}
+                            </span>
+                        </div>
+
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-user-tie w-4 mr-2"></i>
+                                <span>${dept.manager}</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-users w-4 mr-2"></i>
+                                <span>${dept.employeeCount} employees</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600">
+                                <i class="fas fa-map-marker-alt w-4 mr-2"></i>
+                                <span>${dept.location}</span>
+                            </div>
+                        </div>
+
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-2">${dept.description}</p>
+
+                        <div class="flex justify-between items-center">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-${typeInfo.color}-100 text-${typeInfo.color}-800">
+                                <i class="fas ${typeInfo.icon} mr-1"></i>
+                                ${dept.type.charAt(0).toUpperCase() + dept.type.slice(1)}
+                            </span>
+                            <div class="flex space-x-2">
+                                <button onclick="editDepartment(${dept.id})" class="text-blue-600 hover:text-blue-900">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteDepartment(${dept.id})" class="text-red-600 hover:text-red-900">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render table data
+        function renderTable() {
+            const tableBody = document.getElementById('departmentTableBody');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            tableBody.innerHTML = pageData.map(dept => {
+                const typeInfo = getTypeInfo(dept.type);
+                return `
+                    <tr class="hover:bg-gray-50 fade-in">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-${typeInfo.color}-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas ${typeInfo.icon} text-${typeInfo.color}-600"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">${dept.name}</div>
+                                    <div class="text-sm text-gray-500">${dept.location}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-mono font-semibold text-gray-900">${dept.code}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${dept.manager}</div>
+                            <div class="text-sm text-gray-500">${dept.managerEmail}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">${dept.employeeCount}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-${typeInfo.color}-100 text-${typeInfo.color}-800">
+                                <i class="fas ${typeInfo.icon} mr-1"></i>
+                                ${dept.type.charAt(0).toUpperCase() + dept.type.slice(1)}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                dept.status === 'active' ? 'status-active' : 'status-inactive'
+                            }">
+                                <i class="fas fa-circle mr-1"></i>
+                                ${dept.status.charAt(0).toUpperCase() + dept.status.slice(1)}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                            <button onclick="editDepartment(${dept.id})" class="text-blue-600 hover:text-blue-900">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteDepartment(${dept.id})" class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            updatePagination();
+        }
+
+        // Switch between views
+        function switchView(view) {
+            currentView = view;
+            const cardsContainer = document.getElementById('departmentCards');
+            const tableView = document.getElementById('tableView');
+            const cardBtn = document.getElementById('cardViewBtn');
+            const tableBtn = document.getElementById('tableViewBtn');
+
+            if (view === 'cards') {
+                cardsContainer.classList.remove('hidden');
+                tableView.classList.add('hidden');
+                cardBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                cardBtn.classList.add('bg-blue-600', 'text-white');
+                tableBtn.classList.remove('bg-blue-600', 'text-white');
+                tableBtn.classList.add('bg-gray-200', 'text-gray-700');
+                renderCards();
+            } else {
+                cardsContainer.classList.add('hidden');
+                tableView.classList.remove('hidden');
+                tableBtn.classList.remove('bg-gray-200', 'text-gray-700');
+                tableBtn.classList.add('bg-blue-600', 'text-white');
+                cardBtn.classList.remove('bg-blue-600', 'text-white');
+                cardBtn.classList.add('bg-gray-200', 'text-gray-700');
+                renderTable();
+            }
+        }
+
+        // Update pagination info
+        function updatePagination() {
+            const totalRecords = filteredData.length;
+            const startIndex = (currentPage - 1) * itemsPerPage + 1;
+            const endIndex = Math.min(currentPage * itemsPerPage, totalRecords);
+
+            document.getElementById('showingStart').textContent = totalRecords > 0 ? startIndex : 0;
+            document.getElementById('showingEnd').textContent = endIndex;
+            document.getElementById('totalRecords').textContent = totalRecords;
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = endIndex >= totalRecords;
+        }
+
+        // Filter data
+        function filterData() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredData = departmentsData.filter(dept => {
+                const statusMatch = statusFilter === 'all' || dept.status === statusFilter;
+                const typeMatch = typeFilter === 'all' || dept.type === typeFilter;
+                const searchMatch = dept.name.toLowerCase().includes(searchTerm) ||
+                                  dept.code.toLowerCase().includes(searchTerm) ||
+                                  dept.manager.toLowerCase().includes(searchTerm);
+
+                return statusMatch && typeMatch && searchMatch;
+            });
+
+            currentPage = 1;
+            if (currentView === 'cards') {
+                renderCards();
+            } else {
+                renderTable();
+            }
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const totalDepts = departmentsData.length;
+            const activeDepts = departmentsData.filter(d => d.status === 'active').length;
+            const totalEmployees = departmentsData.reduce((sum, dept) => sum + dept.employeeCount, 0);
+            const totalManagers = departmentsData.length;
+
+            document.getElementById('totalDepartments').textContent = totalDepts;
+            document.getElementById('activeDepartments').textContent = activeDepts;
+            document.getElementById('totalEmployees').textContent = totalEmployees;
+            document.getElementById('totalManagers').textContent = totalManagers;
+        }
+
+        // Show add department modal
+        function showAddDepartmentModal() {
+            isEditMode = false;
+            editingDeptId = null;
+            document.getElementById('modalTitle').textContent = 'Add New Department';
+            document.getElementById('departmentForm').reset();
+            clearFormErrors();
+            document.getElementById('departmentModal').classList.remove('hidden');
+        }
+
+        // Edit department
+        function editDepartment(deptId) {
+            const dept = departmentsData.find(d => d.id === deptId);
+            if (!dept) return;
+
+            isEditMode = true;
+            editingDeptId = deptId;
+            document.getElementById('modalTitle').textContent = 'Edit Department';
+
+            // Populate form fields
+            document.getElementById('departmentId').value = dept.id;
+            document.getElementById('deptName').value = dept.name;
+            document.getElementById('deptCode').value = dept.code;
+            document.getElementById('manager').value = dept.manager;
+            document.getElementById('managerEmail').value = dept.managerEmail;
+            document.getElementById('employeeCount').value = dept.employeeCount;
+            document.getElementById('deptType').value = dept.type;
+            document.getElementById('description').value = dept.description;
+            document.getElementById('location').value = dept.location;
+            document.getElementById('status').value = dept.status;
+
+            clearFormErrors();
+            document.getElementById('departmentModal').classList.remove('hidden');
+        }
+
+        // Delete department
+        function deleteDepartment(deptId) {
+            if (confirm('Are you sure you want to delete this department?')) {
+                departmentsData = departmentsData.filter(d => d.id !== deptId);
+                filterData();
+                updateStatistics();
+            }
+        }
+
+        // Save department
+        function saveDepartment() {
+            const form = document.getElementById('departmentForm');
+            const formData = new FormData(form);
+
+            // Clear previous errors
+            clearFormErrors();
+
+            // Validate form
+            let isValid = true;
+            const requiredFields = ['deptName', 'deptCode', 'manager', 'deptType'];
+
+            requiredFields.forEach(field => {
+                const value = formData.get(field);
+                if (!value || value.trim() === '') {
+                    showFieldError(field, 'This field is required');
+                    isValid = false;
+                }
+            });
+
+            // Check for duplicate code (excluding current department in edit mode)
+            const code = formData.get('deptCode');
+            const duplicateDept = departmentsData.find(d =>
+                d.code === code && (!isEditMode || d.id !== editingDeptId)
+            );
+
+            if (duplicateDept) {
+                showFieldError('deptCode', 'Department code already exists');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            // Create department object
+            const deptData = {
+                name: formData.get('deptName'),
+                code: formData.get('deptCode'),
+                manager: formData.get('manager'),
+                managerEmail: formData.get('managerEmail') || '',
+                employeeCount: parseInt(formData.get('employeeCount')) || 0,
+                type: formData.get('deptType'),
+                description: formData.get('description') || '',
+                location: formData.get('location') || '',
+                status: formData.get('status'),
+                createdDate: new Date().toISOString().split('T')[0]
+            };
+
+            if (isEditMode) {
+                // Update existing department
+                const deptIndex = departmentsData.findIndex(d => d.id === editingDeptId);
+                departmentsData[deptIndex] = { ...departmentsData[deptIndex], ...deptData };
+            } else {
+                // Add new department
+                deptData.id = Math.max(...departmentsData.map(d => d.id)) + 1;
+                departmentsData.push(deptData);
+            }
+
+            // Close modal and refresh view
+            document.getElementById('departmentModal').classList.add('hidden');
+            filterData();
+            updateStatistics();
+        }
+
+        // Show field error
+        function showFieldError(fieldName, message) {
+            const field = document.getElementById(fieldName);
+            const errorDiv = document.getElementById(fieldName + 'Error');
+
+            field.classList.add('form-error');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+
+        // Clear form errors
+        function clearFormErrors() {
+            const errorDivs = document.querySelectorAll('[id$="Error"]');
+            const inputFields = document.querySelectorAll('#departmentForm input, #departmentForm select, #departmentForm textarea');
+
+            errorDivs.forEach(div => {
+                div.classList.add('hidden');
+                div.textContent = '';
+            });
+
+            inputFields.forEach(field => {
+                field.classList.remove('form-error');
+            });
+        }
+
+        // Event listeners
+        document.getElementById('addDeptBtn').addEventListener('click', showAddDepartmentModal);
+        document.getElementById('saveDeptBtn').addEventListener('click', saveDepartment);
+
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('departmentModal').classList.add('hidden');
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            document.getElementById('departmentModal').classList.add('hidden');
+        });
+
+        // View switcher event listeners
+        document.getElementById('cardViewBtn').addEventListener('click', () => switchView('cards'));
+        document.getElementById('tableViewBtn').addEventListener('click', () => switchView('table'));
+
+        // Filter event listeners
+        document.getElementById('statusFilter').addEventListener('change', filterData);
+        document.getElementById('typeFilter').addEventListener('change', filterData);
+        document.getElementById('searchInput').addEventListener('input', filterData);
+
+        // Pagination event listeners
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                if (currentView === 'table') renderTable();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            if (currentPage * itemsPerPage < filteredData.length) {
+                currentPage++;
+                if (currentView === 'table') renderTable();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStatistics();
+            switchView('cards'); // Start with cards view
+        });
+    </script>
 </body>
 
 </html>

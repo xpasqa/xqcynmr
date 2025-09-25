@@ -143,107 +143,72 @@
 <body class="bg-gray-50 font-sans">
 
     <!-- Main Content -->
-    <main id="mainContent" class="ml-16 mt-16 transition-all duration-300 ease-in-out">
-
-        <!-- Main Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
             <!-- Page Header -->
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-yanmar-dark mb-2">NCR Dashboard</h2>
-                <p class="text-slate-600">Manage and monitor Non-Conformance Reports</p>
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">NCR Dashboard</h2>
+                        <p class="text-gray-600 mt-1">Manage and monitor Non-Conformance Reports</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-sm text-gray-500">Active NCRs:</span>
+                            <span class="font-semibold text-blue-600 ml-2" id="activeNCRs">158</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Status Cards -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
-                <!-- Created NCR Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 filter-card active"
+                <!-- NCR Submitted Card -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card active"
                     data-status="created" onclick="filterByStatus('created')">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-slate-600 mb-1">NCR Submitted</p>
-                                <p class="text-3xl font-bold text-slate-900" id="createdCount">10</p>
-                            </div>
-                            <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                                </svg>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-sm"></i>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <div class="flex items-center text-sm">
-                                <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                    Pending Review
-                                </span>
-                            </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">NCR Submitted</p>
+                            <p class="text-lg font-semibold text-gray-900" id="createdCount">45</p>
                         </div>
-                    </div>
-                    <div class="bg-red-50 px-6 py-3 border-t border-red-100">
-                        <p class="text-xs text-red-600 font-medium">Click to filter</p>
                     </div>
                 </div>
 
                 <!-- Reply NCR Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
                     data-status="reply" onclick="filterByStatus('reply')">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-slate-600 mb-1">NCR Process</p>
-                                <p class="text-3xl font-bold text-slate-900" id="replyCount">4</p>
-                            </div>
-                            <div class="w-12 h-12 bg-yellow-500 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                </svg>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-yellow-600 text-sm"></i>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <div class="flex items-center text-sm">
-                                <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                    In Progress
-                                </span>
-                            </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">NCR Process</p>
+                            <p class="text-lg font-semibold text-gray-900" id="replyCount">4</p>
                         </div>
-                    </div>
-                    <div class="bg-yellow-50 px-6 py-3 border-t border-yellow-100">
-                        <p class="text-xs text-yellow-600 font-medium">Click to filter</p>
                     </div>
                 </div>
 
                 <!-- Done NCR Card -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
                     data-status="done" onclick="filterByStatus('done')">
-                    <div class="p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-slate-600 mb-1">NCR Done</p>
-                                <p class="text-3xl font-bold text-slate-900" id="doneCount">2</p>
-                            </div>
-                            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-600 text-sm"></i>
                             </div>
                         </div>
-                        <div class="mt-4">
-                            <div class="flex items-center text-sm">
-                                <span
-                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    Completed
-                                </span>
-                            </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">NCR Done</p>
+                            <p class="text-lg font-semibold text-gray-900" id="doneCount">2</p>
                         </div>
-                    </div>
-                    <div class="bg-green-50 px-6 py-3 border-t border-green-100">
-                        <p class="text-xs text-green-600 font-medium">Click to filter</p>
                     </div>
                 </div>
             </div>
@@ -252,7 +217,7 @@
             <div class="mb-6">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-4">
-                        <h3 class="text-lg font-semibold text-yanmar-dark" id="currentFilter">Showing: Created NCR</h3>
+                        <h3 class="text-lg font-semibold text-gray-800" id="currentFilter">Showing: Created NCR</h3>
                         <span
                             class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800"
                             id="filterBadge">
@@ -275,7 +240,7 @@
             <!-- Data Table -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
-                    <h4 class="text-lg font-semibold text-yanmar-dark">NCR Records</h4>
+                    <h4 class="text-lg font-semibold text-gray-800">NCR Records</h4>
                 </div>
 
                 <!-- Table -->
@@ -347,7 +312,7 @@
             <div class="bg-white rounded-xl max-w-2xl w-full max-h-96 overflow-y-auto">
                 <div
                     class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-yanmar-dark">NCR Details</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">NCR Details</h3>
                     <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -366,11 +331,11 @@
             // Dummy Data
             const ncrData = [
                 // Created NCR (10 records)
-                { id: 1, name: "John Smith", department: "Quality Control", partNumber: "YM-001", partName: "Engine Block", location: "Claim QC Incoming", status: "created", date: "2024-01-15", description: "Casting defect found on engine block surface" },
-                { id: 2, name: "Sarah Johnson", department: "Production", partNumber: "YM-002", partName: "Piston Ring", location: "Assembly Line A", status: "created", date: "2024-01-16", description: "Dimension out of tolerance" },
-                { id: 3, name: "Mike Chen", department: "Quality Control", partNumber: "YM-003", partName: "Cylinder Head", location: "Incoming Inspection", status: "created", date: "2024-01-17", description: "Surface roughness exceeds specification" },
-                { id: 4, name: "Lisa Wang", department: "Engineering", partNumber: "YM-004", partName: "Connecting Rod", location: "Machining Center", status: "created", date: "2024-01-18", description: "Material hardness below requirement" },
-                { id: 5, name: "David Brown", department: "Production", partNumber: "YM-005", partName: "Crankshaft", location: "Assembly Line B", status: "created", date: "2024-01-19", description: "Balancing issue detected" },
+                { id: 1, name: "John Smith", department: "Quality Control", partNumber: "YM-001", partName: "Engine Block", location: "Claim QC Incoming", status: "Send Back", date: "2024-01-15", description: "Casting defect found on engine block surface" },
+                { id: 2, name: "Sarah Johnson", department: "Production", partNumber: "YM-002", partName: "Piston Ring", location: "Assembly Line A", status: "NG", date: "2024-01-16", description: "Dimension out of tolerance" },
+                { id: 3, name: "Mike Chen", department: "Quality Control", partNumber: "YM-003", partName: "Cylinder Head", location: "Incoming Inspection", status: "Hold Part", date: "2024-01-17", description: "Surface roughness exceeds specification" },
+                { id: 4, name: "Lisa Wang", department: "Engineering", partNumber: "YM-004", partName: "Connecting Rod", location: "Machining Center", status: "Send Back", date: "2024-01-18", description: "Material hardness below requirement" },
+                { id: 5, name: "David Brown", department: "Production", partNumber: "YM-005", partName: "Crankshaft", location: "Assembly Line B", status: "NG", date: "2024-01-19", description: "Balancing issue detected" },
                 { id: 6, name: "Emma Wilson", department: "Quality Control", partNumber: "YM-006", partName: "Valve Guide", location: "Final Inspection", status: "created", date: "2024-01-20", description: "Installation interference problem" },
                 { id: 7, name: "Tom Anderson", department: "Maintenance", partNumber: "YM-007", partName: "Gasket Set", location: "Warehouse", status: "created", date: "2024-01-21", description: "Packaging damage observed" },
                 { id: 8, name: "Jennifer Lee", department: "Quality Control", partNumber: "YM-008", partName: "Oil Pump", location: "Test Cell", status: "created", date: "2024-01-22", description: "Pressure test failure" },
@@ -378,14 +343,14 @@
                 { id: 10, name: "Maria Garcia", department: "Engineering", partNumber: "YM-010", partName: "Fuel Injector", location: "R&D Lab", status: "created", date: "2024-01-24", description: "Flow rate deviation" },
 
                 // Reply NCR (4 records)
-                { id: 11, name: "Alex Kim", department: "Quality Control", partNumber: "YM-011", partName: "Air Filter", location: "Supplier Site", status: "reply", date: "2024-01-10", description: "Filtration efficiency below standard", reply: "Root cause analysis in progress" },
-                { id: 12, name: "Rachel Green", department: "Production", partNumber: "YM-012", partName: "Spark Plug", location: "Assembly Line D", status: "reply", date: "2024-01-11", description: "Gap setting incorrect", reply: "Calibration procedure updated" },
+                { id: 11, name: "Alex Kim", department: "Quality Control", partNumber: "YM-011", partName: "Air Filter", location: "Supplier Site", status: "Rework", date: "2024-01-10", description: "Filtration efficiency below standard", reply: "Root cause analysis in progress" },
+                { id: 12, name: "Rachel Green", department: "Production", partNumber: "YM-012", partName: "Spark Plug", location: "Assembly Line D", status: "Rework", date: "2024-01-11", description: "Gap setting incorrect", reply: "Calibration procedure updated" },
                 { id: 13, name: "Kevin Park", department: "Engineering", partNumber: "YM-013", partName: "Radiator", location: "Test Facility", status: "reply", date: "2024-01-12", description: "Cooling capacity insufficient", reply: "Design modification proposed" },
                 { id: 14, name: "Sophie Miller", department: "Quality Control", partNumber: "YM-014", partName: "Exhaust Valve", location: "Incoming QC", status: "reply", date: "2024-01-13", description: "Surface coating defect", reply: "Supplier corrective action plan received" },
 
                 // Done NCR (2 records)
-                { id: 15, name: "James Wilson", department: "Production", partNumber: "YM-015", partName: "Water Pump", location: "Final Assembly", status: "done", date: "2024-01-05", description: "Seal leakage detected", resolution: "Design improved, testing completed successfully" },
-                { id: 16, name: "Anna Thompson", department: "Quality Control", partNumber: "YM-016", partName: "Alternator", location: "Electrical Test", status: "done", date: "2024-01-08", description: "Output voltage fluctuation", resolution: "Winding process optimized, issue resolved" }
+                { id: 15, name: "James Wilson", department: "Production", partNumber: "YM-015", partName: "Water Pump", location: "Final Assembly", status: "Part OK", date: "2024-01-05", description: "Seal leakage detected", resolution: "Design improved, testing completed successfully" },
+                { id: 16, name: "Anna Thompson", department: "Quality Control", partNumber: "YM-016", partName: "Alternator", location: "Electrical Test", status: "Part OK", date: "2024-01-08", description: "Output voltage fluctuation", resolution: "Winding process optimized, issue resolved" }
             ];
 
             let currentFilter = 'created';
@@ -493,9 +458,15 @@
             // Get status badge HTML
             function getStatusBadge(status) {
                 const badges = {
-                    created: '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Created</span>',
-                    reply: '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Reply</span>',
-                    done: '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Done</span>'
+                    'Send Back': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Send Back</span>',
+                    'NG': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">NG</span>',
+                    'Hold Part': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Hold Part</span>',
+                    'Rework': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Rework</span>',
+                    'Part OK': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Part OK</span>',
+                    // Keep legacy status for compatibility
+                    'created': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Created</span>',
+                    'reply': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Reply</span>',
+                    'done': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Done</span>'
                 };
                 return badges[status];
             }

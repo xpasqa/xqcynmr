@@ -143,102 +143,149 @@
 <body class="bg-gray-50 font-sans">
 
     <!-- Main Content -->
-    <main id="mainContent" class="ml-16 mt-16 transition-all duration-300 ease-in-out">
-
-        <!-- Report Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
 
             <!-- Page Header -->
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-yanmar-dark mb-2">NCR Report</h2>
-                <p class="text-slate-600">Non-Conformance Reports submitted by users</p>
-            </div>
-
-            <!-- Summary Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <!-- Total Reports -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-slate-600">Total Reports</p>
-                            <p class="text-2xl font-bold text-slate-900" id="totalReports">25</p>
-                        </div>
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">NCR Report</h2>
+                        <p class="text-gray-600 mt-1">Non-Conformance Reports submitted by users</p>
                     </div>
-                </div>
-
-                <!-- This Week -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-calendar-week text-white"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-slate-600">This Week</p>
-                            <p class="text-2xl font-bold text-slate-900" id="weeklyReports">8</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pending Inspect -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-search text-white"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-slate-600">Pending Inspect</p>
-                            <p class="text-2xl font-bold text-slate-900" id="pendingInspect">12</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Completed -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-yanmar-red rounded-lg flex items-center justify-center">
-                            <i class="fas fa-check-circle text-white"></i>
-                        </div>
-                        <div class="ml-4">
-                            <p class="text-sm font-medium text-slate-600">Completed</p>
-                            <p class="text-2xl font-bold text-slate-900" id="completedReports">13</p>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-sm text-gray-500">Active Reports:</span>
+                            <span class="font-semibold text-blue-600 ml-2" id="activeReportsCount">25</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Filters -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 p-6">
-                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
-                    <h3 class="text-lg font-semibold text-yanmar-dark">NCR Reports List</h3>
-
-                    <div class="flex flex-col sm:flex-row gap-3 items-center">
-                        <!-- Date Filter -->
-                        <div class="flex items-center space-x-2">
-                            <label class="text-sm font-medium text-slate-700">Date Range:</label>
-                            <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
-                                <option value="all">All Time</option>
-                                <option value="today">Today</option>
-                                <option value="week">This Week</option>
-                                <option value="month">This Month</option>
-                            </select>
+            <!-- Search and Filter Box -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 p-6">
+                <div class="flex flex-col lg:flex-row gap-4 items-center">
+                    <!-- Search Bar -->
+                    <div class="flex-1 w-full lg:w-auto">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Search Reports</label>
+                        <div class="relative">
+                            <input type="text" id="searchInput"
+                                class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent transition-colors"
+                                placeholder="Search by name, department, or part...">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                         </div>
+                    </div>
 
-                        <!-- Department Filter -->
-                        <div class="flex items-center space-x-2">
-                            <label class="text-sm font-medium text-slate-700">Department:</label>
-                            <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
-                                <option value="all">All Departments</option>
-                                <option value="production">Production</option>
-                                <option value="quality">Quality Control</option>
-                                <option value="engineering">Engineering</option>
-                                <option value="maintenance">Maintenance</option>
+                    <!-- Department Filter -->
+                    <div class="w-full lg:w-48">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                        <div class="relative">
+                            <select id="departmentFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="">All Departments</option>
+                                <option value="Quality Control">Quality Control</option>
+                                <option value="Production">Production</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Maintenance">Maintenance</option>
                             </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
                         </div>
+                    </div>
 
-                        <!-- Export Button -->
+                    <!-- Date Sort -->
+                    <div class="w-full lg:w-40">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sort Date</label>
+                        <div class="relative">
+                            <select id="dateSortFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clear Filters -->
+                    <div class="w-full lg:w-auto lg:mt-7">
+                        <button id="clearFiltersBtn"
+                            class="w-full lg:w-auto inline-flex items-center justify-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-times mr-2"></i>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Filter Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Pending Status Card -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card active"
+                    data-status="Pending" onclick="filterByStatus('Pending')">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-clock text-yellow-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Pending Review</p>
+                            <p class="text-lg font-semibold text-gray-900" id="pendingCount">12</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Under Review Status Card -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
+                    data-status="Under Review" onclick="filterByStatus('Under Review')">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-search text-blue-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Under Review</p>
+                            <p class="text-lg font-semibold text-gray-900" id="reviewCount">8</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assigned Status Card -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card"
+                    data-status="Assigned" onclick="filterByStatus('Assigned')">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-user-check text-green-600 text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-500">Assigned</p>
+                            <p class="text-lg font-semibold text-gray-900" id="assignedCount">5</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Status Display -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <h3 class="text-lg font-semibold text-gray-800" id="currentFilter">Showing: Pending Review</h3>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800" id="filterBadge">
+                            <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
+                            12 Reports
+                        </span>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="inline-flex items-center px-4 py-2 text-sm bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors" onclick="showAllRecords()">
+                            <i class="fas fa-list mr-2"></i>
+                            Show All
+                        </button>
                         <button class="inline-flex items-center px-4 py-2 bg-yanmar-red text-white rounded-lg hover:bg-yanmar-dark transition-colors">
                             <i class="fas fa-download mr-2"></i>
                             Export
@@ -258,6 +305,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Department</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Part Name</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Date Submitted</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Status</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Action</th>
                             </tr>
@@ -292,7 +340,7 @@
         <div id="inspectModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
             <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 <div class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-yanmar-dark">NCR Inspection Details</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">NCR Inspection Details</h3>
                     <button onclick="closeInspectModal()" class="text-slate-400 hover:text-slate-600">
                         <i class="fas fa-times text-xl"></i>
                     </button>
@@ -335,32 +383,85 @@
             { id: 25, name: "Steven Johnson", department: "Production", partName: "Cooling Fan", dateSubmitted: "2024-02-09", location: "Final Assembly", partNumber: "YM-025", problem: "Blade imbalance detected", status: "Under Review" }
         ];
 
+        let currentFilter = 'Pending';
+        let filteredData = [];
+
         // Initialize page
         function initializePage() {
+            filterByStatus('Pending');
+        }
+
+        // Filter data by status
+        function filterByStatus(status) {
+            currentFilter = status;
+            filteredData = reportData.filter(item => item.status === status);
+
+            // Update active card
+            document.querySelectorAll('.filter-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.querySelector(`[data-status="${status}"]`).classList.add('active');
+
+            // Update filter display
+            updateFilterDisplay(status);
+
+            // Update table
             updateTable();
-            updateStats();
         }
 
-        // Update statistics
-        function updateStats() {
-            document.getElementById('totalReports').textContent = reportData.length;
-            document.getElementById('weeklyReports').textContent = reportData.filter(item =>
-                new Date(item.dateSubmitted) >= new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-            ).length;
-            document.getElementById('pendingInspect').textContent = reportData.filter(item =>
-                item.status === 'Pending'
-            ).length;
-            document.getElementById('completedReports').textContent = reportData.filter(item =>
-                item.status === 'Completed'
-            ).length;
+        // Show all records
+        function showAllRecords() {
+            currentFilter = 'all';
+            filteredData = reportData;
+
+            // Remove active state from cards
+            document.querySelectorAll('.filter-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            // Update filter display
+            document.getElementById('currentFilter').textContent = 'Showing: All Reports';
+            document.getElementById('filterBadge').innerHTML = `
+                <span class="w-2 h-2 bg-slate-500 rounded-full mr-2"></span>
+                ${filteredData.length} Reports
+            `;
+            document.getElementById('filterBadge').className = 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-800';
+
+            // Update table
+            updateTable();
         }
 
-        // Update table
+        // Update filter display
+        function updateFilterDisplay(status) {
+            const statusConfig = {
+                'Pending': { name: 'Pending Review', color: 'yellow', bgColor: 'bg-yellow-100', textColor: 'text-yellow-800' },
+                'Under Review': { name: 'Under Review', color: 'blue', bgColor: 'bg-blue-100', textColor: 'text-blue-800' },
+                'Completed': { name: 'Completed', color: 'green', bgColor: 'bg-green-100', textColor: 'text-green-800' }
+            };
+
+            const config = statusConfig[status];
+            document.getElementById('currentFilter').textContent = `Showing: ${config.name}`;
+            document.getElementById('filterBadge').innerHTML = `
+                <span class="w-2 h-2 bg-${config.color}-500 rounded-full mr-2"></span>
+                ${filteredData.length} Reports
+            `;
+            document.getElementById('filterBadge').className = `inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.textColor}`;
+        }
+
+        // Update statistics in cards
+        function updateCounts() {
+            document.getElementById('pendingCount').textContent = reportData.filter(item => item.status === 'Pending').length;
+            document.getElementById('reviewCount').textContent = reportData.filter(item => item.status === 'Under Review').length;
+            document.getElementById('completedCount').textContent = reportData.filter(item => item.status === 'Completed').length;
+            document.getElementById('activeReportsCount').textContent = reportData.length;
+        }
+
+        // Update table with filtered data
         function updateTable() {
             const tbody = document.getElementById('reportTableBody');
             tbody.innerHTML = '';
 
-            reportData.forEach((item, index) => {
+            filteredData.forEach((item, index) => {
                 const row = document.createElement('tr');
                 row.className = 'hover:bg-slate-50 transition-colors';
 
@@ -393,9 +494,12 @@
             });
 
             // Update pagination info
-            document.getElementById('showingStart').textContent = reportData.length > 0 ? 1 : 0;
-            document.getElementById('showingEnd').textContent = reportData.length;
+            document.getElementById('showingStart').textContent = filteredData.length > 0 ? 1 : 0;
+            document.getElementById('showingEnd').textContent = filteredData.length;
             document.getElementById('totalRecordsCount').textContent = reportData.length;
+
+            // Update counts
+            updateCounts();
         }
 
         // Get department badge class
@@ -424,7 +528,7 @@
             modalContent.innerHTML = `
                 <div class="space-y-6">
                     <div class="bg-slate-50 rounded-lg p-4">
-                        <h4 class="text-lg font-semibold text-yanmar-dark mb-4">Report Information</h4>
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4">Report Information</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Report ID</label>
@@ -508,6 +612,22 @@
 
     <!-- Custom Styles -->
     <style>
+        /* Filter card active state */
+        .filter-card.active {
+            ring: 2px;
+            ring-color: #DC2626;
+            ring-opacity: 0.5;
+            transform: scale(1.02);
+        }
+
+        .filter-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .filter-card.active:hover {
+            transform: scale(1.02) translateY(-2px);
+        }
+
         /* Table hover effects */
         tbody tr:hover {
             background-color: #f8fafc;

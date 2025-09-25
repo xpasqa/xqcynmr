@@ -108,7 +108,7 @@
 
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card" data-type="internal" onclick="filterByType('internal')">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
                             <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -117,11 +117,11 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm font-medium text-gray-500">Internal Departments</p>
-                            <p class="text-lg font-semibold text-gray-900">18</p>
+                            <p class="text-lg font-semibold text-gray-900" id="internalCount">18</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 cursor-pointer hover:shadow-md transition-all duration-200 filter-card" data-type="external" onclick="filterByType('external')">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
                             <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
@@ -130,7 +130,7 @@
                         </div>
                         <div class="ml-3">
                             <p class="text-sm font-medium text-gray-500">External Suppliers</p>
-                            <p class="text-lg font-semibold text-gray-900">24</p>
+                            <p class="text-lg font-semibold text-gray-900" id="externalCount">24</p>
                         </div>
                     </div>
                 </div>
@@ -162,29 +162,75 @@
                 </div>
             </div>
 
-            <!-- Filters -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
-                <div class="flex flex-wrap gap-4 items-center">
-                    <div class="flex items-center space-x-2">
-                        <label class="text-sm font-medium text-gray-700">Filter by:</label>
-                        <select id="typeFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
-                            <option value="all">All Types</option>
-                            <option value="internal">Internal Only</option>
-                            <option value="external">External Only</option>
-                        </select>
+            <!-- Search and Filter Box -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 p-6">
+                <div class="flex flex-col lg:flex-row gap-4 items-center">
+                    <!-- Search Bar -->
+                    <div class="flex-1 w-full lg:w-auto">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Search Records</label>
+                        <div class="relative">
+                            <input type="text" id="searchInput"
+                                class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent transition-colors"
+                                placeholder="Search by part name, supplier, or department...">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <label class="text-sm font-medium text-gray-700">Response Time:</label>
-                        <select id="responseFilter" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
-                            <option value="all">All Response Times</option>
-                            <option value="fast">Fast (≤1 day)</option>
-                            <option value="medium">Medium (1-3 days)</option>
-                            <option value="slow">Slow (>3 days)</option>
-                        </select>
+
+                    <!-- Response Rate Filter -->
+                    <div class="w-full lg:w-40">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Response</label>
+                        <div class="relative">
+                            <select id="responseFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="">All Response</option>
+                                <option value="fast">Fast (≤1 day)</option>
+                                <option value="medium">Medium (1-3 days)</option>
+                                <option value="slow">Slow (>3 days)</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-1 max-w-xs">
-                        <input type="text" id="searchInput" placeholder="Search by part number or supplier..."
-                            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm">
+
+                    <!-- Type Filter -->
+                    <div class="w-full lg:w-40">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                        <div class="relative">
+                            <select id="typeFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="">All Types</option>
+                                <option value="internal">Internal</option>
+                                <option value="external">External</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date Sort -->
+                    <div class="w-full lg:w-40">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sort Date</label>
+                        <div class="relative">
+                            <select id="dateSortFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clear Filters -->
+                    <div class="w-full lg:w-auto lg:mt-7">
+                        <button id="clearFiltersBtn"
+                            class="w-full lg:w-auto inline-flex items-center justify-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-times mr-2"></i>
+                            Clear
+                        </button>
                     </div>
                 </div>
             </div>
@@ -321,6 +367,117 @@
         ];
 
         let filteredData = [...doneNCRData];
+
+        let currentTypeFilter = '';
+
+        // Advanced filtering function that combines all filters
+        function applyAllFilters() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            const responseFilter = document.getElementById('responseFilter')?.value || '';
+            const typeFilter = document.getElementById('typeFilter')?.value || currentTypeFilter;
+            const dateSort = document.getElementById('dateSortFilter')?.value || 'newest';
+
+            // Start with all data
+            let baseData = [...doneNCRData];
+
+            // Apply search filter
+            if (searchTerm) {
+                baseData = baseData.filter(item =>
+                    item.partNumber.toLowerCase().includes(searchTerm) ||
+                    item.supplier.toLowerCase().includes(searchTerm) ||
+                    item.problem.toLowerCase().includes(searchTerm) ||
+                    item.resolution.toLowerCase().includes(searchTerm) ||
+                    item.inspector.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Apply response rate filter
+            if (responseFilter) {
+                baseData = baseData.filter(item => item.responseClass === responseFilter);
+            }
+
+            // Apply type filter (internal/external)
+            if (typeFilter) {
+                baseData = baseData.filter(item => item.type === typeFilter);
+            }
+
+            // Apply date sorting
+            baseData.sort((a, b) => {
+                const dateA = new Date(a.completedDate);
+                const dateB = new Date(b.completedDate);
+                return dateSort === 'newest' ? dateB - dateA : dateA - dateB;
+            });
+
+            filteredData = baseData;
+            renderTable();
+            updateStatistics();
+        }
+
+        // Filter by type (from clickable cards)
+        function filterByType(type) {
+            // Update card active states
+            document.querySelectorAll('.filter-card').forEach(card => {
+                card.classList.remove('ring-2', 'ring-yanmar-red', 'ring-opacity-50');
+            });
+
+            if (currentTypeFilter === type) {
+                // If clicking the same card, clear the filter
+                currentTypeFilter = '';
+                if (document.getElementById('typeFilter')) {
+                    document.getElementById('typeFilter').value = '';
+                }
+            } else {
+                // Set new filter
+                currentTypeFilter = type;
+                if (document.getElementById('typeFilter')) {
+                    document.getElementById('typeFilter').value = type;
+                }
+                // Highlight active card
+                const activeCard = document.querySelector(`[data-type="${type}"]`);
+                if (activeCard) {
+                    activeCard.classList.add('ring-2', 'ring-yanmar-red', 'ring-opacity-50');
+                }
+            }
+
+            applyAllFilters();
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            if (document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
+            if (document.getElementById('responseFilter')) document.getElementById('responseFilter').value = '';
+            if (document.getElementById('typeFilter')) document.getElementById('typeFilter').value = '';
+            if (document.getElementById('dateSortFilter')) document.getElementById('dateSortFilter').value = 'newest';
+
+            // Clear type filter and card selection
+            currentTypeFilter = '';
+            document.querySelectorAll('.filter-card').forEach(card => {
+                card.classList.remove('ring-2', 'ring-yanmar-red', 'ring-opacity-50');
+            });
+
+            applyAllFilters();
+        }
+
+        // Update statistics cards
+        function updateStatistics() {
+            const internalCount = filteredData.filter(item => item.type === 'internal').length;
+            const externalCount = filteredData.filter(item => item.type === 'external').length;
+
+            // Update the statistics cards if they exist
+            const totalCompleted = document.getElementById('totalCompleted');
+            const internalCountEl = document.getElementById('internalCount');
+            const externalCountEl = document.getElementById('externalCount');
+
+            if (totalCompleted) {
+                totalCompleted.textContent = filteredData.length;
+            }
+            if (internalCountEl) {
+                internalCountEl.textContent = internalCount;
+            }
+            if (externalCountEl) {
+                externalCountEl.textContent = externalCount;
+            }
+        }
         let currentPage = 1;
         const itemsPerPage = 10;
 
@@ -460,10 +617,7 @@
             document.getElementById('viewModal').classList.remove('hidden');
         }
 
-        // Event listeners
-        document.getElementById('typeFilter').addEventListener('change', filterData);
-        document.getElementById('responseFilter').addEventListener('change', filterData);
-        document.getElementById('searchInput').addEventListener('input', filterData);
+        // Legacy event listeners - removed as we now use the DOMContentLoaded setup above
 
         document.getElementById('prevPage').addEventListener('click', () => {
             if (currentPage > 1) {
@@ -490,7 +644,44 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            renderTable();
+            // Initialize data and render table
+            applyAllFilters();
+
+            // Add event listeners for new filters
+            const searchInput = document.getElementById('searchInput');
+            const responseFilter = document.getElementById('responseFilter');
+            const typeFilter = document.getElementById('typeFilter');
+            const dateSortFilter = document.getElementById('dateSortFilter');
+            const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', applyAllFilters);
+            }
+            if (responseFilter) {
+                responseFilter.addEventListener('change', applyAllFilters);
+            }
+            if (typeFilter) {
+                typeFilter.addEventListener('change', () => {
+                    currentTypeFilter = typeFilter.value;
+                    // Update card visual states
+                    document.querySelectorAll('.filter-card').forEach(card => {
+                        card.classList.remove('ring-2', 'ring-yanmar-red', 'ring-opacity-50');
+                    });
+                    if (currentTypeFilter) {
+                        const activeCard = document.querySelector(`[data-type="${currentTypeFilter}"]`);
+                        if (activeCard) {
+                            activeCard.classList.add('ring-2', 'ring-yanmar-red', 'ring-opacity-50');
+                        }
+                    }
+                    applyAllFilters();
+                });
+            }
+            if (dateSortFilter) {
+                dateSortFilter.addEventListener('change', applyAllFilters);
+            }
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener('click', clearAllFilters);
+            }
         });
     </script>
 </body>
