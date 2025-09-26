@@ -87,6 +87,24 @@
                       <span class="menu-text ml-3 font-medium">Supplier</span>
                       <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Supplier Database</div>
                   </a>
+
+                    <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="ncr">
+                      <i class="fas fa-truck menu-icon"></i>
+                      <span class="menu-text ml-3 font-medium">NCR</span>
+                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Supplier Database</div>
+                  </a>
+
+                   <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="verification">
+                      <i class="fas fa-truck menu-icon"></i>
+                      <span class="menu-text ml-3 font-medium">Verification</span>
+                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Supplier Database</div>
+                  </a>
+
+                   <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="reply">
+                      <i class="fas fa-truck menu-icon"></i>
+                      <span class="menu-text ml-3 font-medium">Reply</span>
+                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Reply</div>
+                  </a>
               </div>
           </nav>
       </div>

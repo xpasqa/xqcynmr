@@ -213,6 +213,81 @@
                 </div>
             </div>
 
+            <!-- Search and Filter Box -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 p-6">
+                <div class="flex flex-col lg:flex-row gap-4 items-center">
+                    <!-- Search Bar -->
+                    <div class="flex-1 w-full lg:w-auto">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Search NCR Records</label>
+                        <div class="relative">
+                            <input type="text" id="searchInput"
+                                class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent transition-colors"
+                                placeholder="Search by name, department, part number, or location...">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Department Filter -->
+                    <div class="w-full lg:w-48">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Department</label>
+                        <div class="relative">
+                            <select id="departmentFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="">All Departments</option>
+                                <option value="Quality Control">Quality Control</option>
+                                <option value="Production">Production</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Priority Filter -->
+                    <div class="w-full lg:w-40">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                        <div class="relative">
+                            <select id="priorityFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="">All Priority</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date Sort -->
+                    <div class="w-full lg:w-40">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Sort Date</label>
+                        <div class="relative">
+                            <select id="dateSortFilter"
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                <option value="newest">Newest</option>
+                                <option value="oldest">Oldest</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clear Filters -->
+                    <div class="w-full lg:w-auto lg:mt-7">
+                        <button id="clearFiltersBtn"
+                            class="w-full lg:w-auto inline-flex items-center justify-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-times mr-2"></i>
+                            Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Filter Status Display -->
             <div class="mb-6">
                 <div class="flex items-center justify-between">
@@ -268,6 +343,9 @@
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                                     Location</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    Priority</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                                     Status</th>
@@ -328,43 +406,102 @@
 
         <!-- JavaScript -->
         <script>
-            // Dummy Data
+            // Dummy Data with priority field added
             const ncrData = [
                 // Created NCR (10 records)
-                { id: 1, name: "John Smith", department: "Quality Control", partNumber: "YM-001", partName: "Engine Block", location: "Claim QC Incoming", status: "Send Back", date: "2024-01-15", description: "Casting defect found on engine block surface" },
-                { id: 2, name: "Sarah Johnson", department: "Production", partNumber: "YM-002", partName: "Piston Ring", location: "Assembly Line A", status: "NG", date: "2024-01-16", description: "Dimension out of tolerance" },
-                { id: 3, name: "Mike Chen", department: "Quality Control", partNumber: "YM-003", partName: "Cylinder Head", location: "Incoming Inspection", status: "Hold Part", date: "2024-01-17", description: "Surface roughness exceeds specification" },
-                { id: 4, name: "Lisa Wang", department: "Engineering", partNumber: "YM-004", partName: "Connecting Rod", location: "Machining Center", status: "Send Back", date: "2024-01-18", description: "Material hardness below requirement" },
-                { id: 5, name: "David Brown", department: "Production", partNumber: "YM-005", partName: "Crankshaft", location: "Assembly Line B", status: "NG", date: "2024-01-19", description: "Balancing issue detected" },
-                { id: 6, name: "Emma Wilson", department: "Quality Control", partNumber: "YM-006", partName: "Valve Guide", location: "Final Inspection", status: "created", date: "2024-01-20", description: "Installation interference problem" },
-                { id: 7, name: "Tom Anderson", department: "Maintenance", partNumber: "YM-007", partName: "Gasket Set", location: "Warehouse", status: "created", date: "2024-01-21", description: "Packaging damage observed" },
-                { id: 8, name: "Jennifer Lee", department: "Quality Control", partNumber: "YM-008", partName: "Oil Pump", location: "Test Cell", status: "created", date: "2024-01-22", description: "Pressure test failure" },
-                { id: 9, name: "Robert Taylor", department: "Production", partNumber: "YM-009", partName: "Timing Belt", location: "Assembly Line C", status: "created", date: "2024-01-23", description: "Tension specification not met" },
-                { id: 10, name: "Maria Garcia", department: "Engineering", partNumber: "YM-010", partName: "Fuel Injector", location: "R&D Lab", status: "created", date: "2024-01-24", description: "Flow rate deviation" },
+                { id: 1, name: "John Smith", department: "Quality Control", partNumber: "YM-001", partName: "Engine Block", location: "Claim QC Incoming", status: "Send Back", date: "2024-01-15", priority: "High", description: "Casting defect found on engine block surface" },
+                { id: 2, name: "Sarah Johnson", department: "Production", partNumber: "YM-002", partName: "Piston Ring", location: "Assembly Line A", status: "NG", date: "2024-01-16", priority: "Medium", description: "Dimension out of tolerance" },
+                { id: 3, name: "Mike Chen", department: "Quality Control", partNumber: "YM-003", partName: "Cylinder Head", location: "Incoming Inspection", status: "Hold Part", date: "2024-01-17", priority: "High", description: "Surface roughness exceeds specification" },
+                { id: 4, name: "Lisa Wang", department: "Engineering", partNumber: "YM-004", partName: "Connecting Rod", location: "Machining Center", status: "Send Back", date: "2024-01-18", priority: "Low", description: "Material hardness below requirement" },
+                { id: 5, name: "David Brown", department: "Production", partNumber: "YM-005", partName: "Crankshaft", location: "Assembly Line B", status: "NG", date: "2024-01-19", priority: "High", description: "Balancing issue detected" },
+                { id: 6, name: "Emma Wilson", department: "Quality Control", partNumber: "YM-006", partName: "Valve Guide", location: "Final Inspection", status: "created", date: "2024-01-20", priority: "Medium", description: "Installation interference problem" },
+                { id: 7, name: "Tom Anderson", department: "Maintenance", partNumber: "YM-007", partName: "Gasket Set", location: "Warehouse", status: "created", date: "2024-01-21", priority: "Low", description: "Packaging damage observed" },
+                { id: 8, name: "Jennifer Lee", department: "Quality Control", partNumber: "YM-008", partName: "Oil Pump", location: "Test Cell", status: "created", date: "2024-01-22", priority: "Medium", description: "Pressure test failure" },
+                { id: 9, name: "Robert Taylor", department: "Production", partNumber: "YM-009", partName: "Timing Belt", location: "Assembly Line C", status: "created", date: "2024-01-23", priority: "High", description: "Tension specification not met" },
+                { id: 10, name: "Maria Garcia", department: "Engineering", partNumber: "YM-010", partName: "Fuel Injector", location: "R&D Lab", status: "created", date: "2024-01-24", priority: "Medium", description: "Flow rate deviation" },
 
                 // Reply NCR (4 records)
-                { id: 11, name: "Alex Kim", department: "Quality Control", partNumber: "YM-011", partName: "Air Filter", location: "Supplier Site", status: "Rework", date: "2024-01-10", description: "Filtration efficiency below standard", reply: "Root cause analysis in progress" },
-                { id: 12, name: "Rachel Green", department: "Production", partNumber: "YM-012", partName: "Spark Plug", location: "Assembly Line D", status: "Rework", date: "2024-01-11", description: "Gap setting incorrect", reply: "Calibration procedure updated" },
-                { id: 13, name: "Kevin Park", department: "Engineering", partNumber: "YM-013", partName: "Radiator", location: "Test Facility", status: "reply", date: "2024-01-12", description: "Cooling capacity insufficient", reply: "Design modification proposed" },
-                { id: 14, name: "Sophie Miller", department: "Quality Control", partNumber: "YM-014", partName: "Exhaust Valve", location: "Incoming QC", status: "reply", date: "2024-01-13", description: "Surface coating defect", reply: "Supplier corrective action plan received" },
+                { id: 11, name: "Alex Kim", department: "Quality Control", partNumber: "YM-011", partName: "Air Filter", location: "Supplier Site", status: "Rework", date: "2024-01-10", priority: "High", description: "Filtration efficiency below standard", reply: "Root cause analysis in progress" },
+                { id: 12, name: "Rachel Green", department: "Production", partNumber: "YM-012", partName: "Spark Plug", location: "Assembly Line D", status: "Rework", date: "2024-01-11", priority: "Medium", description: "Gap setting incorrect", reply: "Calibration procedure updated" },
+                { id: 13, name: "Kevin Park", department: "Engineering", partNumber: "YM-013", partName: "Radiator", location: "Test Facility", status: "reply", date: "2024-01-12", priority: "Low", description: "Cooling capacity insufficient", reply: "Design modification proposed" },
+                { id: 14, name: "Sophie Miller", department: "Quality Control", partNumber: "YM-014", partName: "Exhaust Valve", location: "Incoming QC", status: "reply", date: "2024-01-13", priority: "High", description: "Surface coating defect", reply: "Supplier corrective action plan received" },
 
                 // Done NCR (2 records)
-                { id: 15, name: "James Wilson", department: "Production", partNumber: "YM-015", partName: "Water Pump", location: "Final Assembly", status: "Part OK", date: "2024-01-05", description: "Seal leakage detected", resolution: "Design improved, testing completed successfully" },
-                { id: 16, name: "Anna Thompson", department: "Quality Control", partNumber: "YM-016", partName: "Alternator", location: "Electrical Test", status: "Part OK", date: "2024-01-08", description: "Output voltage fluctuation", resolution: "Winding process optimized, issue resolved" }
+                { id: 15, name: "James Wilson", department: "Production", partNumber: "YM-015", partName: "Water Pump", location: "Final Assembly", status: "Part OK", date: "2024-01-05", priority: "Medium", description: "Seal leakage detected", resolution: "Design improved, testing completed successfully" },
+                { id: 16, name: "Anna Thompson", department: "Quality Control", partNumber: "YM-016", partName: "Alternator", location: "Electrical Test", status: "Part OK", date: "2024-01-08", priority: "Low", description: "Output voltage fluctuation", resolution: "Winding process optimized, issue resolved" }
             ];
 
             let currentFilter = 'created';
             let filteredData = [];
+            let currentSearchTerm = '';
+            let currentDepartmentFilter = '';
+            let currentPriorityFilter = '';
+            let currentDateSort = 'newest';
 
             // Initialize page
             function initializePage() {
                 filterByStatus('created');
             }
 
+            // Advanced filtering function that combines all filters
+            function applyAllFilters() {
+                const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || currentSearchTerm;
+                const departmentFilter = document.getElementById('departmentFilter')?.value || currentDepartmentFilter;
+                const priorityFilter = document.getElementById('priorityFilter')?.value || currentPriorityFilter;
+                const dateSort = document.getElementById('dateSortFilter')?.value || currentDateSort;
+
+                // Start with all data
+                let baseData = [...ncrData];
+
+                // Apply status filter if active
+                if (currentFilter !== 'all') {
+                    // Handle different status mappings
+                    if (currentFilter === 'created') {
+                        baseData = baseData.filter(item => ['created', 'Send Back', 'NG', 'Hold Part'].includes(item.status));
+                    } else if (currentFilter === 'reply') {
+                        baseData = baseData.filter(item => ['reply', 'Rework'].includes(item.status));
+                    } else if (currentFilter === 'done') {
+                        baseData = baseData.filter(item => item.status === 'Part OK');
+                    }
+                }
+
+                // Apply search filter
+                if (searchTerm) {
+                    baseData = baseData.filter(item =>
+                        item.name.toLowerCase().includes(searchTerm) ||
+                        item.department.toLowerCase().includes(searchTerm) ||
+                        item.partNumber.toLowerCase().includes(searchTerm) ||
+                        item.partName.toLowerCase().includes(searchTerm) ||
+                        item.location.toLowerCase().includes(searchTerm) ||
+                        item.description.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                // Apply department filter
+                if (departmentFilter) {
+                    baseData = baseData.filter(item => item.department === departmentFilter);
+                }
+
+                // Apply priority filter
+                if (priorityFilter) {
+                    baseData = baseData.filter(item => item.priority === priorityFilter);
+                }
+
+                // Apply date sorting
+                baseData.sort((a, b) => {
+                    const dateA = new Date(a.date);
+                    const dateB = new Date(b.date);
+                    return dateSort === 'newest' ? dateB - dateA : dateA - dateB;
+                });
+
+                filteredData = baseData;
+                updateTable();
+                updateCounts();
+            }
+
             // Filter data by status
             function filterByStatus(status) {
                 currentFilter = status;
-                filteredData = ncrData.filter(item => item.status === status);
 
                 // Update active card
                 document.querySelectorAll('.filter-card').forEach(card => {
@@ -375,14 +512,28 @@
                 // Update filter display
                 updateFilterDisplay(status);
 
-                // Update table
-                updateTable();
+                // Apply all filters
+                applyAllFilters();
+            }
+
+            // Clear all filters
+            function clearAllFilters() {
+                if (document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
+                if (document.getElementById('departmentFilter')) document.getElementById('departmentFilter').value = '';
+                if (document.getElementById('priorityFilter')) document.getElementById('priorityFilter').value = '';
+                if (document.getElementById('dateSortFilter')) document.getElementById('dateSortFilter').value = 'newest';
+
+                currentSearchTerm = '';
+                currentDepartmentFilter = '';
+                currentPriorityFilter = '';
+                currentDateSort = 'newest';
+
+                applyAllFilters();
             }
 
             // Show all records
             function showAllRecords() {
                 currentFilter = 'all';
-                filteredData = ncrData;
 
                 // Remove active state from cards
                 document.querySelectorAll('.filter-card').forEach(card => {
@@ -397,8 +548,20 @@
       `;
                 document.getElementById('filterBadge').className = 'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-800';
 
-                // Update table
-                updateTable();
+                // Apply all filters
+                applyAllFilters();
+            }
+
+            // Update counts for status cards
+            function updateCounts() {
+                const createdCount = ncrData.filter(item => ['created', 'Send Back', 'NG', 'Hold Part'].includes(item.status)).length;
+                const replyCount = ncrData.filter(item => ['reply', 'Rework'].includes(item.status)).length;
+                const doneCount = ncrData.filter(item => item.status === 'Part OK').length;
+
+                document.getElementById('createdCount').textContent = createdCount;
+                document.getElementById('replyCount').textContent = replyCount;
+                document.getElementById('doneCount').textContent = doneCount;
+                document.getElementById('activeNCRs').textContent = ncrData.length;
             }
 
             // Update filter display
@@ -435,6 +598,12 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-slate-900">${item.partNumber}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">${item.partName}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${item.location}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPriorityBadge(item.priority).class}">
+              <i class="fas ${getPriorityIcon(item.priority)} mr-1"></i>
+              ${item.priority}
+            </span>
+          </td>
           <td class="px-6 py-4 whitespace-nowrap">${statusBadge}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
             <button onclick="viewDetails(${item.id})" class="inline-flex items-center px-3 py-1.5 bg-yanmar-red text-white text-xs font-medium rounded-md hover:bg-yanmar-dark transition-colors">
@@ -540,8 +709,65 @@
                 document.getElementById('viewModal').classList.add('hidden');
             }
 
+            // Get priority badge
+            function getPriorityBadge(priority) {
+                const badges = {
+                    'High': { class: 'bg-red-100 text-red-800' },
+                    'Medium': { class: 'bg-yellow-100 text-yellow-800' },
+                    'Low': { class: 'bg-green-100 text-green-800' }
+                };
+                return badges[priority] || { class: 'bg-gray-100 text-gray-800' };
+            }
+
+            // Get priority icon
+            function getPriorityIcon(priority) {
+                const icons = {
+                    'High': 'fa-exclamation-triangle',
+                    'Medium': 'fa-clock',
+                    'Low': 'fa-minus-circle'
+                };
+                return icons[priority] || 'fa-circle';
+            }
+
             // Initialize page on load
-            document.addEventListener('DOMContentLoaded', initializePage);
+            document.addEventListener('DOMContentLoaded', () => {
+                initializePage();
+
+                // Add event listeners for filters
+                const searchInput = document.getElementById('searchInput');
+                const departmentFilter = document.getElementById('departmentFilter');
+                const priorityFilter = document.getElementById('priorityFilter');
+                const dateSortFilter = document.getElementById('dateSortFilter');
+                const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', () => {
+                        currentSearchTerm = searchInput.value.toLowerCase();
+                        applyAllFilters();
+                    });
+                }
+                if (departmentFilter) {
+                    departmentFilter.addEventListener('change', () => {
+                        currentDepartmentFilter = departmentFilter.value;
+                        applyAllFilters();
+                    });
+                }
+                if (priorityFilter) {
+                    priorityFilter.addEventListener('change', () => {
+                        currentPriorityFilter = priorityFilter.value;
+                        applyAllFilters();
+                    });
+                }
+                if (dateSortFilter) {
+                    dateSortFilter.addEventListener('change', () => {
+                        currentDateSort = dateSortFilter.value;
+                        applyAllFilters();
+                    });
+                }
+                if (clearFiltersBtn) {
+                    clearFiltersBtn.addEventListener('click', clearAllFilters);
+                }
+            });
         </script>
 
         <!-- Custom Styles -->
