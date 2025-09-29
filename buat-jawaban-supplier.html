@@ -209,32 +209,6 @@
                             </div>
                         </div>
 
-                        <!-- Images and Videos -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-base font-medium text-gray-700 mb-2">Images (3)</label>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div
-                                        class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-yanmar-red transition-colors">
-                                        <i class="fas fa-image text-gray-400 text-2xl"></i>
-                                    </div>
-                                    <div
-                                        class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-yanmar-red transition-colors">
-                                        <i class="fas fa-image text-gray-400 text-2xl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-base font-medium text-gray-700 mb-2">Videos (1)</label>
-                                <div
-                                    class="aspect-video bg-gray-200 rounded-lg border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-yanmar-red transition-colors">
-                                    <div class="text-center">
-                                        <i class="fas fa-play-circle text-gray-400 text-4xl mb-2"></i>
-                                        <div class="text-sm text-gray-500">Click to play video</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -302,7 +276,8 @@
                     <div class="space-y-4">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-base font-medium text-gray-700 mb-2">Replacement Quantity *</label>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Replacement Quantity
+                                    *</label>
                                 <input type="number" id="replacementQuantity" min="1" required
                                     class="w-full px-4 py-3 text-lg bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                                     placeholder="Enter quantity">
@@ -455,6 +430,129 @@
             const actionType = selectedAction.value === 'rework' ? 'Rework' : 'Replace';
             alert(`Response berhasil dikirim! Tindakan ${actionType} akan diproses oleh tim QC.`);
         }
+
+        function openImageModal(imageSrc, fileName) {
+            const modal = document.getElementById('mediaModal');
+            const content = document.getElementById('mediaContent');
+
+            content.innerHTML = `
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">Attachment Preview</h3>
+                                    <p class="text-sm text-gray-500">${fileName}</p>
+                                </div>
+                                <button onclick="downloadAttachment('${imageSrc}', '${fileName}')" class="text-yanmar-red hover:text-yanmar-dark">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4 flex justify-center">
+                                <img src="${imageSrc}" alt="${fileName}" class="max-w-full max-h-96 object-contain rounded-lg shadow-sm">
+                            </div>
+                        </div>
+                    `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function openVideoModal(videoSrc) {
+            const modal = document.getElementById('mediaModal');
+            const content = document.getElementById('mediaContent');
+
+            content.innerHTML = `
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-900">Video Attachment</h3>
+                                    <p class="text-sm text-gray-500">${videoSrc}</p>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4 flex justify-center">
+                                <div class="text-center text-gray-500">
+                                    <i class="fas fa-play-circle text-6xl mb-4"></i>
+                                    <p>Video playback simulation</p>
+                                    <p class="text-sm">In production, this would show the actual video player</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function downloadAttachment(src, fileName) {
+            // Simulate download
+            alert(`Downloading ${fileName}...`);
+        }
+
+        function openDocumentModal(documentSrc) {
+            const modal = document.getElementById('mediaModal');
+            const content = document.getElementById('mediaContent');
+
+            const docTypes = {
+                'quality_report.pdf': {
+                    title: 'Quality Control Report',
+                    icon: 'fas fa-file-pdf text-red-600',
+                    size: '2.4 MB',
+                    description: 'Detailed inspection measurements and specifications'
+                },
+                'process_specification.xlsx': {
+                    title: 'Process Specification Sheet',
+                    icon: 'fas fa-file-excel text-green-600',
+                    size: '1.1 MB',
+                    description: 'Manufacturing process parameters and tolerances'
+                },
+                'supplier_certificate.pdf': {
+                    title: 'Material Certificate',
+                    icon: 'fas fa-certificate text-blue-600',
+                    size: '890 KB',
+                    description: 'Raw material certification and test results'
+                }
+            };
+
+            const doc = docTypes[documentSrc] || {
+                title: 'Document',
+                icon: 'fas fa-file text-gray-600',
+                size: 'Unknown',
+                description: 'Supporting document'
+            };
+
+            content.innerHTML = `
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
+                                        <i class="${doc.icon} text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-900">${doc.title}</h3>
+                                        <p class="text-sm text-gray-500">${documentSrc} • ${doc.size}</p>
+                                    </div>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="downloadAttachment('${documentSrc}', '${documentSrc}')" class="inline-flex items-center px-3 py-2 text-sm bg-yanmar-red text-white rounded-md hover:bg-yanmar-dark">
+                                        <i class="fas fa-download mr-2"></i>Download
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-6 text-center">
+                                <i class="${doc.icon} text-6xl mb-4"></i>
+                                <p class="text-gray-600 mb-2">${doc.description}</p>
+                                <p class="text-sm text-gray-500">Document preview not available - Click download to view full document</p>
+                            </div>
+                        </div>
+                    `;
+
+            modal.classList.remove('hidden');
+        }
+
+        // Close modal
+        document.getElementById('closeMediaModal').addEventListener('click', function () {
+            document.getElementById('mediaModal').classList.add('hidden');
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('mediaModal').addEventListener('click', function (e) { t
     </script>
 </body>
 
