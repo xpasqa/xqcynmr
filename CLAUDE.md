@@ -35,14 +35,6 @@ The application follows a modular component-based architecture:
 - Auto-injects into `#navbar-container` or falls back to body
 - Includes notification dropdown and user profile menu
 
-### Theme System
-
-- Uses custom Tailwind config with Yanmar brand colors:
-  - `yanmar-red`: #DC2626
-  - `yanmar-light`: #FEF2F2
-  - `yanmar-dark`: #991B1B
-- Login page uses "diesel" branding theme for contrast
-
 ## Development
 
 Since this is a static web application with no build process:
