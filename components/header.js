@@ -122,8 +122,8 @@ document.body.insertAdjacentHTML('afterbegin', header);
 console.warn('#navbar-container not found — injected header at top of body as fallback');
 }
 
-// Add sidebar toggle functionality
-setTimeout(() => {
+// Add sidebar toggle functionality - wait for sidebar to be ready
+function initSidebarToggle() {
     const sidebarToggle = document.getElementById('sidebarToggle');
     const toggleIcon = document.getElementById('toggleIcon');
     const sidebar = document.getElementById('sidebar');
@@ -161,6 +161,16 @@ setTimeout(() => {
                 }
             }
         });
+        console.log('Hamburger toggle initialized');
+    } else {
+        // Retry if sidebar not ready yet
+        setTimeout(initSidebarToggle, 100);
     }
-}, 100); // Small delay to ensure sidebar is rendered
+}
+
+// Initialize after a delay and also listen for custom event
+setTimeout(initSidebarToggle, 200);
+
+// Also try to initialize when page is fully loaded
+window.addEventListener('load', initSidebarToggle);
 });
