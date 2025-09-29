@@ -12,7 +12,6 @@ const header = `
                 <img src="/images/yanmar-log.png" alt="Yanmar Logo" class="w-10 h-7 rounded-lg">
                 <div>
                     <h1 class="text-xl font-bold text-red-700">YANMAR</h1>
-                    <p class="text-xs text-gray-500 -mt-1">Quality Control Management</p>
                 </div>
             </div>
         </div>

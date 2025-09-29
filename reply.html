@@ -6,968 +6,573 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yanmar QC Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'yanmar-red': '#DC2626',
-                        'yanmar-light': '#FEF2F2',
-                        'yanmar-dark': '#991B1B'
-                    },
-                    animation: {
-                        'slide-in': 'slide-in 0.3s ease-out',
-                        'slide-out': 'slide-out 0.3s ease-in',
-                        'fade-in': 'fade-in 0.2s ease-out'
-                    },
-                    keyframes: {
-                        'slide-in': {
-                            '0%': { transform: 'translateX(-100%)' },
-                            '100%': { transform: 'translateX(0)' }
-                        },
-                        'slide-out': {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-100%)' }
-                        },
-                        'fade-in': {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .sidebar-collapsed {
-            width: 4rem;
-        }
-
-        .sidebar-expanded {
-            width: 16rem;
-        }
-
-        .sidebar-transition {
-            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .menu-item-hover:hover {
-            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
-            border-right: 3px solid #DC2626;
-        }
-
-        .tooltip {
-            transform: translateX(0.5rem);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .show-tooltip .tooltip {
-            transform: translateX(1rem);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .menu-text {
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .sidebar-expanded .menu-text {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .menu-icon {
-            min-width: 1.25rem;
-            text-align: center;
-        }
-
-        /* Improved icon alignment for collapsed sidebar */
-        .sidebar-collapsed nav a {
-            justify-content: center;
-            /* center icon horizontally */
-            padding-left: 0.5rem;
-            /* reduce left padding when collapsed */
-            padding-right: 0.5rem;
-        }
-
-        .sidebar-collapsed .menu-icon {
-            margin-right: 0;
-            /* remove right margin */
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            font-size: 1.15rem;
-            /* slightly larger icon for visibility */
-        }
-
-        /* hide the text when collapsed (keeps space clean) */
-        .sidebar-collapsed .menu-text {
-            display: none !important;
-        }
-
-        /* position tooltips just outside the slim sidebar */
-        .sidebar-collapsed .tooltip {
-            left: 4rem;
-            /* hover tooltip appears aligned to collapsed width */
-        }
-
-        /* Restore left-aligned layout when expanded */
-        .sidebar-expanded nav a {
-            justify-content: flex-start;
-            /* icon + text aligned to left */
-            padding-left: 0.75rem;
-        }
-
-        .sidebar-expanded .menu-icon {
-            width: auto;
-            margin-right: 0.75rem;
-            font-size: 1rem;
-        }
-
-        .sidebar-expanded .menu-text {
-            display: inline-block !important;
-            opacity: 1;
-            transform: translateX(0);
-        }
-    </style>
     <script src="components/header.js"></script>
     <script src="components/sidebar.js"></script>
 </head>
 
 <body class="bg-gray-50 font-sans">
-
     <!-- Main Content -->
-    <main id="mainContent" class="ml-16 pt-16 transition-all duration-300 ease-in-out">
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
         <div class="p-6">
-            <!-- Breadcrumb Navigation -->
-            <nav class="flex mb-6" aria-label="Breadcrumb">
-                <ol class="inline-flex items-center space-x-1 md:space-x-3">
-                    <li class="inline-flex items-center">
-                        <a href="dashboard.html" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-yanmar-red">
-                            <i class="fas fa-home mr-2"></i>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <div class="flex items-center">
-                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
-                            <a href="report.html" class="text-sm font-medium text-gray-700 hover:text-yanmar-red">
-                                Reports
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="flex items-center">
-                            <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
-                            <span class="text-sm font-medium text-gray-500" id="breadcrumbNCR">NCR Reply</span>
-                        </div>
-                    </li>
-                </ol>
-            </nav>
 
-                <!-- Part A: Identification of Problem -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Part A - Identification of Problem</h2>
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">NCR Vendor Reply</h2>
                     </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Left Column -->
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">To</label>
-                                    <p class="mt-1 text-sm text-gray-900">QUALITY CONTROL DEPT.</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Supplier Name</label>
-                                    <p class="mt-1 text-sm text-gray-900">YANMAR POWER TECHNOLOGY CO., LTD.</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Supplier Code</label>
-                                    <p class="mt-1 text-sm text-gray-900">1010018</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Part No.</label>
-                                    <p class="mt-1 text-sm text-gray-900">105990 - 01920-CT</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Part Name</label>
-                                    <p class="mt-1 text-sm text-gray-900">GEAR CASE</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Model</label>
-                                    <p class="mt-1 text-sm text-gray-900">TS230</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Engine NO</label>
-                                    <p class="mt-1 text-sm text-gray-900">-</p>
-                                </div>
-                            </div>
-
-                            <!-- Right Column -->
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">No NCR</label>
-                                    <p class="mt-1 text-sm text-gray-900">NC-25-09-001</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Date Create</label>
-                                    <p class="mt-1 text-sm text-gray-900">07/08/25</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Class Part</label>
-                                    <div class="mt-1 text-sm text-gray-900">
-                                        <div class="space-y-1">
-                                            <div class="flex items-center">
-                                                <span class="w-4 h-4 bg-yanmar-red text-white rounded-full flex items-center justify-center text-xs mr-2">①</span>
-                                                Safety
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="w-4 h-4 border border-gray-300 rounded-full flex items-center justify-center text-xs mr-2">②</span>
-                                                Function
-                                            </div>
-                                            <div class="flex items-center">
-                                                <span class="w-4 h-4 border border-gray-300 rounded-full flex items-center justify-center text-xs mr-2">③</span>
-                                                General
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Due Date Answer</label>
-                                    <p class="mt-1 text-sm text-gray-900">-</p>
-                                </div>
-                            </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Status:</span>
+                            <span class="font-semibold text-orange-600 ml-2">Vendor Confirmation</span>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Part B: Problem Description -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Part B - Problem Description</h2>
-                    </div>
-                    <div class="p-6">
-                        <div class="space-y-4">
+            <!-- Report Form -->
+            <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+                <form class="p-6 space-y-6" method="post" id="reportForm">
+
+                    <!-- Report Info Section (Read-only) -->
+                    <div class="mb-8">
+                        <h4 class="text-base font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Report Information
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                            <!-- NO NCR -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700">Problem Detail</label>
-                                <p class="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded-md">POROSITY di area permukaan</p>
-                            </div>
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Qty. Problem</label>
-                                    <p class="mt-1 text-sm text-gray-900">10</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Location</label>
-                                    <p class="mt-1 text-sm text-gray-900">MACHINE SHOP</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Original Analysis Data -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Problem : NUT LEPAS ( SPOT WELDING TIDAK KUAT )</h2>
-                    </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Left Column - Part Data -->
-                            <div class="space-y-4">
-                                <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2">Part
-                                    Information</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Part Number</label>
-                                        <p class="mt-1 text-sm text-gray-900">YM-ENG-001-2024</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Part Name</label>
-                                        <p class="mt-1 text-sm text-gray-900">Engine Block Assembly</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Model</label>
-                                        <p class="mt-1 text-sm text-gray-900">TNV Series</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Class Part</label>
-                                        <p class="mt-1 text-sm text-gray-900">Safety</p>
-                                    </div>
-                                    <div class="sm:col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700">Location</label>
-                                        <p class="mt-1 text-sm text-gray-900">Assembly Line A</p>
-                                    </div>
-                                </div>
-
-                                <!-- Defect Information -->
-                                <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2 mt-6">
-                                    Defect
-                                    Information</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Date Create</label>
-                                        <p class="mt-1 text-sm text-gray-900">2024-03-15</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Defect Qty Found</label>
-                                        <p class="mt-1 text-sm text-gray-900">5</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Total Defect
-                                            Ratio</label>
-                                        <p class="mt-1 text-sm text-gray-900">0.05</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Replacement Part</label>
-                                        <p class="mt-1 text-sm text-gray-900">Yes</p>
-                                    </div>
-                                </div>
-
-                                <!-- Documentation -->
-                                <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2 mt-6">
-                                    Documentation</h3>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">No NCR</label>
-                                        <p class="mt-1 text-sm text-gray-900">NCR-2024-001</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">P.O NO</label>
-                                        <p class="mt-1 text-sm text-gray-900">PO-2024-0315</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Invoice NO</label>
-                                        <p class="mt-1 text-sm text-gray-900">INV-2024-0315</p>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Debit Note</label>
-                                        <p class="mt-1 text-sm text-gray-900">DB-2024-0315</p>
-                                    </div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">No. NCR</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    NCR-20250928-1425
                                 </div>
                             </div>
 
-                            <!-- Right Column - Problem & Media -->
-                            <div class="space-y-4">
-                                <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2">Problem
-                                    Description</h3>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Problem Statement</label>
-                                    <p class="mt-1 text-sm text-gray-900">Surface defect detected on cylinder head.
-                                        Visible
-                                        crack approximately 2mm in length.</p>
+                            <!-- Date -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Date</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    Saturday, September 28, 2025
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700">Problem Detail</label>
-                                    <p class="mt-1 text-sm text-gray-900">During routine inspection, a hairline crack
-                                        was
-                                        discovered on the cylinder head surface. The crack appears to be a casting
-                                        defect and
-                                        may compromise the structural integrity of the component.</p>
-                                </div>
+                            </div>
 
-                                <!-- Attachments -->
-                                <h3 class="text-md font-semibold text-yanmar-dark border-b border-gray-200 pb-2 mt-6">
-                                    Attachments</h3>
-                                <div class="space-y-3">
-                                    <div class="grid grid-cols-3 gap-2">
-                                        <div class="border border-gray-200 rounded-lg p-2 text-center">
-                                            <img src="https://via.placeholder.com/100x100/f3f4f6/9ca3af?text=IMG1"
-                                                alt="Image 1" class="w-full h-20 object-cover rounded">
-                                            <p class="text-xs text-gray-500 mt-1">defect_01.jpg</p>
-                                        </div>
-                                        <div class="border border-gray-200 rounded-lg p-2 text-center">
-                                            <img src="https://via.placeholder.com/100x100/f3f4f6/9ca3af?text=IMG2"
-                                                alt="Image 2" class="w-full h-20 object-cover rounded">
-                                            <p class="text-xs text-gray-500 mt-1">defect_02.jpg</p>
-                                        </div>
-                                        <div class="border border-gray-200 rounded-lg p-2 text-center">
-                                            <div
-                                                class="w-full h-20 bg-gray-100 rounded flex items-center justify-center">
-                                                <i class="fas fa-play text-gray-500 text-2xl"></i>
-                                            </div>
-                                            <p class="text-xs text-gray-500 mt-1">inspection.mp4</p>
-                                        </div>
-                                    </div>
-                                    <div class="border border-gray-200 rounded-lg p-3">
-                                        <div class="flex items-center space-x-2">
-                                            <i class="fas fa-microphone text-gray-400"></i>
-                                            <div class="flex-1">
-                                                <div class="flex items-center space-x-2">
-                                                    <button class="text-yanmar-red hover:text-yanmar-dark">
-                                                        <i class="fas fa-play"></i>
-                                                    </button>
-                                                    <div class="flex-1 bg-gray-200 rounded-full h-2">
-                                                        <div class="bg-yanmar-red h-2 rounded-full" style="width: 0%">
-                                                        </div>
-                                                    </div>
-                                                    <span class="text-xs text-gray-500">0:00 / 0:45</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <!-- Sender Department -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Sender Department</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    Machine Shop
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Problem Analysis Section -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Problem Analysis</h2>
+                    <!-- Report Title Section -->
+                    <div class="mb-8">
+                        <div>
+                            <label class="block text-base font-medium text-gray-700 mb-2">Report Title</label>
+                            <div
+                                class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                Defect on Engine Mount Bracket - Crack in Welding Area
+                            </div>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <!-- MAN -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">MAN</h3>
-                                    <button onclick="addTextBox('man-analysis')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="man-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Analyze human factors contributing to the problem..."></textarea>
+
+                    <!-- Data Parts Section -->
+                    <div class="mb-8">
+                        <h4 class="text-base font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            Data Parts
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                            <!-- Part No -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Part No.</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    EMB-4TNV98-001
                                 </div>
                             </div>
 
-                            <!-- METHOD -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">METHOD</h3>
-                                    <button onclick="addTextBox('method-analysis')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="method-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Analyze process/method factors contributing to the problem..."></textarea>
+                            <!-- Part Name -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Part Name</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    Engine Mount Bracket
                                 </div>
                             </div>
 
-                            <!-- MATERIAL -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">MATERIAL</h3>
-                                    <button onclick="addTextBox('material-analysis')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="material-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Analyze material factors contributing to the problem..."></textarea>
+                            <!-- Model -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Model</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    4TNV98-ZNSA
                                 </div>
                             </div>
 
-                            <!-- MACHINE -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">MACHINE</h3>
-                                    <button onclick="addTextBox('machine-analysis')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
+                            <!-- Engine NO -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Engine No.</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    4TNV98-523847
                                 </div>
-                                <div id="machine-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Analyze machine/equipment factors contributing to the problem..."></textarea>
+                            </div>
+
+                            <!-- Class Part -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Class Part</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                                        Safety
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Location</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    QC Incoming - Line 2
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Countermeasure Table -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-lg font-medium text-gray-900">Countermeasure for Occurs</h2>
-                            <button onclick="openCountermeasureModal()"
-                                class="bg-yanmar-red text-white px-4 py-2 rounded-md hover:bg-yanmar-dark flex items-center space-x-2">
-                                <i class="fas fa-plus"></i>
-                                <span>Add Countermeasure</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        No</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Description</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Phone</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Effective Date</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Remarks</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="countermeasureTableBody" class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Implement additional visual inspection
-                                        checkpoints</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">John Smith</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">+1-555-0101</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2024-03-20</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Training required for inspection team
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button onclick="editCountermeasure(1)"
-                                            class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
-                                        <button onclick="deleteCountermeasure(1)"
-                                            class="text-red-600 hover:text-red-900">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Update casting process temperature
-                                        controls</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Johnson</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">+1-555-0102</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2024-03-25</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Equipment calibration needed</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button onclick="editCountermeasure(2)"
-                                            class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
-                                        <button onclick="deleteCountermeasure(2)"
-                                            class="text-red-600 hover:text-red-900">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                    <!-- Problem Section -->
+                    <div class="mb-8">
+                        <h4 class="text-base font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            Problem Statement
+                        </h4>
 
-
-                <!-- Why Problem Flow Out Section -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Why Problem Flow Out</h2>
-                    </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <!-- MAN -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">MAN</h3>
-                                    <button onclick="addTextBox('man-flowout')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="man-flowout" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Why human factors allowed this problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- METHOD -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">METHOD</h3>
-                                    <button onclick="addTextBox('method-flowout')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="method-flowout" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Why process/method allowed this problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- MATERIAL -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">MATERIAL</h3>
-                                    <button onclick="addTextBox('material-flowout')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="material-flowout" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Why material factors allowed this problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- MACHINE -->
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-md font-semibold text-yanmar-dark">MACHINE</h3>
-                                    <button onclick="addTextBox('machine-flowout')"
-                                        class="text-yanmar-red hover:text-yanmar-dark text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="machine-flowout" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                        rows="3"
-                                        placeholder="Why machine/equipment allowed this problem to flow out..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Countermeasure Table -->
-                <div class="bg-white rounded-lg shadow mb-8">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-lg font-medium text-gray-900">Countermeasure for Flow Out</h2>
-                            <button onclick="openCountermeasureModal()"
-                                class="bg-yanmar-red text-white px-4 py-2 rounded-md hover:bg-yanmar-dark flex items-center space-x-2">
-                                <i class="fas fa-plus"></i>
-                                <span>Add Countermeasure</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        No</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Description</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Phone</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Effective Date</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Remarks</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="countermeasureTableBody" class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">1</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Implement additional visual inspection
-                                        checkpoints</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">John Smith</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">+1-555-0101</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2024-03-20</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Training required for inspection team
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button onclick="editCountermeasure(1)"
-                                            class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
-                                        <button onclick="deleteCountermeasure(1)"
-                                            class="text-red-600 hover:text-red-900">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Update casting process temperature
-                                        controls</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Johnson</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">+1-555-0102</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2024-03-25</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">Equipment calibration needed</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <button onclick="editCountermeasure(2)"
-                                            class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
-                                        <button onclick="deleteCountermeasure(2)"
-                                            class="text-red-600 hover:text-red-900">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Final Remarks and Actions -->
-                <div class="bg-white rounded-lg shadow">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Confirmation of Effectiveness</h2>
-                    </div>
-                    <div class="p-6">
                         <div class="mb-6">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
-                            <textarea id="finalRemarks"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"
-                                rows="4" placeholder="Add final remarks and assessment..."></textarea>
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row gap-4 justify-end">
-                            <button onclick="rejectNCR()"
-                                class="px-6 py-2 border border-red-300 text-red-700 rounded-md hover:bg-red-50 flex items-center space-x-2">
-                                <i class="fas fa-times"></i>
-                                <span>Save Draft</span>
-                            </button>
-                            <button onclick="approveNCR()"
-                                class="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center space-x-2">
-                                <i class="fas fa-check"></i>
-                                <span>Submit</span>
-                            </button>
+                            <div
+                                class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg min-h-32">
+                                Found crack in the welding area of engine mount bracket. Crack detected at the joint
+                                between base plate and mounting hole. Crack size approximately 15mm with depth reaching
+                                2-3mm. This condition has potential to cause failure during engine operation and may
+                                endanger operator safety.
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Countermeasure Modal -->
-            <div id="countermeasureModal"
-                class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
-                <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <div class="flex justify-between items-center">
-                            <h3 id="modalTitle" class="text-lg font-medium text-gray-900">Add Countermeasure</h3>
-                            <button onclick="closeCountermeasureModal()" class="text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-times"></i>
-                            </button>
+                    <!-- Media Section -->
+                    <div class="mb-8">
+                        <h4 class="text-base font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            Media Evidence
+                        </h4>
+
+                        <div class="space-y-6">
+                            <!-- Voice Notes -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Voice Notes</label>
+                                <div class="relative p-4 bg-gray-50 border border-slate-200 rounded-lg overflow-hidden">
+                                    <div class="flex items-center space-x-4">
+                                        <!-- Play Button with Background Red -->
+                                        <button type="button" id="voicePlayBtn"
+                                            class="flex items-center justify-center w-12 h-12 bg-red-700 hover:bg-red-800 rounded-full transition-all duration-200 transform hover:scale-105 shadow-md group">
+                                            <i id="voiceIcon"
+                                                class="fas fa-play text-white text-lg transition-transform duration-200 group-hover:scale-110"></i>
+                                        </button>
+
+                                        <!-- Title and Duration -->
+                                        <div class="flex-1">
+                                            <span class="text-base text-gray-600 font-medium">Voice recording
+                                                available</span>
+
+                                        </div>
+
+                                        <!-- Animated Lines (Right Side) -->
+                                        <div id="animatedLines"
+                                            class="flex items-center space-x-1 opacity-0 transition-opacity duration-300">
+                                            <div class="w-1 h-8 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0s; animation-duration: 0.8s;"></div>
+                                            <div class="w-1 h-6 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.1s; animation-duration: 0.9s;"></div>
+                                            <div class="w-1 h-10 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.2s; animation-duration: 0.7s;"></div>
+                                            <div class="w-1 h-4 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.3s; animation-duration: 1s;"></div>
+                                            <div class="w-1 h-7 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.4s; animation-duration: 0.6s;"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Progress Line (Moving from Left to Right) -->
+                                    <div id="progressLine"
+                                        class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-700 to-red-500 transition-all duration-100 ease-out opacity-0"
+                                        style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Images and Videos -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Images & Videos
+                                    (3)</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <!-- Image 1 -->
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group"
+                                        onclick="openImageModal('images/baud.png', 'baud.png');">
+                                        <img src="images/baud.png" alt="Evidence Image 1"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                    </div>
+
+                                    <!-- Image 2 -->
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group"
+                                        onclick="openImageModal('images/baud-2.png', 'baud-2.png');">
+                                        <img src="images/baud-2.png" alt="Evidence Image 2"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                    </div>
+
+                                    <!-- Video -->
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group relative"
+                                        onclick="openVideoModal('images/videos.mp4');">
+                                        <!-- Video Thumbnail -->
+                                        <video class="w-full h-full object-cover" muted preload="metadata" poster="">
+                                            <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                        </video>
+
+                                        <!-- Play overlay -->
+                                        <div
+                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-200">
+                                            <div
+                                                class="bg-white bg-opacity-95 rounded-full w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-lg">
+                                                <i class="fas fa-play text-yanmar-red text-2xl ml-1"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Video Info Badge -->
+                                        <div
+                                            class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                                            <i class="fas fa-video mr-1"></i>VIDEO
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    <form id="countermeasureForm" class="p-6 space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Description *</label>
-                            <textarea name="description" required rows="3"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Responsible Person *</label>
-                            <input type="text" name="name" required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
-                            <input type="tel" name="phone" required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Effective Date *</label>
-                            <input type="date" name="effectiveDate" required
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Remarks</label>
-                            <textarea name="remarks" rows="2"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent"></textarea>
-                        </div>
 
-                        <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
-                            <button type="button" onclick="closeCountermeasureModal()"
-                                class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
-                                Cancel
-                            </button>
-                            <button type="submit"
-                                class="px-4 py-2 bg-yanmar-red text-white rounded-md hover:bg-yanmar-dark">
-                                <span id="submitBtnText">Add Countermeasure</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-slate-200">
+                        <button type="button"
+                            class="flex-1 bg-slate-200 text-slate-700 py-4 px-8 rounded-lg font-semibold text-lg hover:bg-slate-300 transition-all duration-200 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+                            </svg>
+                            Kembali
+                        </button>
+
+                        <button type="button"
+                            class="flex-1 bg-red-600 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:bg-red-700 transition-all duration-200 flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Tolak
+                        </button>
+
+                        <button type="submit"
+                            class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-8 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center shadow-lg">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Verifikasi & Lanjutkan
+                        </button>
+                    </div>
+                </form>
             </div>
-
-            <script>
-                let countermeasures = [
-                    {
-                        id: 1,
-                        description: "Implement additional visual inspection checkpoints",
-                        name: "John Smith",
-                        phone: "+1-555-0101",
-                        effectiveDate: "2024-03-20",
-                        remarks: "Training required for inspection team"
-                    },
-                    {
-                        id: 2,
-                        description: "Update casting process temperature controls",
-                        name: "Sarah Johnson",
-                        phone: "+1-555-0102",
-                        effectiveDate: "2024-03-25",
-                        remarks: "Equipment calibration needed"
-                    }
-                ];
-                let editingCountermeasure = null;
-
-                // Add text box functionality
-                function addTextBox(containerId) {
-                    const container = document.getElementById(containerId);
-                    const newTextarea = document.createElement('div');
-                    newTextarea.className = 'relative';
-                    newTextarea.innerHTML = `
-                <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent" rows="3" placeholder="Add additional analysis..."></textarea>
-                <button onclick="removeTextBox(this)" class="absolute top-2 right-2 text-red-500 hover:text-red-700">
-                    <i class="fas fa-times text-sm"></i>
-                </button>
-            `;
-                    container.appendChild(newTextarea);
-                }
-
-                function removeTextBox(button) {
-                    button.closest('.relative').remove();
-                }
-
-                // Countermeasure modal functions
-                function openCountermeasureModal(id = null) {
-                    editingCountermeasure = id;
-                    const modal = document.getElementById('countermeasureModal');
-                    const form = document.getElementById('countermeasureForm');
-                    const title = document.getElementById('modalTitle');
-                    const submitBtn = document.getElementById('submitBtnText');
-
-                    if (id) {
-                        const countermeasure = countermeasures.find(c => c.id === id);
-                        if (countermeasure) {
-                            title.textContent = 'Edit Countermeasure';
-                            submitBtn.textContent = 'Update Countermeasure';
-
-                            form.description.value = countermeasure.description;
-                            form.name.value = countermeasure.name;
-                            form.phone.value = countermeasure.phone;
-                            form.effectiveDate.value = countermeasure.effectiveDate;
-                            form.remarks.value = countermeasure.remarks;
-                        }
-                    } else {
-                        title.textContent = 'Add Countermeasure';
-                        submitBtn.textContent = 'Add Countermeasure';
-                        form.reset();
-                    }
-
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                }
-
-                function closeCountermeasureModal() {
-                    document.getElementById('countermeasureModal').classList.add('hidden');
-                    document.getElementById('countermeasureModal').classList.remove('flex');
-                    editingCountermeasure = null;
-                }
-
-                function editCountermeasure(id) {
-                    openCountermeasureModal(id);
-                }
-
-                function deleteCountermeasure(id) {
-                    if (confirm('Are you sure you want to delete this countermeasure?')) {
-                        countermeasures = countermeasures.filter(c => c.id !== id);
-                        renderCountermeasureTable();
-                    }
-                }
-
-                function renderCountermeasureTable() {
-                    const tbody = document.getElementById('countermeasureTableBody');
-                    tbody.innerHTML = countermeasures.map((item, index) => `
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${index + 1}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${item.description}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.name}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.phone}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.effectiveDate}</td>
-                    <td class="px-6 py-4 text-sm text-gray-900">${item.remarks}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button onclick="editCountermeasure(${item.id})" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
-                        <button onclick="deleteCountermeasure(${item.id})" class="text-red-600 hover:text-red-900">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-                }
-
-                // Form submission
-                document.getElementById('countermeasureForm').addEventListener('submit', function (e) {
-                    e.preventDefault();
-                    const formData = new FormData(e.target);
-                    const data = Object.fromEntries(formData.entries());
-
-                    if (editingCountermeasure) {
-                        const index = countermeasures.findIndex(c => c.id === editingCountermeasure);
-                        if (index !== -1) {
-                            countermeasures[index] = { ...countermeasures[index], ...data };
-                        }
-                    } else {
-                        const newId = Math.max(...countermeasures.map(c => c.id)) + 1;
-                        countermeasures.push({ id: newId, ...data });
-                    }
-
-                    renderCountermeasureTable();
-                    closeCountermeasureModal();
-                });
-
-                // Final actions
-                function approveNCR() {
-                    const remarks = document.getElementById('finalRemarks').value;
-                    if (!remarks.trim()) {
-                        alert('Please add remarks before approving.');
-                        return;
-                    }
-
-                    if (confirm('Are you sure you want to approve this NCR?')) {
-                        alert('NCR has been approved successfully!');
-                        // Here you would typically send data to backend
-                    }
-                }
-
-                function rejectNCR() {
-                    const remarks = document.getElementById('finalRemarks').value;
-                    if (!remarks.trim()) {
-                        alert('Please add remarks explaining the rejection reason.');
-                        return;
-                    }
-
-                    if (confirm('Are you sure you want to reject this NCR?')) {
-                        alert('NCR has been rejected. Notification sent to submitter.');
-                        // Here you would typically send data to backend
-                    }
-                }
-
-                // Initialize
-                document.addEventListener('DOMContentLoaded', function () {
-                    renderCountermeasureTable();
-                });
-            </script>
-
         </div>
+
+        <!-- Media Modal -->
+        <div id="mediaModal"
+            class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4"
+            onclick="closeModal()">
+            <div class="relative max-w-4xl max-h-full w-full" onclick="event.stopPropagation()">
+                <!-- Modal Content -->
+                <div id="mediaContent" class="bg-white rounded-lg overflow-hidden shadow-2xl max-h-full relative">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            // Media Modal Functions - Global functions outside DOMContentLoaded
+            function openImageModal(imageSrc, fileName) {
+                console.log('Opening image modal:', imageSrc, fileName);
+                const modal = document.getElementById('mediaModal');
+                const content = document.getElementById('mediaContent');
+
+                if (!modal || !content) {
+                    console.error('Modal elements not found');
+                    return;
+                }
+
+                content.innerHTML = `
+                    <!-- Close Button -->
+                    <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 z-20 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Image Preview</h3>
+                                <p class="text-sm text-gray-500">${fileName}</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 flex justify-center">
+                            <img src="${imageSrc}" alt="${fileName}" class="max-w-full max-h-96 object-contain rounded-lg shadow-sm">
+                        </div>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+            }
+
+            function openVideoModal(videoSrc) {
+                console.log('Opening video modal:', videoSrc);
+                const modal = document.getElementById('mediaModal');
+                const content = document.getElementById('mediaContent');
+
+                if (!modal || !content) {
+                    console.error('Modal elements not found');
+                    return;
+                }
+
+                content.innerHTML = `
+                    <!-- Close Button -->
+                    <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 z-20 bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Video Preview</h3>
+                                <p class="text-sm text-gray-500">${videoSrc}</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 flex justify-center">
+                            <video controls autoplay class="max-w-full max-h-96 rounded-lg shadow-sm">
+                                <source src="${videoSrc}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                `;
+
+                modal.classList.remove('hidden');
+            }
+
+            // Close modal function - Global
+            function closeModal() {
+                const modal = document.getElementById('mediaModal');
+                if (modal) {
+                    modal.classList.add('hidden');
+                }
+            }
+
+            // Admin Edit Mode Functionality
+            let isEditMode = false;
+
+            function enableEditMode() {
+                console.log('Enabling edit mode for admin...');
+                isEditMode = true;
+
+                // Enable all form inputs
+                const form = document.getElementById('reportForm');
+                if (form) {
+                    const inputs = form.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => {
+                        input.disabled = false;
+                        input.style.backgroundColor = '#fff';
+                        input.style.border = '2px solid #3b82f6';
+                    });
+
+                    // Enable radio buttons
+                    const radioButtons = form.querySelectorAll('input[type="radio"]');
+                    radioButtons.forEach(radio => {
+                        radio.disabled = false;
+                        const label = radio.closest('label');
+                        if (label) {
+                            label.style.opacity = '1';
+                            label.style.pointerEvents = 'auto';
+                        }
+                    });
+
+                    // Show save/cancel buttons
+                    showEditButtons();
+
+                    // Update status
+                    updateStatusToEditing();
+
+                    showNotification('Edit mode enabled. You can now modify the form.', 'info');
+                } else {
+                    console.error('Report form not found!');
+                }
+            }
+
+            function disableEditMode() {
+                console.log('Disabling edit mode...');
+                isEditMode = false;
+
+                // Disable all form inputs
+                const form = document.getElementById('reportForm');
+                if (form) {
+                    const inputs = form.querySelectorAll('input, textarea, select');
+                    inputs.forEach(input => {
+                        input.disabled = true;
+                        input.style.backgroundColor = '#f9fafb';
+                        input.style.border = '1px solid #d1d5db';
+                    });
+
+                    // Disable radio buttons
+                    const radioButtons = form.querySelectorAll('input[type="radio"]');
+                    radioButtons.forEach(radio => {
+                        radio.disabled = true;
+                        const label = radio.closest('label');
+                        if (label) {
+                            label.style.opacity = '0.6';
+                            label.style.pointerEvents = 'none';
+                        }
+                    });
+
+                    // Hide save/cancel buttons
+                    hideEditButtons();
+
+                    // Restore status
+                    updateStatusToPending();
+
+                    showNotification('Edit mode disabled. Form is now read-only.', 'info');
+                }
+            }
+
+            function saveEditChanges() {
+                console.log('Saving edit changes...');
+
+                // Here you would typically send data to server
+                // For now, just disable edit mode
+                disableEditMode();
+
+                showNotification('Changes saved successfully!', 'success');
+            }
+
+            function cancelEditChanges() {
+                console.log('Cancelling edit changes...');
+
+                // Reload page to revert changes (or implement proper revert logic)
+                if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
+                    window.location.reload();
+                }
+            }
+
+            // Simple Voice Player Functionality
+            document.addEventListener('DOMContentLoaded', function () {
+                const voicePlayBtn = document.getElementById('voicePlayBtn');
+                const voiceIcon = document.getElementById('voiceIcon');
+                const animatedLines = document.getElementById('animatedLines');
+                const progressLine = document.getElementById('progressLine');
+
+                let isPlaying = false;
+                let playInterval = null;
+                let currentSeconds = 0;
+                const totalSeconds = 135; // 02:15 in seconds
+
+                voicePlayBtn.addEventListener('click', function () {
+                    if (!isPlaying) {
+                        // Start playing
+                        isPlaying = true;
+
+                        // Change icon to pause
+                        voiceIcon.classList.remove('fa-play');
+                        voiceIcon.classList.add('fa-pause');
+
+                        // Show animated lines and progress
+                        animatedLines.style.opacity = '1';
+                        progressLine.style.opacity = '1';
+
+                        // Start progress animation
+                        playInterval = setInterval(() => {
+                            currentSeconds++;
+                            const progress = (currentSeconds / totalSeconds) * 100;
+                            progressLine.style.width = progress + '%';
+
+                            // End of recording
+                            if (currentSeconds >= totalSeconds) {
+                                stopPlaying();
+                            }
+                        }, 80); // Smooth animation
+
+                    } else {
+                        // Pause playing
+                        pausePlaying();
+                    }
+                });
+
+                function pausePlaying() {
+                    isPlaying = false;
+
+                    // Change icon back to play
+                    voiceIcon.classList.remove('fa-pause');
+                    voiceIcon.classList.add('fa-play');
+
+                    // Hide animated lines
+                    animatedLines.style.opacity = '0';
+
+                    if (playInterval) {
+                        clearInterval(playInterval);
+                        playInterval = null;
+                    }
+                }
+
+                function stopPlaying() {
+                    pausePlaying();
+
+                    // Reset progress after delay
+                    setTimeout(() => {
+                        currentSeconds = 0;
+                        progressLine.style.width = '0%';
+                        progressLine.style.opacity = '0';
+                    }, 1000);
+
+                    // Add completion glow effect
+                    voicePlayBtn.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.6)';
+                    setTimeout(() => {
+                        voicePlayBtn.style.boxShadow = '';
+                    }, 1000);
+                }
+            });
+        </script>
     </main>
 
 </body>

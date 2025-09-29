@@ -3,6 +3,36 @@
 (function (global) {
   'use strict';
 
+  // Add hover effect styles
+  if (!document.getElementById('sidebar-hover-styles')) {
+    const hoverStyles = document.createElement('style');
+    hoverStyles.id = 'sidebar-hover-styles';
+    hoverStyles.textContent = `
+      .menu-item-hover {
+        transition: all 0.2s ease;
+      }
+
+      .menu-item-hover:hover {
+        background: linear-gradient(90deg, rgba(220, 38, 38, 0.15), rgba(220, 38, 38, 0.05));
+        border-right: 3px solid #DC2626;
+        transform: translateX(3px);
+        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+      }
+
+      .menu-item-hover:hover i {
+        color: #DC2626 !important;
+        transform: scale(1.1);
+        transition: all 0.2s ease;
+      }
+
+      .menu-item-hover:hover span {
+        color: #991B1B !important;
+        font-weight: 600;
+      }
+    `;
+    document.head.appendChild(hoverStyles);
+  }
+
   const SIDEBAR_HTML = `
   <!-- Left edge hover trigger -->
   <div id="leftEdgeTrigger" class="fixed left-0 top-0 bottom-0 w-3 z-50"></div>

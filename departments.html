@@ -7,95 +7,12 @@
     <title>Department Management - Yanmar Quality Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        .sidebar-collapsed {
-            width: 64px;
-        }
-
-        .sidebar-expanded {
-            width: 256px;
-        }
-
-        .sidebar-transition {
-            transition: width 100ms linear;
-        }
-
-        .menu-icon {
-            width: 20px;
-            text-align: center;
-        }
-
-        .menu-text {
-            white-space: nowrap;
-        }
-
-        .sidebar-collapsed .menu-text {
-            display: none;
-        }
-
-        .sidebar-expanded .menu-text {
-            display: inline;
-        }
-
-        .tooltip {
-            display: none;
-        }
-
-        .group.show-tooltip .tooltip {
-            display: block;
-        }
-
-        .menu-item-hover:hover {
-            background-color: #f3f4f6;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .status-active {
-            background-color: #dcfce7;
-            color: #166534;
-        }
-
-        .status-inactive {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-
-        .form-error {
-            border-color: #ef4444;
-            background-color: #fef2f2;
-        }
-
-        .department-card {
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .department-card:hover {
-            transform: translateY(-2px);
-        }
-    </style>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
 </head>
 
 <body class="bg-gray-50">
-    <!-- Header -->
-    <script src="components/header.js"></script>
-    <script src="components/sidebar.js"></script>
 
-    <!-- Main Content -->
     <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
         <div class="p-6">
             <!-- Page Header -->
@@ -106,7 +23,8 @@
                         <p class="text-gray-600 mt-1">Manage internal departments for Quality Control system</p>
                     </div>
                     <div class="flex items-center space-x-3">
-                        <button id="addDeptBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+                        <button id="addDeptBtn"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
                             <i class="fas fa-plus"></i>
                             <span>Add Department</span>
                         </button>
@@ -222,13 +140,27 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Code</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Manager</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employees</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Department</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Code</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Manager</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Employees</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions</th>
                             </tr>
                         </thead>
                         <tbody id="departmentTableBody" class="bg-white divide-y divide-gray-200">
@@ -239,11 +171,14 @@
                 <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
                     <div class="flex items-center justify-between">
                         <div class="text-sm text-gray-700">
-                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalRecords">0</span> results
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span
+                                id="totalRecords">0</span> results
                         </div>
                         <div class="flex space-x-2">
-                            <button id="prevPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
-                            <button id="nextPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                            <button id="prevPage"
+                                class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                            <button id="nextPage"
+                                class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
                         </div>
                     </div>
                 </div>
@@ -269,15 +204,18 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="deptName" class="block text-sm font-medium text-gray-700 mb-1">Department Name *</label>
+                                <label for="deptName" class="block text-sm font-medium text-gray-700 mb-1">Department
+                                    Name *</label>
                                 <input type="text" id="deptName" name="deptName" required
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <div class="text-red-500 text-xs mt-1 hidden" id="deptNameError"></div>
                             </div>
 
                             <div>
-                                <label for="deptCode" class="block text-sm font-medium text-gray-700 mb-1">Department Code *</label>
-                                <input type="text" id="deptCode" name="deptCode" required placeholder="e.g., QC, ENG, PROD"
+                                <label for="deptCode" class="block text-sm font-medium text-gray-700 mb-1">Department
+                                    Code *</label>
+                                <input type="text" id="deptCode" name="deptCode" required
+                                    placeholder="e.g., QC, ENG, PROD"
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <div class="text-red-500 text-xs mt-1 hidden" id="deptCodeError"></div>
                             </div>
@@ -285,14 +223,16 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="manager" class="block text-sm font-medium text-gray-700 mb-1">Department Manager *</label>
+                                <label for="manager" class="block text-sm font-medium text-gray-700 mb-1">Department
+                                    Manager *</label>
                                 <input type="text" id="manager" name="manager" required
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <div class="text-red-500 text-xs mt-1 hidden" id="managerError"></div>
                             </div>
 
                             <div>
-                                <label for="managerEmail" class="block text-sm font-medium text-gray-700 mb-1">Manager Email</label>
+                                <label for="managerEmail" class="block text-sm font-medium text-gray-700 mb-1">Manager
+                                    Email</label>
                                 <input type="email" id="managerEmail" name="managerEmail"
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <div class="text-red-500 text-xs mt-1 hidden" id="managerEmailError"></div>
@@ -301,13 +241,15 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="employeeCount" class="block text-sm font-medium text-gray-700 mb-1">Employee Count</label>
+                                <label for="employeeCount" class="block text-sm font-medium text-gray-700 mb-1">Employee
+                                    Count</label>
                                 <input type="number" id="employeeCount" name="employeeCount" min="0"
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             </div>
 
                             <div>
-                                <label for="deptType" class="block text-sm font-medium text-gray-700 mb-1">Department Type *</label>
+                                <label for="deptType" class="block text-sm font-medium text-gray-700 mb-1">Department
+                                    Type *</label>
                                 <select id="deptType" name="deptType" required
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     <option value="">Select Type</option>
@@ -321,20 +263,24 @@
                         </div>
 
                         <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                            <textarea id="description" name="description" rows="3" placeholder="Department responsibilities and overview..."
+                            <label for="description"
+                                class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                            <textarea id="description" name="description" rows="3"
+                                placeholder="Department responsibilities and overview..."
                                 class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                                <label for="location"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Location</label>
                                 <input type="text" id="location" name="location" placeholder="Building/Floor/Area"
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             </div>
 
                             <div>
-                                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status *</label>
+                                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status
+                                    *</label>
                                 <select id="status" name="status" required
                                     class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                     <option value="active">Active</option>
@@ -345,8 +291,10 @@
                     </form>
                 </div>
                 <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                    <button id="cancelBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</button>
-                    <button id="saveDeptBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save Department</button>
+                    <button id="cancelBtn"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</button>
+                    <button id="saveDeptBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save
+                        Department</button>
                 </div>
             </div>
         </div>
@@ -464,9 +412,8 @@
                                     <p class="text-sm text-gray-500">${dept.code}</p>
                                 </div>
                             </div>
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                dept.status === 'active' ? 'status-active' : 'status-inactive'
-                            }">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${dept.status === 'active' ? 'status-active' : 'status-inactive'
+                    }">
                                 ${dept.status.charAt(0).toUpperCase() + dept.status.slice(1)}
                             </span>
                         </div>
@@ -542,9 +489,8 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                dept.status === 'active' ? 'status-active' : 'status-inactive'
-                            }">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${dept.status === 'active' ? 'status-active' : 'status-inactive'
+                    }">
                                 <i class="fas fa-circle mr-1"></i>
                                 ${dept.status.charAt(0).toUpperCase() + dept.status.slice(1)}
                             </span>
@@ -615,8 +561,8 @@
                 const statusMatch = statusFilter === 'all' || dept.status === statusFilter;
                 const typeMatch = typeFilter === 'all' || dept.type === typeFilter;
                 const searchMatch = dept.name.toLowerCase().includes(searchTerm) ||
-                                  dept.code.toLowerCase().includes(searchTerm) ||
-                                  dept.manager.toLowerCase().includes(searchTerm);
+                    dept.code.toLowerCase().includes(searchTerm) ||
+                    dept.manager.toLowerCase().includes(searchTerm);
 
                 return statusMatch && typeMatch && searchMatch;
             });

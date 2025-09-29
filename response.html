@@ -7,93 +7,8 @@
     <title>Response Rate - Yanmar Quality Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        .sidebar-collapsed {
-            width: 64px;
-        }
-
-        .sidebar-expanded {
-            width: 256px;
-        }
-
-        .sidebar-transition {
-            transition: width 100ms linear;
-        }
-
-        .menu-icon {
-            width: 20px;
-            text-align: center;
-        }
-
-        .menu-text {
-            white-space: nowrap;
-        }
-
-        .sidebar-collapsed .menu-text {
-            display: none;
-        }
-
-        .sidebar-expanded .menu-text {
-            display: inline;
-        }
-
-        .tooltip {
-            display: none;
-        }
-
-        .group.show-tooltip .tooltip {
-            display: block;
-        }
-
-        .menu-item-hover:hover {
-            background-color: #f3f4f6;
-        }
-
-        .response-excellent {
-            color: #059669;
-            font-weight: 600;
-        }
-
-        .response-good {
-            color: #10b981;
-            font-weight: 600;
-        }
-
-        .response-average {
-            color: #f59e0b;
-            font-weight: 600;
-        }
-
-        .response-poor {
-            color: #dc2626;
-            font-weight: 600;
-        }
-
-        .response-very-poor {
-            color: #b91c1c;
-            font-weight: 600;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .progress-bar {
-            transition: width 0.3s ease-in-out;
-        }
-    </style>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
 </head>
 
 <body class="bg-gray-50">
@@ -109,7 +24,8 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-2xl font-bold text-gray-800">Response Rate Analysis</h2>
-                        <p class="text-gray-600 mt-1">Average response time performance by suppliers and internal departments</p>
+                        <p class="text-gray-600 mt-1">Average response time performance by suppliers and internal
+                            departments</p>
                     </div>
                     <div class="flex items-center space-x-3">
                         <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
@@ -241,13 +157,27 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company/Department</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Parts</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Response Time</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Response</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Company/Department</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Type</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Total Parts</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Avg Response Time</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Performance</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Last Response</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody id="responseTableBody" class="bg-white divide-y divide-gray-200">
@@ -258,11 +188,14 @@
                 <div class="px-4 py-3 border-t border-gray-200 bg-gray-50">
                     <div class="flex items-center justify-between">
                         <div class="text-sm text-gray-700">
-                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span id="totalRecords">0</span> results
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span
+                                id="totalRecords">0</span> results
                         </div>
                         <div class="flex space-x-2">
-                            <button id="prevPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
-                            <button id="nextPage" class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+                            <button id="prevPage"
+                                class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                            <button id="nextPage"
+                                class="px-3 py-1 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
                         </div>
                     </div>
                 </div>
@@ -313,12 +246,18 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Part Number</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Problem</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Report Date</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Response Date</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Response Time</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Part
+                                        Number</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Problem
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Report
+                                        Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Response
+                                        Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Response
+                                        Time</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="historyTableBody" class="bg-white divide-y divide-gray-200">
@@ -328,7 +267,8 @@
                     </div>
                 </div>
                 <div class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
-                    <button id="closeModalBtn" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Close</button>
+                    <button id="closeModalBtn"
+                        class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Close</button>
                 </div>
             </div>
         </div>
@@ -506,9 +446,8 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                company.type === 'internal' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                            }">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${company.type === 'internal' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                    }">
                                 <i class="fas ${company.type === 'internal' ? 'fa-building' : 'fa-truck'} mr-1"></i>
                                 ${company.type.charAt(0).toUpperCase() + company.type.slice(1)}
                             </span>
