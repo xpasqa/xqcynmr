@@ -121,4 +121,46 @@ console.log('header injected into #navbar-container');
 document.body.insertAdjacentHTML('afterbegin', header);
 console.warn('#navbar-container not found — injected header at top of body as fallback');
 }
+
+// Add sidebar toggle functionality
+setTimeout(() => {
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+
+    if (sidebarToggle && sidebar) {
+        let isToggled = false;
+
+        sidebarToggle.addEventListener('click', () => {
+            isToggled = !isToggled;
+
+            if (isToggled) {
+                // Show sidebar
+                sidebar.style.left = '0';
+                if (mainContent) {
+                    mainContent.style.marginLeft = '16rem';
+                    mainContent.style.transition = 'margin-left 200ms ease-out';
+                }
+                // Change icon to X
+                if (toggleIcon) {
+                    toggleIcon.classList.remove('fa-bars');
+                    toggleIcon.classList.add('fa-times');
+                }
+            } else {
+                // Hide sidebar
+                sidebar.style.left = '-16rem';
+                if (mainContent) {
+                    mainContent.style.marginLeft = '0';
+                    mainContent.style.transition = 'margin-left 200ms ease-out';
+                }
+                // Change icon to hamburger
+                if (toggleIcon) {
+                    toggleIcon.classList.remove('fa-times');
+                    toggleIcon.classList.add('fa-bars');
+                }
+            }
+        });
+    }
+}, 100); // Small delay to ensure sidebar is rendered
 });
