@@ -11,25 +11,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        /* Toggle section styling */
-        .toggle-container {
-            margin-bottom: 2rem !important;
-        }
-
-        .toggle-section {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .toggle-section.collapsed {
-            margin-bottom: 0 !important;
-        }
-
-        /* Ensure proper spacing for collapsed state */
-        .toggle-container:has(.collapsed) {
-            margin-bottom: 2rem !important;
-        }
-    </style>
     <script src="components/header.js"></script>
     <script src="components/sidebar.js"></script>
 </head>
@@ -87,7 +68,7 @@
             </div>
 
             <!-- Report Form -->
-            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
                 <form class="p-6 space-y-6" method="post" id="reportForm">
 
                     <!-- Report Info Section (Read-only) -->
@@ -347,7 +328,7 @@
             </div>
 
             <!-- Temporary Action Box -->
-            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
                 <form class="p-6 space-y-6" method="post" id="vendorReplyForm">
 
                     <!-- Temporary Action Section -->
@@ -466,311 +447,199 @@
                             </label>
                         </div>
                     </div>
-                </form>
-            </div>
 
-            <!-- Detail Analysis Title -->
-            <div id="detailAnalysisTitle" class="mb-6 mt-8 hidden">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Detail Analysis</h3>
-                <p class="text-gray-600">Provide detailed analysis including process flow, problem analysis, and countermeasures.</p>
-            </div>
-
-            <!-- Advanced Analysis Section -->
-            <div id="advancedAnalysisSection" class="hidden">
-                <!-- Process Flow and Problem Analysis (Simple) -->
-                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('processFlowSection')">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-lg font-medium text-gray-900">Process Flow & Problem Analysis</h2>
-                            <i id="processFlowIcon" class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
-                        </div>
-                    </div>
-                    <div id="processFlowSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Process Flow -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Process Flow</label>
-                                <textarea
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm resize-none"
-                                    rows="3"
-                                    placeholder="Describe the process flow that led to this issue..."></textarea>
-                            </div>
-
-                            <!-- Problem Analysis -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Problem Analysis</label>
-                                <textarea
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm resize-none"
-                                    rows="3" placeholder="Analyze the root cause of the problem..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Problem Analysis: Why Occurs Section -->
-                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('whyOccursSection')">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-lg font-medium text-gray-900">Problem Analysis: Why Occurs?</h2>
-                            <i id="whyOccursIcon" class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
-                        </div>
-                    </div>
-                    <div id="whyOccursSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <!-- MAN -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">MAN</h4>
-                                    <button type="button" onclick="addTextBox('man-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="man-analysis" class="space-y-2">
+                    <!-- Advanced Analysis Section -->
+                    <div id="advancedAnalysisSection" class="hidden">
+                        <!-- Process Flow and Basic Problem Analysis -->
+                        <div class="mb-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Process Flow -->
+                                <div>
+                                    <label class="block text-base font-medium text-gray-700 mb-2">Process Flow</label>
                                     <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base resize-none"
                                         rows="3"
-                                        placeholder="Analyze human factors contributing to the problem..."></textarea>
+                                        placeholder="Describe the process flow that led to this issue..."></textarea>
                                 </div>
-                            </div>
 
-                            <!-- METHOD -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">METHOD</h4>
-                                    <button type="button" onclick="addTextBox('method-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="method-analysis" class="space-y-2">
+                                <!-- Problem Analysis -->
+                                <div>
+                                    <label class="block text-base font-medium text-gray-700 mb-2">Problem
+                                        Analysis</label>
                                     <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze process/method factors contributing to the problem..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- MATERIAL -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">MATERIAL</h4>
-                                    <button type="button" onclick="addTextBox('material-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="material-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze material factors contributing to the problem..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- MACHINE -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">MACHINE</h4>
-                                    <button type="button" onclick="addTextBox('machine-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="machine-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze machine/equipment factors contributing to the problem..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- ENVIRONMENT -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">ENVIRONMENT</h4>
-                                    <button type="button" onclick="addTextBox('environment-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="environment-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze environmental factors contributing to the problem..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- ROOT CAUSE -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">ROOT CAUSE</h4>
-                                    <button type="button" onclick="addTextBox('rootcause-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="rootcause-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3" placeholder="Identify the root cause of the problem..."></textarea>
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base resize-none"
+                                        rows="3" placeholder="Analyze the root cause of the problem..."></textarea>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <!-- Problem Analysis Section -->
+                        <div class="mb-8">
+                            <h4 class="text-base font-semibold text-gray-800 mb-6 flex items-center">
+                                <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                Problem Analysis
+                            </h4>
 
-                <!-- Problem Analysis: Why Flow Out Section -->
-                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('whyFlowOutSection')">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-lg font-medium text-gray-900">Problem Analysis: Why Flow Out?</h2>
-                            <i id="whyFlowOutIcon" class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                                <!-- MAN -->
+                                <div class="border border-gray-300 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h5 class="text-base font-semibold text-gray-800">MAN</h5>
+                                        <button type="button" onclick="addTextBox('man-analysis')"
+                                            class="text-gray-600 hover:text-gray-800 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Add More
+                                        </button>
+                                    </div>
+                                    <div id="man-analysis" class="space-y-2">
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                            rows="3"
+                                            placeholder="Analyze human factors contributing to the problem..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- METHOD -->
+                                <div class="border border-gray-300 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h5 class="text-base font-semibold text-gray-800">METHOD</h5>
+                                        <button type="button" onclick="addTextBox('method-analysis')"
+                                            class="text-gray-600 hover:text-gray-800 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Add More
+                                        </button>
+                                    </div>
+                                    <div id="method-analysis" class="space-y-2">
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                            rows="3"
+                                            placeholder="Analyze process/method factors contributing to the problem..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- MATERIAL -->
+                                <div class="border border-gray-300 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h5 class="text-base font-semibold text-gray-800">MATERIAL</h5>
+                                        <button type="button" onclick="addTextBox('material-analysis')"
+                                            class="text-gray-600 hover:text-gray-800 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Add More
+                                        </button>
+                                    </div>
+                                    <div id="material-analysis" class="space-y-2">
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                            rows="3"
+                                            placeholder="Analyze material factors contributing to the problem..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- MACHINE -->
+                                <div class="border border-gray-300 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h5 class="text-base font-semibold text-gray-800">MACHINE</h5>
+                                        <button type="button" onclick="addTextBox('machine-analysis')"
+                                            class="text-gray-600 hover:text-gray-800 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Add More
+                                        </button>
+                                    </div>
+                                    <div id="machine-analysis" class="space-y-2">
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                            rows="3"
+                                            placeholder="Analyze machine/equipment factors contributing to the problem..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- ENVIRONMENT -->
+                                <div class="border border-gray-300 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h5 class="text-base font-semibold text-gray-800">ENVIRONMENT</h5>
+                                        <button type="button" onclick="addTextBox('environment-analysis')"
+                                            class="text-gray-600 hover:text-gray-800 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Add More
+                                        </button>
+                                    </div>
+                                    <div id="environment-analysis" class="space-y-2">
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                            rows="3"
+                                            placeholder="Analyze environmental factors contributing to the problem..."></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- ROOT CAUSE -->
+                                <div class="border border-gray-300 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h5 class="text-base font-semibold text-gray-800">ROOT CAUSE</h5>
+                                        <button type="button" onclick="addTextBox('rootcause-analysis')"
+                                            class="text-gray-600 hover:text-gray-800 text-sm">
+                                            <i class="fas fa-plus mr-1"></i>Add More
+                                        </button>
+                                    </div>
+                                    <div id="rootcause-analysis" class="space-y-2">
+                                        <textarea
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
+                                            rows="3" placeholder="Identify the root cause of the problem..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div id="whyFlowOutSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                            <!-- MAN -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">MAN</h4>
-                                    <button type="button" onclick="addTextBox('man-flowout-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="man-flowout-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze human factors that allowed the problem to flow out..."></textarea>
-                                </div>
-                            </div>
 
-                            <!-- METHOD -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">METHOD</h4>
-                                    <button type="button" onclick="addTextBox('method-flowout-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="method-flowout-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze process/method factors that allowed the problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- MATERIAL -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">MATERIAL</h4>
-                                    <button type="button" onclick="addTextBox('material-flowout-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="material-flowout-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze material factors that allowed the problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- MACHINE -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">MACHINE</h4>
-                                    <button type="button" onclick="addTextBox('machine-flowout-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="machine-flowout-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze machine/equipment factors that allowed the problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- ENVIRONMENT -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">ENVIRONMENT</h4>
-                                    <button type="button" onclick="addTextBox('environment-flowout-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="environment-flowout-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3"
-                                        placeholder="Analyze environmental factors that allowed the problem to flow out..."></textarea>
-                                </div>
-                            </div>
-
-                            <!-- ROOT CAUSE -->
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <div class="flex items-center justify-between mb-3">
-                                    <h4 class="font-semibold text-gray-900">ROOT CAUSE</h4>
-                                    <button type="button" onclick="addTextBox('rootcause-flowout-analysis')"
-                                        class="text-gray-600 hover:text-gray-800 text-sm">
-                                        <i class="fas fa-plus mr-1"></i>Add More
-                                    </button>
-                                </div>
-                                <div id="rootcause-flowout-analysis" class="space-y-2">
-                                    <textarea
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3" placeholder="Identify the root cause of why the problem flowed out..."></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Countermeasure for Occurs Section -->
-                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('countermeasureSection')">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-lg font-medium text-gray-900">Countermeasure for Occurs</h2>
-                            <div class="flex items-center space-x-3">
-                                <button type="button" onclick="event.stopPropagation(); openCountermeasureModal()"
+                        <!-- Countermeasure for Occurs Section -->
+                        <div class="mb-8">
+                            <div class="flex items-center justify-between mb-6">
+                                <h4 class="text-base font-semibold text-gray-800 flex items-center">
+                                    <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Countermeasure for Occurs
+                                </h4>
+                                <button type="button" onclick="openCountermeasureModal()"
                                     class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center space-x-2">
                                     <i class="fas fa-plus"></i>
                                     <span>Add Countermeasure</span>
                                 </button>
-                                <i id="countermeasureIcon" class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                No</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Description</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Name</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Phone</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Effective Date</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Remarks</th>
+                                            <th
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="countermeasureTableBody" class="bg-white divide-y divide-gray-200">
+                                        <!-- Dynamic countermeasure rows will be added here -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div id="countermeasureSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Phone</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Effective Date</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Remarks</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="countermeasureTableBody" class="bg-white divide-y divide-gray-200">
-                                    <!-- Dynamic countermeasure rows will be added here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -1180,78 +1049,31 @@
                 // Advanced Analysis section toggle
                 const enableAdvancedAnalysisCheckbox = document.getElementById('enableAdvancedAnalysis');
                 const advancedAnalysisSection = document.getElementById('advancedAnalysisSection');
-                const detailAnalysisTitle = document.getElementById('detailAnalysisTitle');
 
                 enableAdvancedAnalysisCheckbox.addEventListener('change', function () {
                     if (this.checked) {
-                        detailAnalysisTitle.classList.remove('hidden');
                         advancedAnalysisSection.classList.remove('hidden');
                         // Add smooth transition
-                        detailAnalysisTitle.style.opacity = '0';
                         advancedAnalysisSection.style.opacity = '0';
                         setTimeout(() => {
-                            detailAnalysisTitle.style.transition = 'opacity 0.3s ease-in-out';
                             advancedAnalysisSection.style.transition = 'opacity 0.3s ease-in-out';
-                            detailAnalysisTitle.style.opacity = '1';
                             advancedAnalysisSection.style.opacity = '1';
                         }, 10);
                     } else {
-                        detailAnalysisTitle.style.transition = 'opacity 0.3s ease-in-out';
                         advancedAnalysisSection.style.transition = 'opacity 0.3s ease-in-out';
-                        detailAnalysisTitle.style.opacity = '0';
                         advancedAnalysisSection.style.opacity = '0';
                         setTimeout(() => {
-                            detailAnalysisTitle.classList.add('hidden');
                             advancedAnalysisSection.classList.add('hidden');
                         }, 300);
                     }
                 });
             });
 
-            // Toggle section collapse/expand functionality
-            function toggleSection(sectionId) {
-                const section = document.getElementById(sectionId);
-                const icon = document.getElementById(sectionId.replace('Section', 'Icon'));
-                const container = section.parentElement;
-
-                if (section.classList.contains('collapsed')) {
-                    // Expand
-                    section.classList.remove('collapsed');
-                    section.style.maxHeight = section.scrollHeight + 'px';
-                    section.style.paddingTop = '1.5rem';
-                    section.style.paddingBottom = '1.5rem';
-                    section.style.marginBottom = '0';
-                    container.style.marginBottom = '2rem';
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-up');
-                    icon.style.transform = 'rotate(0deg)';
-
-                    // Reset maxHeight after animation
-                    setTimeout(() => {
-                        section.style.maxHeight = 'none';
-                    }, 300);
-                } else {
-                    // Collapse
-                    section.classList.add('collapsed');
-                    section.style.maxHeight = section.scrollHeight + 'px';
-                    // Force reflow
-                    section.offsetHeight;
-                    section.style.maxHeight = '0px';
-                    section.style.paddingTop = '0';
-                    section.style.paddingBottom = '0';
-                    section.style.marginBottom = '0';
-                    container.style.marginBottom = '2rem';
-                    icon.classList.remove('fa-chevron-up');
-                    icon.classList.add('fa-chevron-down');
-                    icon.style.transform = 'rotate(180deg)';
-                }
-            }
-
             // Add text box functionality
             function addTextBox(containerId) {
                 const container = document.getElementById(containerId);
                 const textarea = document.createElement('textarea');
-                textarea.className = 'w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm';
+                textarea.className = 'w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base';
                 textarea.rows = 3;
                 textarea.placeholder = 'Additional analysis...';
                 container.appendChild(textarea);
