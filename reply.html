@@ -472,40 +472,48 @@
             <!-- Detail Analysis Title -->
             <div id="detailAnalysisTitle" class="mb-6 mt-8 hidden">
                 <h3 class="text-xl font-bold text-gray-800 mb-2">Detail Analysis</h3>
-                <p class="text-gray-600">Provide detailed analysis including process flow, problem analysis, and countermeasures.</p>
+                <p class="text-gray-600">Provide detailed analysis including process flow, problem analysis, and
+                    countermeasures.</p>
             </div>
 
             <!-- Advanced Analysis Section -->
             <div id="advancedAnalysisSection" class="hidden">
                 <!-- Process Flow and Problem Analysis (Simple) -->
                 <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('processFlowSection')">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('processFlowSection')">
                         <div class="flex items-center justify-between">
                             <h2 class="text-lg font-medium text-gray-900">Process Flow</h2>
-                            <i id="processFlowIcon" class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
+                            <i id="processFlowIcon"
+                                class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
                         </div>
                     </div>
-                    <div id="processFlowSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed" style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
+                    <div id="processFlowSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed"
+                        style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
                         <!-- Process Flow -->
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Process Flow</label>
                             <textarea
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm resize-none"
-                                rows="3"
-                                placeholder="Describe the process flow that led to this issue..."></textarea>
+                                rows="3" placeholder="Describe the process flow that led to this issue..."></textarea>
                         </div>
                     </div>
                 </div>
 
                 <!-- Problem Analysis: Why Occurs Section -->
                 <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('whyOccursSection')">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('whyOccursSection')">
                         <div class="flex items-center justify-between">
                             <h2 class="text-lg font-medium text-gray-900">Problem Analysis: Why Occurs?</h2>
-                            <i id="whyOccursIcon" class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
+                            <i id="whyOccursIcon"
+                                class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
                         </div>
                     </div>
-                    <div id="whyOccursSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed" style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
+                    <div id="whyOccursSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed"
+                        style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- MAN -->
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -613,13 +621,17 @@
 
                 <!-- Problem Analysis: Why Flow Out Section -->
                 <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('whyFlowOutSection')">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('whyFlowOutSection')">
                         <div class="flex items-center justify-between">
                             <h2 class="text-lg font-medium text-gray-900">Problem Analysis: Why Flow Out?</h2>
-                            <i id="whyFlowOutIcon" class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
+                            <i id="whyFlowOutIcon"
+                                class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
                         </div>
                     </div>
-                    <div id="whyFlowOutSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed" style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
+                    <div id="whyFlowOutSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed"
+                        style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- MAN -->
                             <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
@@ -718,7 +730,8 @@
                                 <div id="rootcause-flowout-analysis" class="space-y-2">
                                     <textarea
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                        rows="3" placeholder="Identify the root cause of why the problem flowed out..."></textarea>
+                                        rows="3"
+                                        placeholder="Identify the root cause of why the problem flowed out..."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -727,23 +740,35 @@
 
                 <!-- Countermeasure for Occurs Section -->
                 <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('countermeasureSection')">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('countermeasureSection')">
                         <div class="flex items-center justify-between">
                             <h2 class="text-lg font-medium text-gray-900">Countermeasure for Occurs</h2>
-                            <i id="countermeasureIcon" class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
+                            <i id="countermeasureIcon"
+                                class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
                         </div>
                     </div>
-                    <div id="countermeasureSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed" style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
+                    <div id="countermeasureSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed"
+                        style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PIC</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Verification</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Description</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PIC
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Due
+                                            Date</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Status</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Evidence</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Verification</th>
                                     </tr>
                                 </thead>
                                 <tbody id="countermeasureTableBody" class="bg-white divide-y divide-gray-200">
@@ -765,23 +790,35 @@
 
                 <!-- Countermeasure for Flow Out Section -->
                 <div class="bg-white rounded-lg shadow mb-8 toggle-container">
-                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleSection('countermeasureFlowOutSection')">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('countermeasureFlowOutSection')">
                         <div class="flex items-center justify-between">
                             <h2 class="text-lg font-medium text-gray-900">Countermeasure for Flow Out</h2>
-                            <i id="countermeasureFlowOutIcon" class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
+                            <i id="countermeasureFlowOutIcon"
+                                class="fas fa-chevron-down text-gray-500 transition-transform duration-200"></i>
                         </div>
                     </div>
-                    <div id="countermeasureFlowOutSection" class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed" style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
+                    <div id="countermeasureFlowOutSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section collapsed"
+                        style="max-height: 0px; padding-top: 0; padding-bottom: 0;">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PIC</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Due Date</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Verification</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Description</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PIC
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Due
+                                            Date</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Status</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Evidence</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Verification</th>
                                     </tr>
                                 </thead>
                                 <tbody id="countermeasureFlowOutTableBody" class="bg-white divide-y divide-gray-200">
@@ -797,6 +834,157 @@
                                 <i class="fas fa-plus"></i>
                                 <span>Add Countermeasure</span>
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication History -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-medium text-gray-900">Communication History</h2>
+                    <p class="text-sm text-gray-500">Review feedback and discussion thread with admin</p>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-6">
+                        <!-- Admin Review #1 -->
+                        <div class="flex space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user-shield text-red-600 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm font-medium text-gray-900">Admin Review</span>
+                                            <span
+                                                class="px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">
+                                                ❌ Rejected
+                                            </span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">December 16, 2024 - 09:15 AM</span>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-700 mb-1">Countermeasure
+                                                Assessment:</h4>
+                                            <p class="text-sm text-gray-800">The proposed calibration management system
+                                                lacks specific implementation timeline and responsible personnel
+                                                assignments. Evidence documentation is insufficient to demonstrate
+                                                effectiveness of training programs. The countermeasure description is
+                                                too general and doesn't address the root cause adequately.</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-sm font-medium text-gray-700 mb-1">Administrative
+                                                Recommendations:</h4>
+                                            <p class="text-sm text-gray-800">Recommend establishing monthly calibration
+                                                audits with documented verification procedures. Suggest implementing
+                                                competency assessment framework for operators with quarterly
+                                                evaluations. Please provide detailed implementation schedule with
+                                                specific milestones and responsible person for each action item.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vendor Response #1 -->
+                        <div class="flex space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-blue-600 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm font-medium text-gray-900">Vendor Response</span>
+                                            <span
+                                                class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                                                📝 Updated
+                                            </span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">December 16, 2024 - 02:30 PM</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-800">Thank you for the detailed feedback. We have
+                                            revised our countermeasure plan based on your recommendations:</p>
+                                        <br>
+                                        <p class="text-sm text-gray-800"><strong>Updated Implementation Plan:</strong>
+                                        </p>
+                                        <ul class="list-disc list-inside text-sm text-gray-800 mt-2 space-y-1">
+                                            <li>Week 1-2: Ahmad Wijaya will implement automated calibration tracking
+                                                system</li>
+                                            <li>Week 3: Conduct comprehensive operator training with competency
+                                                assessment</li>
+                                            <li>Week 4: Establish monthly audit schedule with verification checkpoints
+                                            </li>
+                                            <li>Monthly: Quality review meetings to monitor effectiveness</li>
+                                        </ul>
+                                        <br>
+                                        <p class="text-sm text-gray-800">Additional evidence documentation has been
+                                            uploaded including training certificates and calibration records. Please
+                                            review the updated countermeasure table above.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Follow-up -->
+                        <div class="flex space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user-shield text-green-600 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm font-medium text-gray-900">Admin Follow-up</span>
+                                            <span
+                                                class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                                                ✅ Approved with Conditions
+                                            </span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">December 17, 2024 - 08:45 AM</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-800">Excellent improvement in the countermeasure
+                                            plan. The detailed timeline and specific personnel assignments address our
+                                            previous concerns. The additional evidence documentation provides adequate
+                                            verification of implementation capability.</p>
+                                        <br>
+                                        <p class="text-sm text-gray-800"><strong>Conditional Approval
+                                                Requirements:</strong></p>
+                                        <ul class="list-disc list-inside text-sm text-gray-800 mt-2 space-y-1">
+                                            <li>Submit weekly progress reports during implementation phase</li>
+                                            <li>Provide calibration audit results within 30 days</li>
+                                            <li>Schedule follow-up verification meeting in 6 weeks</li>
+                                        </ul>
+                                        <br>
+                                        <p class="text-sm text-gray-800">Please confirm acceptance of these conditions
+                                            before proceeding with implementation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Status -->
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-sm text-gray-600">Current Status:</span>
+                                    <span
+                                        class="px-3 py-1 text-sm font-medium bg-orange-100 text-orange-800 rounded-full">
+                                        ⏳ Pending Vendor Confirmation
+                                    </span>
+                                </div>
+                                <span class="text-xs text-gray-500">Last updated: December 17, 2024</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -862,6 +1050,36 @@
                             <option value="Done">Done</option>
                         </select>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Evidence Photos</label>
+                        <input type="file" id="countermeasureImageUpload" accept="image/*" multiple class="hidden">
+                        <div id="countermeasureImageUploadPrompt"
+                            class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-red-500 transition-colors cursor-pointer"
+                            onclick="document.getElementById('countermeasureImageUpload').click()">
+                            <svg class="mx-auto h-8 w-8 text-gray-400" stroke="currentColor" fill="none"
+                                viewBox="0 0 48 48">
+                                <path
+                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray-600 mt-1">Click to upload evidence photos</p>
+                            <p class="text-xs text-gray-400">PNG, JPG max 10MB</p>
+                            <div id="countermeasureUploadStatus" class="mt-2 text-xs text-blue-600 hidden">
+                                <i class="fas fa-spinner fa-spin mr-1"></i>Uploading...
+                            </div>
+                        </div>
+                        <div id="countermeasureImageThumbnails" class="grid grid-cols-3 gap-2 hidden mt-3"></div>
+                        <div id="countermeasureAddMoreImages" class="hidden mt-2">
+                            <label for="countermeasureImageUpload"
+                                class="cursor-pointer inline-flex items-center px-2 py-1 text-xs bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                                Add More
+                            </label>
+                        </div>
+                    </div>
                     <div class="flex justify-end space-x-3 pt-4">
                         <button type="button" onclick="closeCountermeasureModal()"
                             class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
@@ -881,7 +1099,8 @@
             <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <div class="flex justify-between items-center">
-                        <h3 id="modalFlowOutTitle" class="text-lg font-medium text-gray-900">Add Countermeasure Flow Out</h3>
+                        <h3 id="modalFlowOutTitle" class="text-lg font-medium text-gray-900">Add Countermeasure Flow Out
+                        </h3>
                         <button onclick="closeCountermeasureFlowOutModal()" class="text-gray-400 hover:text-gray-600">
                             <i class="fas fa-times"></i>
                         </button>
@@ -913,6 +1132,37 @@
                             <option value="In Progress">In Progress</option>
                             <option value="Done">Done</option>
                         </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Evidence Photos</label>
+                        <input type="file" id="countermeasureFlowOutImageUpload" accept="image/*" multiple
+                            class="hidden">
+                        <div id="countermeasureFlowOutImageUploadPrompt"
+                            class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-red-500 transition-colors cursor-pointer"
+                            onclick="document.getElementById('countermeasureFlowOutImageUpload').click()">
+                            <svg class="mx-auto h-8 w-8 text-gray-400" stroke="currentColor" fill="none"
+                                viewBox="0 0 48 48">
+                                <path
+                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <p class="text-sm text-gray-600 mt-1">Click to upload evidence photos</p>
+                            <p class="text-xs text-gray-400">PNG, JPG max 10MB</p>
+                            <div id="countermeasureFlowOutUploadStatus" class="mt-2 text-xs text-blue-600 hidden">
+                                <i class="fas fa-spinner fa-spin mr-1"></i>Uploading...
+                            </div>
+                        </div>
+                        <div id="countermeasureFlowOutImageThumbnails" class="grid grid-cols-3 gap-2 hidden mt-3"></div>
+                        <div id="countermeasureFlowOutAddMoreImages" class="hidden mt-2">
+                            <label for="countermeasureFlowOutImageUpload"
+                                class="cursor-pointer inline-flex items-center px-2 py-1 text-xs bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
+                                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                                Add More
+                            </label>
+                        </div>
                     </div>
                     <div class="flex justify-end space-x-3 pt-4">
                         <button type="button" onclick="closeCountermeasureFlowOutModal()"
@@ -1130,14 +1380,8 @@
                             const thumbnailDiv = document.createElement('div');
                             thumbnailDiv.className = 'relative group cursor-pointer';
                             thumbnailDiv.innerHTML = `
-                                <div class="aspect-square bg-slate-100 rounded-lg overflow-hidden border-2 border-slate-200 hover:border-red-600 transition-colors shadow-sm">
-                                    <img src="${e.target.result}" alt="Temp Image ${index + 1}" class="w-full h-full object-cover" />
-                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-200 flex items-center justify-center">
-                                        <svg class="w-6 h-6 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                        </svg>
-                                    </div>
+                                <div class="aspect-square rounded-lg overflow-hidden hover:opacity-80 transition-opacity">
+                                    <img src="${e.target.result}" alt="Temp Image ${index + 1}" class="w-full h-full object-cover rounded-lg" />
                                     <button class="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center shadow-lg" onclick="removeTempImage(${index})">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -1208,8 +1452,8 @@
                                 const thumbnailDiv = document.createElement('div');
                                 thumbnailDiv.className = 'relative group cursor-pointer';
                                 thumbnailDiv.innerHTML = `
-                                    <div class="aspect-square rounded-lg overflow-hidden border-2 border-slate-200 hover:border-red-600 transition-colors shadow-sm relative">
-                                        <video class="w-full h-full object-cover" muted>
+                                    <div class="aspect-square rounded-lg overflow-hidden hover:opacity-80 transition-opacity relative">
+                                        <video class="w-full h-full object-cover rounded-lg" muted>
                                             <source src="${video.src}" type="video/mp4">
                                         </video>
                                         <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-200">
@@ -1350,10 +1594,12 @@
             // Countermeasure functionality
             let countermeasures = [];
             let editingCountermeasure = null;
+            let countermeasureUploadedImages = [];
 
             // Countermeasure Flow Out functionality
             let countermeasuresFlowOut = [];
             let editingCountermeasureFlowOut = null;
+            let countermeasureFlowOutUploadedImages = [];
 
             function openCountermeasureModal(id = null) {
                 editingCountermeasure = id;
@@ -1361,6 +1607,9 @@
                 const form = document.getElementById('countermeasureForm');
                 const title = document.getElementById('modalTitle');
                 const submitBtn = document.getElementById('submitBtnText');
+
+                // Reset images array
+                countermeasureUploadedImages = [];
 
                 if (id) {
                     const countermeasure = countermeasures.find(c => c.id === id);
@@ -1371,12 +1620,34 @@
                         form.pic.value = countermeasure.pic;
                         form.dueDate.value = countermeasure.dueDate;
                         form.status.value = countermeasure.status;
+                        // Load existing images
+                        if (countermeasure.evidencePhotos) {
+                            countermeasureUploadedImages = [...countermeasure.evidencePhotos];
+                        }
                     }
                 } else {
                     title.textContent = 'Add Countermeasure';
                     submitBtn.textContent = 'Add Countermeasure';
                     form.reset();
                 }
+
+                // Reset upload UI
+                setTimeout(() => {
+                    const uploadPrompt = document.getElementById('countermeasureImageUploadPrompt');
+                    const thumbnails = document.getElementById('countermeasureImageThumbnails');
+                    const addMore = document.getElementById('countermeasureAddMoreImages');
+
+                    if (countermeasureUploadedImages.length > 0) {
+                        uploadPrompt.classList.add('hidden');
+                        thumbnails.classList.remove('hidden');
+                        addMore.classList.remove('hidden');
+                        displayCountermeasureImageThumbnails();
+                    } else {
+                        uploadPrompt.classList.remove('hidden');
+                        thumbnails.classList.add('hidden');
+                        addMore.classList.add('hidden');
+                    }
+                }, 100);
 
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
@@ -1404,6 +1675,15 @@
                 const tbody = document.getElementById('countermeasureTableBody');
                 tbody.innerHTML = countermeasures.map((item, index) => {
                     const statusBadge = getStatusBadge(item.status);
+                    const evidencePhotos = item.evidencePhotos || [];
+                    const evidenceCell = evidencePhotos.length > 0
+                        ? evidencePhotos.map((photo, photoIndex) =>
+                            `<img src="${photo}" alt="Evidence ${photoIndex + 1}"
+                                 class="w-8 h-8 object-cover rounded border cursor-pointer hover:opacity-75 transition-opacity mr-1"
+                                 onclick="openImageModal('${photo}', 'Evidence Photo ${photoIndex + 1}')">`
+                        ).join('')
+                        : '<span class="text-gray-400 text-xs">No evidence</span>';
+
                     return `
                     <tr>
                         <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
@@ -1417,6 +1697,11 @@
                                     class="text-blue-600 hover:text-blue-800 text-xs font-medium underline">
                                     Edit
                                 </button>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center flex-wrap">
+                                ${evidenceCell}
                             </div>
                         </td>
                         <td class="px-4 py-3">
@@ -1448,6 +1733,9 @@
                 const title = document.getElementById('modalFlowOutTitle');
                 const submitBtn = document.getElementById('submitFlowOutBtnText');
 
+                // Reset images array
+                countermeasureFlowOutUploadedImages = [];
+
                 if (id) {
                     const countermeasure = countermeasuresFlowOut.find(c => c.id === id);
                     if (countermeasure) {
@@ -1457,12 +1745,34 @@
                         form.pic.value = countermeasure.pic;
                         form.dueDate.value = countermeasure.dueDate;
                         form.status.value = countermeasure.status;
+                        // Load existing images
+                        if (countermeasure.evidencePhotos) {
+                            countermeasureFlowOutUploadedImages = [...countermeasure.evidencePhotos];
+                        }
                     }
                 } else {
                     title.textContent = 'Add Countermeasure Flow Out';
                     submitBtn.textContent = 'Add Countermeasure';
                     form.reset();
                 }
+
+                // Reset upload UI
+                setTimeout(() => {
+                    const uploadPrompt = document.getElementById('countermeasureFlowOutImageUploadPrompt');
+                    const thumbnails = document.getElementById('countermeasureFlowOutImageThumbnails');
+                    const addMore = document.getElementById('countermeasureFlowOutAddMoreImages');
+
+                    if (countermeasureFlowOutUploadedImages.length > 0) {
+                        uploadPrompt.classList.add('hidden');
+                        thumbnails.classList.remove('hidden');
+                        addMore.classList.remove('hidden');
+                        displayCountermeasureFlowOutImageThumbnails();
+                    } else {
+                        uploadPrompt.classList.remove('hidden');
+                        thumbnails.classList.add('hidden');
+                        addMore.classList.add('hidden');
+                    }
+                }, 100);
 
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
@@ -1490,6 +1800,15 @@
                 const tbody = document.getElementById('countermeasureFlowOutTableBody');
                 tbody.innerHTML = countermeasuresFlowOut.map((item, index) => {
                     const statusBadge = getStatusBadge(item.status);
+                    const evidencePhotos = item.evidencePhotos || [];
+                    const evidenceCell = evidencePhotos.length > 0
+                        ? evidencePhotos.map((photo, photoIndex) =>
+                            `<img src="${photo}" alt="Evidence ${photoIndex + 1}"
+                                 class="w-8 h-8 object-cover rounded border cursor-pointer hover:opacity-75 transition-opacity mr-1"
+                                 onclick="openImageModal('${photo}', 'Evidence Photo ${photoIndex + 1}')">`
+                        ).join('')
+                        : '<span class="text-gray-400 text-xs">No evidence</span>';
+
                     return `
                     <tr>
                         <td class="px-4 py-3 text-sm text-gray-900">${index + 1}</td>
@@ -1503,6 +1822,11 @@
                                     class="text-blue-600 hover:text-blue-800 text-xs font-medium underline">
                                     Edit
                                 </button>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3">
+                            <div class="flex items-center flex-wrap">
+                                ${evidenceCell}
                             </div>
                         </td>
                         <td class="px-4 py-3">
@@ -1528,7 +1852,8 @@
                         description: formData.get('description'),
                         pic: formData.get('pic'),
                         dueDate: formData.get('dueDate'),
-                        status: formData.get('status')
+                        status: formData.get('status'),
+                        evidencePhotos: [...countermeasureUploadedImages]
                     };
 
                     if (editingCountermeasure) {
@@ -1556,7 +1881,8 @@
                         description: formData.get('description'),
                         pic: formData.get('pic'),
                         dueDate: formData.get('dueDate'),
-                        status: formData.get('status')
+                        status: formData.get('status'),
+                        evidencePhotos: [...countermeasureFlowOutUploadedImages]
                     };
 
                     if (editingCountermeasureFlowOut) {
@@ -1574,6 +1900,179 @@
                     closeCountermeasureFlowOutModal();
                 });
 
+            });
+
+            // Global functions for image thumbnails
+            function displayCountermeasureImageThumbnails() {
+                const countermeasureImageThumbnails = document.getElementById('countermeasureImageThumbnails');
+                const countermeasureImageUploadPrompt = document.getElementById('countermeasureImageUploadPrompt');
+                const countermeasureAddMoreImages = document.getElementById('countermeasureAddMoreImages');
+
+                countermeasureImageThumbnails.innerHTML = '';
+                if (countermeasureUploadedImages.length > 0) {
+                    countermeasureImageUploadPrompt.classList.add('hidden');
+                    countermeasureImageThumbnails.classList.remove('hidden');
+                    countermeasureAddMoreImages.classList.remove('hidden');
+
+                    countermeasureUploadedImages.forEach((imageData, index) => {
+                        const thumbnailDiv = document.createElement('div');
+                        thumbnailDiv.className = 'relative group cursor-pointer';
+                        thumbnailDiv.innerHTML = `
+                            <div class="aspect-square rounded-lg overflow-hidden hover:opacity-80 transition-opacity">
+                                <img src="${imageData}" alt="Evidence ${index + 1}" class="w-full h-full object-cover rounded-lg" />
+                                <button class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center shadow-lg" onclick="removeCountermeasureImage(${index})">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        `;
+
+                        thumbnailDiv.addEventListener('click', function (event) {
+                            if (!event.target.closest('button')) {
+                                openImageModal(imageData, `Evidence Photo ${index + 1}`);
+                            }
+                        });
+                        countermeasureImageThumbnails.appendChild(thumbnailDiv);
+                    });
+                } else {
+                    countermeasureImageUploadPrompt.classList.remove('hidden');
+                    countermeasureImageThumbnails.classList.add('hidden');
+                    countermeasureAddMoreImages.classList.add('hidden');
+                }
+            }
+
+            function removeCountermeasureImage(index) {
+                countermeasureUploadedImages.splice(index, 1);
+                displayCountermeasureImageThumbnails();
+            }
+
+            function displayCountermeasureFlowOutImageThumbnails() {
+                const countermeasureFlowOutImageThumbnails = document.getElementById('countermeasureFlowOutImageThumbnails');
+                const countermeasureFlowOutImageUploadPrompt = document.getElementById('countermeasureFlowOutImageUploadPrompt');
+                const countermeasureFlowOutAddMoreImages = document.getElementById('countermeasureFlowOutAddMoreImages');
+
+                countermeasureFlowOutImageThumbnails.innerHTML = '';
+                if (countermeasureFlowOutUploadedImages.length > 0) {
+                    countermeasureFlowOutImageUploadPrompt.classList.add('hidden');
+                    countermeasureFlowOutImageThumbnails.classList.remove('hidden');
+                    countermeasureFlowOutAddMoreImages.classList.remove('hidden');
+
+                    countermeasureFlowOutUploadedImages.forEach((imageData, index) => {
+                        const thumbnailDiv = document.createElement('div');
+                        thumbnailDiv.className = 'relative group cursor-pointer';
+                        thumbnailDiv.innerHTML = `
+                            <div class="aspect-square rounded-lg overflow-hidden hover:opacity-80 transition-opacity">
+                                <img src="${imageData}" alt="Evidence ${index + 1}" class="w-full h-full object-cover rounded-lg" />
+                                <button class="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 flex items-center justify-center shadow-lg" onclick="removeCountermeasureFlowOutImage(${index})">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        `;
+
+                        thumbnailDiv.addEventListener('click', function (event) {
+                            if (!event.target.closest('button')) {
+                                openImageModal(imageData, `Evidence Photo ${index + 1}`);
+                            }
+                        });
+                        countermeasureFlowOutImageThumbnails.appendChild(thumbnailDiv);
+                    });
+                } else {
+                    countermeasureFlowOutImageUploadPrompt.classList.remove('hidden');
+                    countermeasureFlowOutImageThumbnails.classList.add('hidden');
+                    countermeasureFlowOutAddMoreImages.classList.add('hidden');
+                }
+            }
+
+            function removeCountermeasureFlowOutImage(index) {
+                countermeasureFlowOutUploadedImages.splice(index, 1);
+                displayCountermeasureFlowOutImageThumbnails();
+            }
+
+            // Countermeasure Image Upload Functionality
+            document.addEventListener('DOMContentLoaded', function () {
+                const countermeasureImageUpload = document.getElementById('countermeasureImageUpload');
+
+                countermeasureImageUpload.addEventListener('change', function (e) {
+                    const newFiles = Array.from(e.target.files);
+                    const imageFiles = newFiles.filter(file => file.type.startsWith('image/'));
+
+                    if (imageFiles.length === 0) return;
+
+                    // Show loading status
+                    const uploadStatus = document.getElementById('countermeasureUploadStatus');
+                    if (uploadStatus) {
+                        uploadStatus.classList.remove('hidden');
+                    }
+
+                    let filesProcessed = 0;
+                    const totalFiles = imageFiles.length;
+
+                    imageFiles.forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            countermeasureUploadedImages.push(e.target.result);
+                            filesProcessed++;
+
+                            // Update display after each file is loaded
+                            displayCountermeasureImageThumbnails();
+
+                            // Hide loading when all files are processed
+                            if (filesProcessed === totalFiles) {
+                                if (uploadStatus) {
+                                    uploadStatus.classList.add('hidden');
+                                }
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+
+                    // Reset the input to allow re-selecting the same files
+                    this.value = '';
+                });
+
+                // Countermeasure Flow Out Image Upload
+                const countermeasureFlowOutImageUpload = document.getElementById('countermeasureFlowOutImageUpload');
+
+                countermeasureFlowOutImageUpload.addEventListener('change', function (e) {
+                    const newFiles = Array.from(e.target.files);
+                    const imageFiles = newFiles.filter(file => file.type.startsWith('image/'));
+
+                    if (imageFiles.length === 0) return;
+
+                    // Show loading status
+                    const uploadStatus = document.getElementById('countermeasureFlowOutUploadStatus');
+                    if (uploadStatus) {
+                        uploadStatus.classList.remove('hidden');
+                    }
+
+                    let filesProcessed = 0;
+                    const totalFiles = imageFiles.length;
+
+                    imageFiles.forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            countermeasureFlowOutUploadedImages.push(e.target.result);
+                            filesProcessed++;
+
+                            // Update display after each file is loaded
+                            displayCountermeasureFlowOutImageThumbnails();
+
+                            // Hide loading when all files are processed
+                            if (filesProcessed === totalFiles) {
+                                if (uploadStatus) {
+                                    uploadStatus.classList.add('hidden');
+                                }
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+
+                    // Reset the input to allow re-selecting the same files
+                    this.value = '';
+                });
             });
 
             // Submit Function

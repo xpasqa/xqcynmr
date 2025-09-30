@@ -327,6 +327,8 @@
                                         <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                             Status</th>
                                         <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Evidence</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                             Verification</th>
                                     </tr>
                                 </thead>
@@ -342,6 +344,16 @@
                                             <span
                                                 class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">In
                                                 Progress</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center flex-wrap">
+                                                <img src="images/baud.png" alt="Evidence 1"
+                                                     class="w-8 h-8 object-cover rounded border cursor-pointer hover:opacity-75 transition-opacity mr-1"
+                                                     onclick="openModal('images/baud.png', 'image')">
+                                                <img src="images/baud-2.png" alt="Evidence 2"
+                                                     class="w-8 h-8 object-cover rounded border cursor-pointer hover:opacity-75 transition-opacity mr-1"
+                                                     onclick="openModal('images/baud-2.png', 'image')">
+                                            </div>
                                         </td>
                                         <td class="px-4 py-3">
                                             <button onclick="toggleVerification(this, 1)"
@@ -361,6 +373,13 @@
                                                 class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">Done</span>
                                         </td>
                                         <td class="px-4 py-3">
+                                            <div class="flex items-center flex-wrap">
+                                                <img src="images/baud.png" alt="Training Evidence"
+                                                     class="w-8 h-8 object-cover rounded border cursor-pointer hover:opacity-75 transition-opacity mr-1"
+                                                     onclick="openModal('images/baud.png', 'image')">
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3">
                                             <button onclick="toggleVerification(this, 2)"
                                                 class="w-6 h-6 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors cursor-pointer">
                                                 <i class="fas fa-check text-xs"></i>
@@ -376,6 +395,11 @@
                                         <td class="px-4 py-3">
                                             <span
                                                 class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Waiting</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center flex-wrap">
+                                                <span class="text-gray-400 text-xs">No evidence</span>
+                                            </div>
                                         </td>
                                         <td class="px-4 py-3">
                                             <button onclick="toggleVerification(this, 3)"
@@ -417,6 +441,8 @@
                                         <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                             Status</th>
                                         <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Evidence</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
                                             Verification</th>
                                     </tr>
                                 </thead>
@@ -432,6 +458,13 @@
                                             <span
                                                 class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">In
                                                 Progress</span>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center flex-wrap">
+                                                <img src="images/baud-2.png" alt="Verification System Evidence"
+                                                     class="w-8 h-8 object-cover rounded border cursor-pointer hover:opacity-75 transition-opacity mr-1"
+                                                     onclick="openModal('images/baud-2.png', 'image')">
+                                            </div>
                                         </td>
                                         <td class="px-4 py-3">
                                             <button onclick="toggleVerificationFlowOut(this, 1)"
@@ -451,6 +484,11 @@
                                                 class="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">Waiting</span>
                                         </td>
                                         <td class="px-4 py-3">
+                                            <div class="flex items-center flex-wrap">
+                                                <span class="text-gray-400 text-xs">No evidence</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3">
                                             <button onclick="toggleVerificationFlowOut(this, 2)"
                                                 class="w-6 h-6 bg-gray-400 text-white rounded-full flex items-center justify-center hover:bg-gray-500 transition-colors cursor-pointer">
                                                 <i class="fas fa-clock text-xs"></i>
@@ -463,48 +501,200 @@
                     </div>
                 </div>
 
-                <!-- Admin Remarks Section -->
+                <!-- Admin Review & Feedback Section -->
                 <div class="bg-white rounded-lg shadow mb-8">
                     <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-lg font-medium text-gray-900">Admin Remarks</h2>
-                        <p class="text-sm text-gray-500">Add your feedback and comments for the vendor</p>
+                        <h2 class="text-lg font-medium text-gray-900">Admin Review & Feedback</h2>
+                        <p class="text-sm text-gray-500">Provide detailed assessment and improvement recommendations for the vendor response</p>
                     </div>
-                    <div class="p-6">
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
-                            <textarea id="adminRemarks"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm"
-                                rows="6"
-                                placeholder="Enter your remarks, feedback, or additional requirements for the vendor..."></textarea>
+                    <div class="p-6 space-y-6">
+                        <!-- Two Column Layout -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Countermeasure Assessment -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Countermeasure Assessment</label>
+                                <p class="text-sm text-gray-600 mb-3">Identify deficiencies, gaps, or areas of concern in the proposed countermeasures that require vendor attention.</p>
+                                <textarea id="countermeasureAssessment"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base"
+                                    rows="3"
+                                    placeholder="Example: The proposed calibration management system lacks specific implementation timeline and responsible personnel assignments. Evidence documentation is insufficient to demonstrate effectiveness of training programs..."></textarea>
+                            </div>
+
+                            <!-- Admin Recommendations -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Administrative Recommendations</label>
+                                <p class="text-sm text-gray-600 mb-3">Provide specific, actionable recommendations to strengthen the countermeasure implementation and prevent recurrence.</p>
+                                <textarea id="adminRecommendations"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base"
+                                    rows="3"
+                                    placeholder="Example: Recommend establishing monthly calibration audits with documented verification procedures. Suggest implementing competency assessment framework for operators with quarterly evaluations..."></textarea>
+                            </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Remarks Category</label>
-                            <select id="remarksCategory"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900">
-                                <option value="">Select Category</option>
-                                <option value="approved">Approved - No additional action required</option>
-                                <option value="approved_with_conditions">Approved with Conditions</option>
-                                <option value="requires_revision">Requires Revision</option>
-                                <option value="rejected">Rejected - Needs Complete Rework</option>
-                                <option value="request_additional_info">Request Additional Information</option>
+                        <!-- Review Decision -->
+                        <div>
+                            <label class="block text-base font-medium text-gray-700 mb-2">Review Decision</label>
+                            <p class="text-sm text-gray-600 mb-3">Select the appropriate decision based on your assessment of the vendor's countermeasure response.</p>
+                            <select id="reviewDecision"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white text-gray-900 text-base appearance-none bg-no-repeat bg-right bg-[length:16px_16px] pr-8"
+                                style="background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 4 5&quot;><path fill=&quot;%23666&quot; d=&quot;M2 0L0 2h4zm0 5L0 3h4z&quot;/></svg>');">
+                                <option value="">Select Review Decision</option>
+                                <option value="approved">✅ Approved - Countermeasures are adequate and comprehensive</option>
+                                <option value="approved_with_conditions">⚠️ Conditional Approval - Minor enhancements required</option>
+                                <option value="requires_revision">🔄 Requires Revision - Significant improvements needed</option>
+                                <option value="rejected">❌ Rejected - Countermeasures inadequate, complete rework required</option>
+                                <option value="request_additional_evidence">📋 Request Additional Evidence - Supporting documentation needed</option>
                             </select>
                         </div>
 
-                        <div class="flex justify-between items-center">
-                            <div class="text-sm text-gray-500">
-                                <p>This remarks will be sent back to the vendor for their review and action.</p>
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+                            <div class="text-sm text-gray-600">
+                                <p>Review feedback will be communicated to the vendor for corrective action implementation.</p>
                             </div>
                             <div class="flex space-x-3">
-                                <button type="button" onclick="saveDraftRemarks()"
-                                    class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+                                <button type="button" onclick="saveDraftReview()"
+                                    class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 text-base font-medium">
                                     Save Draft
                                 </button>
-                                <button type="button" onclick="sendRemarksToVendor()"
-                                    class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-medium">
-                                    Send to Vendor
+                                <button type="button" onclick="submitReviewToVendor()"
+                                    class="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-700 font-medium text-base">
+                                    Submit Review
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historical Communication Chat -->
+            <div class="bg-white rounded-lg shadow mb-8 mt-8">
+                <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                    onclick="toggleSection('communicationSection')">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-lg font-medium text-gray-900">Historical Communication</h2>
+                            <p class="text-sm text-gray-500">Communication history between admin and vendor regarding countermeasure implementations</p>
+                        </div>
+                        <i id="communicationIcon"
+                            class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                    </div>
+                </div>
+                <div id="communicationSection"
+                    class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section">
+                    <div class="space-y-4">
+                        <!-- Admin Message -->
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user-shield text-red-600 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-sm font-medium text-red-800">Admin QC</h4>
+                                        <span class="text-xs text-red-600">Dec 12, 2024 - 14:30</span>
+                                    </div>
+                                    <div class="text-sm text-red-700 space-y-2">
+                                        <p><strong>Countermeasure Assessment:</strong></p>
+                                        <p>The proposed calibration management system lacks specific implementation timeline and responsible personnel assignments. Evidence documentation is insufficient to demonstrate effectiveness of training programs. The countermeasure for equipment calibration does not address the root cause of systematic maintenance failures.</p>
+
+                                        <p class="mt-3"><strong>Administrative Recommendations:</strong></p>
+                                        <p>Recommend establishing monthly calibration audits with documented verification procedures. Suggest implementing competency assessment framework for operators with quarterly evaluations. Require detailed implementation schedule with clear milestone deliverables and responsible personnel for each action item.</p>
+
+                                        <div class="mt-3 px-3 py-2 bg-red-100 rounded border">
+                                            <p class="text-sm font-medium text-red-800">
+                                                <i class="fas fa-times-circle mr-1"></i>
+                                                Review Decision: Requires Revision - Significant improvements needed
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vendor Response -->
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-building text-green-600 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-sm font-medium text-green-800">PT. Besi Kuat Manufacturing</h4>
+                                        <span class="text-xs text-green-600">Dec 13, 2024 - 09:15</span>
+                                    </div>
+                                    <div class="text-sm text-green-700 space-y-2">
+                                        <p>Thank you for the detailed feedback. We have revised our countermeasure implementation plan to address all the concerns raised:</p>
+
+                                        <p><strong>Updated Implementation Timeline:</strong></p>
+                                        <ul class="list-disc list-inside ml-4 space-y-1">
+                                            <li>Week 1-2: Complete calibration system installation with Ahmad Wijaya as lead coordinator</li>
+                                            <li>Week 3: Operator competency assessment by certified trainers</li>
+                                            <li>Week 4: Monthly audit procedure documentation and approval</li>
+                                        </ul>
+
+                                        <p><strong>Additional Evidence Provided:</strong></p>
+                                        <ul class="list-disc list-inside ml-4 space-y-1">
+                                            <li>Training certificates for all 12 operators (attached)</li>
+                                            <li>Calibration equipment purchase orders and delivery schedule</li>
+                                            <li>Monthly audit checklist and procedure draft</li>
+                                        </ul>
+
+                                        <p>We believe these revisions fully address the root cause analysis and provide the systematic approach requested. Please review and let us know if any further clarification is needed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Follow-up Response -->
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user-shield text-red-600 text-sm"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-sm font-medium text-red-800">Admin QC</h4>
+                                        <span class="text-xs text-red-600">Dec 13, 2024 - 16:45</span>
+                                    </div>
+                                    <div class="text-sm text-red-700 space-y-2">
+                                        <p>Excellent improvement in the revised countermeasure plan. The detailed implementation timeline with specific personnel assignments addresses our previous concerns effectively.</p>
+
+                                        <p><strong>Approved Elements:</strong></p>
+                                        <ul class="list-disc list-inside ml-4 space-y-1">
+                                            <li>✅ Comprehensive training documentation provided</li>
+                                            <li>✅ Clear milestone timeline with responsible personnel</li>
+                                            <li>✅ Monthly audit procedure meets our systematic requirements</li>
+                                            <li>✅ Root cause addressing through preventive measures</li>
+                                        </ul>
+
+                                        <p><strong>Next Steps:</strong></p>
+                                        <p>Please proceed with implementation as planned. We will schedule verification audits at Week 2 and Week 4 milestones. Submit progress reports weekly during implementation phase.</p>
+
+                                        <div class="mt-3 px-3 py-2 bg-red-100 rounded border">
+                                            <p class="text-sm font-medium text-red-800">
+                                                <i class="fas fa-check-circle mr-1"></i>
+                                                Final Decision: Approved - Countermeasures are adequate and comprehensive
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Reply Button -->
+                        <div class="flex justify-end mt-6">
+                            <button
+                                onclick="openReplyModal()"
+                                class="bg-red-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors flex items-center">
+                                <i class="fas fa-reply mr-2"></i>
+                                Add Reply
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -523,6 +713,82 @@
             <div id="modalContent"
                 class="bg-white rounded-lg overflow-hidden max-h-[90vh] flex items-center justify-center">
                 <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">Add Reply to Communication</h3>
+                    <button onclick="closeReplyModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="replyForm">
+                    <!-- Reply Type Selection -->
+                    <div class="mb-6">
+                        <label class="block text-base font-medium text-gray-700 mb-3">Reply As</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="replyType" value="admin" checked class="mr-2 text-red-600 focus:ring-red-500">
+                                <span class="text-sm">Admin QC</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="replyType" value="vendor" class="mr-2 text-green-600 focus:ring-green-500">
+                                <span class="text-sm">PT. Besi Kuat Manufacturing</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Message Content -->
+                    <div class="mb-6">
+                        <label class="block text-base font-medium text-gray-700 mb-2">Message</label>
+                        <textarea
+                            id="replyMessage"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base"
+                            rows="6"
+                            placeholder="Enter your reply message here..."
+                            required></textarea>
+                    </div>
+
+                    <!-- Priority Selection -->
+                    <div class="mb-6">
+                        <label class="block text-base font-medium text-gray-700 mb-2">Priority Level</label>
+                        <select id="replyPriority" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-base">
+                            <option value="normal">Normal</option>
+                            <option value="high">High Priority</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+
+                    <!-- Attachments -->
+                    <div class="mb-6">
+                        <label class="block text-base font-medium text-gray-700 mb-2">Attachments (Optional)</label>
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-red-400 transition-colors">
+                            <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i>
+                            <p class="text-sm text-gray-600">Click to upload files or drag and drop</p>
+                            <input type="file" id="replyAttachments" multiple class="hidden">
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeReplyModal()" class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white rounded-lg font-medium">
+                            Cancel
+                        </button>
+                        <button type="button" onclick="saveDraftReply()" class="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium">
+                            Save Draft
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium">
+                            Send Reply
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -598,10 +864,15 @@
 
         // Verification toggle for Countermeasure for Occurs
         function toggleVerification(button, id) {
-            const currentState = button.className.includes('bg-green-500');
+            const currentState = button.className;
 
-            if (currentState) {
-                // Currently verified, set to pending
+            if (currentState.includes('bg-green-500')) {
+                // Currently verified, set to rejected
+                button.className = 'w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer';
+                button.innerHTML = '<i class="fas fa-times text-xs"></i>';
+                console.log(`Countermeasure ${id} rejected by admin`);
+            } else if (currentState.includes('bg-red-500')) {
+                // Currently rejected, set to pending
                 button.className = 'w-6 h-6 bg-yellow-500 text-white rounded-full flex items-center justify-center hover:bg-yellow-600 transition-colors cursor-pointer';
                 button.innerHTML = '<i class="fas fa-clock text-xs"></i>';
                 console.log(`Countermeasure ${id} set to pending verification`);
@@ -615,10 +886,15 @@
 
         // Verification toggle for Countermeasure for Flow Out
         function toggleVerificationFlowOut(button, id) {
-            const currentState = button.className.includes('bg-green-500');
+            const currentState = button.className;
 
-            if (currentState) {
-                // Currently verified, set to pending
+            if (currentState.includes('bg-green-500')) {
+                // Currently verified, set to rejected
+                button.className = 'w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors cursor-pointer';
+                button.innerHTML = '<i class="fas fa-times text-xs"></i>';
+                console.log(`Flow Out Countermeasure ${id} rejected by admin`);
+            } else if (currentState.includes('bg-red-500')) {
+                // Currently rejected, set to pending
                 button.className = 'w-6 h-6 bg-yellow-500 text-white rounded-full flex items-center justify-center hover:bg-yellow-600 transition-colors cursor-pointer';
                 button.innerHTML = '<i class="fas fa-clock text-xs"></i>';
                 console.log(`Flow Out Countermeasure ${id} set to pending verification`);
@@ -630,38 +906,102 @@
             }
         }
 
-        // Admin remarks functions
-        function saveDraftRemarks() {
-            const remarks = document.getElementById('adminRemarks').value;
-            const category = document.getElementById('remarksCategory').value;
+        // Admin review functions
+        function saveDraftReview() {
+            const assessment = document.getElementById('countermeasureAssessment').value;
+            const recommendations = document.getElementById('adminRecommendations').value;
+            const decision = document.getElementById('reviewDecision').value;
 
-            console.log('Saving draft remarks:', { remarks, category });
-            alert('Draft remarks saved!');
+            console.log('Saving draft review:', { assessment, recommendations, decision });
+            alert('Draft review saved successfully!');
         }
 
-        function sendRemarksToVendor() {
-            const remarks = document.getElementById('adminRemarks').value;
-            const category = document.getElementById('remarksCategory').value;
+        function submitReviewToVendor() {
+            const assessment = document.getElementById('countermeasureAssessment').value;
+            const recommendations = document.getElementById('adminRecommendations').value;
+            const decision = document.getElementById('reviewDecision').value;
 
-            if (!remarks.trim()) {
-                alert('Please enter remarks before sending to vendor.');
+            // Validation
+            if (!assessment.trim()) {
+                alert('Please provide countermeasure assessment before submitting review.');
+                document.getElementById('countermeasureAssessment').focus();
                 return;
             }
 
-            if (!category) {
-                alert('Please select a remarks category.');
+            if (!recommendations.trim()) {
+                alert('Please provide administrative recommendations before submitting review.');
+                document.getElementById('adminRecommendations').focus();
                 return;
             }
 
-            if (confirm('Send remarks to vendor? This will notify the vendor and may require their response.')) {
-                console.log('Sending remarks to vendor:', { remarks, category });
-                alert('Remarks sent to vendor successfully!');
+            if (!decision) {
+                alert('Please select a review decision before submitting.');
+                document.getElementById('reviewDecision').focus();
+                return;
+            }
 
-                // Optional: Clear the form or redirect
-                document.getElementById('adminRemarks').value = '';
-                document.getElementById('remarksCategory').value = '';
+            if (confirm('Submit review to vendor? This will formally communicate your assessment and recommendations.')) {
+                console.log('Submitting review to vendor:', { assessment, recommendations, decision });
+                alert('Review submitted to vendor successfully!');
+
+                // Optional: Clear the form or redirect to next step
+                // document.getElementById('countermeasureAssessment').value = '';
+                // document.getElementById('adminRecommendations').value = '';
+                // document.getElementById('reviewDecision').value = '';
             }
         }
+
+        // Reply Modal Functions
+        function openReplyModal() {
+            const modal = document.getElementById('replyModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeReplyModal() {
+            const modal = document.getElementById('replyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+
+            // Clear form
+            document.getElementById('replyForm').reset();
+        }
+
+        function saveDraftReply() {
+            const message = document.getElementById('replyMessage').value;
+            const replyType = document.querySelector('input[name="replyType"]:checked').value;
+            const priority = document.getElementById('replyPriority').value;
+
+            if (!message.trim()) {
+                alert('Please enter a message before saving draft.');
+                return;
+            }
+
+            console.log('Saving draft reply:', { message, replyType, priority });
+            alert('Draft reply saved successfully!');
+        }
+
+        // Handle reply form submission
+        document.getElementById('replyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const message = document.getElementById('replyMessage').value;
+            const replyType = document.querySelector('input[name="replyType"]:checked').value;
+            const priority = document.getElementById('replyPriority').value;
+
+            if (!message.trim()) {
+                alert('Please enter a message before sending.');
+                return;
+            }
+
+            // In production, this would send the reply to the server
+            console.log('Sending reply:', { message, replyType, priority });
+            alert(`Reply sent successfully as ${replyType === 'admin' ? 'Admin QC' : 'PT. Besi Kuat Manufacturing'}!`);
+
+            closeReplyModal();
+        });
 
         // Initialize page - expand all sections by default for admin view
         document.addEventListener('DOMContentLoaded', function () {
