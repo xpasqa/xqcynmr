@@ -778,6 +778,15 @@
                         </div>
                     </div>
 
+                    <!-- Conversation Section -->
+                    <div id="conversationSection" class="hidden">
+                        <div class="border-t border-gray-200 pt-4">
+                            <h4 class="text-base font-medium text-gray-700 mb-3">Conversation</h4>
+                            <div id="conversationList" class="space-y-3">
+                                <!-- Conversation messages will be added here -->
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -1926,6 +1935,28 @@
                 conversationHistory.scrollTop = conversationHistory.scrollHeight;
             }
 
+            function addMessageToMainConversation(message, sender, timestamp) {
+                const conversationList = document.getElementById('conversationList');
+                const isAdmin = sender === 'admin';
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3';
+
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 ${isAdmin ? 'bg-red-100' : 'bg-blue-100'} rounded-full flex items-center justify-center">
+                        <i class="fas ${isAdmin ? 'fa-user-tie text-red-600' : 'fa-user text-blue-600'} text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-100 rounded-lg p-3">
+                            <div class="text-xs text-gray-500 mb-1">${isAdmin ? 'Admin' : 'Vendor'} • ${timestamp}</div>
+                            <p class="text-sm text-gray-700">${message}</p>
+                        </div>
+                    </div>
+                `;
+
+                conversationList.appendChild(messageDiv);
+            }
+
             // Handle reply form submission
             document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('replyForm').addEventListener('submit', function (e) {
@@ -1940,6 +1971,7 @@
                         const timestamp = 'Just now';
 
                         addMessageToConversation(replyMessage, 'vendor', timestamp);
+                        addMessageToMainConversation(replyMessage, 'vendor', timestamp);
 
                         // Store message (in real app, send to server)
                         conversationMessages.push({
@@ -1947,6 +1979,10 @@
                             sender: 'vendor',
                             timestamp: now
                         });
+
+                        // Show conversation section
+                        const conversationSection = document.getElementById('conversationSection');
+                        conversationSection.classList.remove('hidden');
 
                         // Reset form and close modal
                         this.reset();

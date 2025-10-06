@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanmar QC Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    },
+                    animation: {
+                        'slide-in': 'slide-in 0.3s ease-out',
+                        'slide-out': 'slide-out 0.3s ease-in',
+                        'fade-in': 'fade-in 0.2s ease-out'
+                    },
+                    keyframes: {
+                        'slide-in': {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0)' }
+                        },
+                        'slide-out': {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+
+        .sidebar-expanded {
+            width: 16rem;
+        }
+
+        .sidebar-transition {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-item-hover:hover {
+            background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), transparent);
+            border-right: 3px solid #DC2626;
+        }
+
+        .tooltip {
+            transform: translateX(0.5rem);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .show-tooltip .tooltip {
+            transform: translateX(1rem);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-expanded .menu-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .menu-icon {
+            min-width: 1.25rem;
+            text-align: center;
+        }
+
+        /* Improved icon alignment for collapsed sidebar */
+        .sidebar-collapsed nav a {
+            justify-content: center;
+            /* center icon horizontally */
+            padding-left: 0.5rem;
+            /* reduce left padding when collapsed */
+            padding-right: 0.5rem;
+        }
+
+        .sidebar-collapsed .menu-icon {
+            margin-right: 0;
+            /* remove right margin */
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 1.15rem;
+            /* slightly larger icon for visibility */
+        }
+
+        /* hide the text when collapsed (keeps space clean) */
+        .sidebar-collapsed .menu-text {
+            display: none !important;
+        }
+
+        /* position tooltips just outside the slim sidebar */
+        .sidebar-collapsed .tooltip {
+            left: 4rem;
+            /* hover tooltip appears aligned to collapsed width */
+        }
+
+        /* Restore left-aligned layout when expanded */
+        .sidebar-expanded nav a {
+            justify-content: flex-start;
+            /* icon + text aligned to left */
+            padding-left: 0.75rem;
+        }
+
+        .sidebar-expanded .menu-icon {
+            width: auto;
+            margin-right: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .sidebar-expanded .menu-text {
+            display: inline-block !important;
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">NCR Dashboard</h2>
+                        <p class="text-lg text-gray-600 mt-1">Manage and monitor Non-Conformance Reports</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Active NCRs:</span>
+                            <span class="font-semibold text-blue-600 ml-2 text-lg" id="activeNCRs">158</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi Tab Navigation -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                <div class="border-b border-gray-200">
+                    <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                        <button onclick="filterByStatus('created')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-red-500 text-red-600"
+                            data-status="created">
+                            <i class="fas fa-plus-circle mr-2"></i>
+                            Created (<span id="createdCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('process')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="process">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Process (<span id="processCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('replied')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="replied">
+                            <i class="fas fa-reply mr-2"></i>
+                            Replied (<span id="repliedCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('waiting')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="waiting">
+                            <i class="fas fa-clock mr-2"></i>
+                            Waiting (<span id="waitingCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('done')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="done">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Done (<span id="doneCount">0</span>)
+                        </button>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <!-- Table Header with Search and Filters -->
+                <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+                    <div class="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+                        <!-- Title and Filter Status -->
+                        <div class="flex items-center space-x-4">
+                            <h4 class="text-xl font-semibold text-gray-800">NCR Records</h4>
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded-full text-base font-medium bg-red-100 text-red-800"
+                                id="filterBadge">
+                                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                <span id="currentFilter">Created NCR</span> - <span id="recordCount">0</span> Records
+                            </span>
+                        </div>
+
+                        <!-- Search and Filter Controls -->
+                        <div class="flex flex-col lg:flex-row gap-3 items-start lg:items-center w-full lg:w-auto">
+                            <!-- Search Bar -->
+                            <div class="w-full lg:w-64">
+                                <div class="relative">
+                                    <input type="text" id="searchInput"
+                                        class="w-full px-3 py-2 pl-9 border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent transition-colors text-sm"
+                                        placeholder="Search records...">
+                                    <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+                                </div>
+                            </div>
+
+                            <!-- Department Filter -->
+                            <div class="w-full lg:w-36">
+                                <div class="relative">
+                                    <select id="departmentFilter"
+                                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                        <option value="">All Departments</option>
+                                        <option value="Quality Control">Quality Control</option>
+                                        <option value="Production">Production</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Priority Filter -->
+                            <div class="w-full lg:w-28">
+                                <div class="relative">
+                                    <select id="priorityFilter"
+                                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                        <option value="">All Priority</option>
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date Sort -->
+                            <div class="w-full lg:w-28">
+                                <div class="relative">
+                                    <select id="dateSortFilter"
+                                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-yanmar-red focus:border-transparent bg-white appearance-none cursor-pointer">
+                                        <option value="newest">Newest</option>
+                                        <option value="oldest">Oldest</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                        <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Clear Filters -->
+                            <button id="clearFiltersBtn"
+                                class="w-full lg:w-auto inline-flex items-center justify-center px-3 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors text-sm">
+                                <i class="fas fa-times mr-1"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    No</th>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    Department
+                                </th>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    Part Number
+                                </th>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    Part Name</th>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    Location</th>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-3 text-left text-sm font-medium text-slate-500 uppercase tracking-wider">
+                                    Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody" class="bg-white divide-y divide-slate-200">
+                            <!-- Table content will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="bg-white px-6 py-3 border-t border-slate-200">
+                    <div class="flex items-center justify-between">
+                        <div class="text-base text-slate-500">
+                            Showing <span id="showingStart">1</span> to <span id="showingEnd">10</span> of <span
+                                id="totalRecords">16</span> results
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button
+                                class="px-3 py-1 text-base bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors"
+                                disabled>
+                                Previous
+                            </button>
+                            <span class="px-3 py-1 text-base bg-yanmar-red text-white rounded">1</span>
+                            <button
+                                class="px-3 py-1 text-base bg-slate-200 text-slate-700 rounded hover:bg-slate-300 transition-colors">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Modal -->
+        <div id="viewModal"
+            class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-2xl w-full max-h-96 overflow-y-auto">
+                <div
+                    class="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between">
+                    <h3 class="text-xl font-semibold text-gray-800">NCR Details</h3>
+                    <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div id="modalContent" class="p-6">
+                    <!-- Modal content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- JavaScript -->
+        <script>
+            // Dummy Data with priority field added
+            const ncrData = [
+                // Created NCR (5 records) - NCR yang baru dibuat
+                { id: 1, name: "John Smith", department: "Quality Control", partNumber: "YM-001", partName: "Engine Block", location: "Claim QC Incoming", status: "created", date: "2024-01-15", priority: "High", description: "Casting defect found on engine block surface" },
+                { id: 2, name: "Sarah Johnson", department: "Production", partNumber: "YM-002", partName: "Piston Ring", location: "Assembly Line A", status: "created", date: "2024-01-16", priority: "Medium", description: "Dimension out of tolerance" },
+                { id: 3, name: "Mike Chen", department: "Quality Control", partNumber: "YM-003", partName: "Cylinder Head", location: "Incoming Inspection", status: "created", date: "2024-01-17", priority: "High", description: "Surface roughness exceeds specification" },
+                { id: 4, name: "Lisa Wang", department: "Engineering", partNumber: "YM-004", partName: "Connecting Rod", location: "Machining Center", status: "created", date: "2024-01-18", priority: "Low", description: "Material hardness below requirement" },
+                { id: 5, name: "David Brown", department: "Production", partNumber: "YM-005", partName: "Crankshaft", location: "Assembly Line B", status: "created", date: "2024-01-19", priority: "High", description: "Balancing issue detected" },
+
+                // Process NCR (4 records) - NCR yang sudah dikirim ke vendor
+                { id: 6, name: "Emma Wilson", department: "Quality Control", partNumber: "YM-006", partName: "Valve Guide", location: "Final Inspection", status: "process", date: "2024-01-20", priority: "Medium", description: "Installation interference problem" },
+                { id: 7, name: "Tom Anderson", department: "Maintenance", partNumber: "YM-007", partName: "Gasket Set", location: "Warehouse", status: "process", date: "2024-01-21", priority: "Low", description: "Packaging damage observed" },
+                { id: 8, name: "Jennifer Lee", department: "Quality Control", partNumber: "YM-008", partName: "Oil Pump", location: "Test Cell", status: "process", date: "2024-01-22", priority: "Medium", description: "Pressure test failure" },
+                { id: 9, name: "Robert Taylor", department: "Production", partNumber: "YM-009", partName: "Timing Belt", location: "Assembly Line C", status: "process", date: "2024-01-23", priority: "High", description: "Tension specification not met" },
+
+                // Replied NCR (3 records) - NCR yang sudah dibalas vendor
+                { id: 10, name: "Maria Garcia", department: "Engineering", partNumber: "YM-010", partName: "Fuel Injector", location: "R&D Lab", status: "replied", date: "2024-01-24", priority: "Medium", description: "Flow rate deviation", reply: "Root cause identified and corrective action implemented" },
+                { id: 11, name: "Alex Kim", department: "Quality Control", partNumber: "YM-011", partName: "Air Filter", location: "Supplier Site", status: "replied", date: "2024-01-10", priority: "High", description: "Filtration efficiency below standard", reply: "Filter media upgraded and tested" },
+                { id: 12, name: "Rachel Green", department: "Production", partNumber: "YM-012", partName: "Spark Plug", location: "Assembly Line D", status: "replied", date: "2024-01-11", priority: "Medium", description: "Gap setting incorrect", reply: "Calibration procedure updated and verified" },
+
+                // Waiting NCR (2 records) - NCR yang menunggu balasan
+                { id: 13, name: "Kevin Park", department: "Engineering", partNumber: "YM-013", partName: "Radiator", location: "Test Facility", status: "waiting", date: "2024-01-12", priority: "Low", description: "Cooling capacity insufficient" },
+                { id: 14, name: "Sophie Miller", department: "Quality Control", partNumber: "YM-014", partName: "Exhaust Valve", location: "Incoming QC", status: "waiting", date: "2024-01-13", priority: "High", description: "Surface coating defect" },
+
+                // Done NCR (2 records) - NCR yang sudah selesai
+                { id: 15, name: "James Wilson", department: "Production", partNumber: "YM-015", partName: "Water Pump", location: "Final Assembly", status: "done", date: "2024-01-05", priority: "Medium", description: "Seal leakage detected", resolution: "Design improved, testing completed successfully" },
+                { id: 16, name: "Anna Thompson", department: "Quality Control", partNumber: "YM-016", partName: "Alternator", location: "Electrical Test", status: "done", date: "2024-01-08", priority: "Low", description: "Output voltage fluctuation", resolution: "Winding process optimized, issue resolved" }
+            ];
+
+            let currentFilter = 'created';
+            let filteredData = [];
+            let currentSearchTerm = '';
+            let currentDepartmentFilter = '';
+            let currentPriorityFilter = '';
+            let currentDateSort = 'newest';
+
+            // Initialize page
+            function initializePage() {
+                filterByStatus('created');
+            }
+
+            // Advanced filtering function that combines all filters
+            function applyAllFilters() {
+                const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || currentSearchTerm;
+                const departmentFilter = document.getElementById('departmentFilter')?.value || currentDepartmentFilter;
+                const priorityFilter = document.getElementById('priorityFilter')?.value || currentPriorityFilter;
+                const dateSort = document.getElementById('dateSortFilter')?.value || currentDateSort;
+
+                // Start with all data
+                let baseData = [...ncrData];
+
+                // Apply status filter if active
+                if (currentFilter !== 'all') {
+                    baseData = baseData.filter(item => item.status === currentFilter);
+                }
+
+                // Apply search filter
+                if (searchTerm) {
+                    baseData = baseData.filter(item =>
+                        item.name.toLowerCase().includes(searchTerm) ||
+                        item.department.toLowerCase().includes(searchTerm) ||
+                        item.partNumber.toLowerCase().includes(searchTerm) ||
+                        item.partName.toLowerCase().includes(searchTerm) ||
+                        item.location.toLowerCase().includes(searchTerm) ||
+                        item.description.toLowerCase().includes(searchTerm)
+                    );
+                }
+
+                // Apply department filter
+                if (departmentFilter) {
+                    baseData = baseData.filter(item => item.department === departmentFilter);
+                }
+
+                // Apply priority filter
+                if (priorityFilter) {
+                    baseData = baseData.filter(item => item.priority === priorityFilter);
+                }
+
+                // Apply date sorting
+                baseData.sort((a, b) => {
+                    const dateA = new Date(a.date);
+                    const dateB = new Date(b.date);
+                    return dateSort === 'newest' ? dateB - dateA : dateA - dateB;
+                });
+
+                filteredData = baseData;
+                updateTable();
+                updateCounts();
+            }
+
+            // Filter data by status
+            function filterByStatus(status) {
+                currentFilter = status;
+
+                // Update active tab
+                document.querySelectorAll('.tab-button').forEach(tab => {
+                    tab.classList.remove('border-red-500', 'text-red-600');
+                    tab.classList.add('border-transparent', 'text-gray-500');
+                });
+
+                const activeTab = document.querySelector(`[data-status="${status}"]`);
+                if (activeTab) {
+                    activeTab.classList.remove('border-transparent', 'text-gray-500');
+                    activeTab.classList.add('border-red-500', 'text-red-600');
+                }
+
+                // Update filter display
+                updateFilterDisplay(status);
+
+                // Apply all filters
+                applyAllFilters();
+            }
+
+            // Clear all filters
+            function clearAllFilters() {
+                if (document.getElementById('searchInput')) document.getElementById('searchInput').value = '';
+                if (document.getElementById('departmentFilter')) document.getElementById('departmentFilter').value = '';
+                if (document.getElementById('priorityFilter')) document.getElementById('priorityFilter').value = '';
+                if (document.getElementById('dateSortFilter')) document.getElementById('dateSortFilter').value = 'newest';
+
+                currentSearchTerm = '';
+                currentDepartmentFilter = '';
+                currentPriorityFilter = '';
+                currentDateSort = 'newest';
+
+                applyAllFilters();
+            }
+
+
+            // Update counts for status tabs
+            function updateCounts() {
+                const createdCount = ncrData.filter(item => item.status === 'created').length;
+                const processCount = ncrData.filter(item => item.status === 'process').length;
+                const repliedCount = ncrData.filter(item => item.status === 'replied').length;
+                const waitingCount = ncrData.filter(item => item.status === 'waiting').length;
+                const doneCount = ncrData.filter(item => item.status === 'done').length;
+
+                document.getElementById('createdCount').textContent = createdCount;
+                document.getElementById('processCount').textContent = processCount;
+                document.getElementById('repliedCount').textContent = repliedCount;
+                document.getElementById('waitingCount').textContent = waitingCount;
+                document.getElementById('doneCount').textContent = doneCount;
+                document.getElementById('activeNCRs').textContent = ncrData.length;
+            }
+
+            // Update filter display
+            function updateFilterDisplay(status) {
+                const statusConfig = {
+                    created: { name: 'Created NCR', color: 'red', bgColor: 'bg-red-100', textColor: 'text-red-800' },
+                    process: { name: 'Process NCR', color: 'blue', bgColor: 'bg-blue-100', textColor: 'text-blue-800' },
+                    replied: { name: 'Replied NCR', color: 'green', bgColor: 'bg-green-100', textColor: 'text-green-800' },
+                    waiting: { name: 'Waiting NCR', color: 'yellow', bgColor: 'bg-yellow-100', textColor: 'text-yellow-800' },
+                    done: { name: 'Done NCR', color: 'purple', bgColor: 'bg-purple-100', textColor: 'text-purple-800' }
+                };
+
+                const config = statusConfig[status];
+                document.getElementById('currentFilter').textContent = config.name;
+                document.getElementById('recordCount').textContent = filteredData.length;
+                document.getElementById('filterBadge').className = `inline-flex items-center px-3 py-1 rounded-full text-base font-medium ${config.bgColor} ${config.textColor}`;
+
+                // Update the colored dot
+                const dot = document.getElementById('filterBadge').querySelector('span');
+                if (dot) {
+                    dot.className = `w-2 h-2 bg-${config.color}-500 rounded-full mr-2`;
+                }
+            }
+
+            // Update table with filtered data
+            function updateTable() {
+                const tbody = document.getElementById('dataTableBody');
+                tbody.innerHTML = '';
+
+                filteredData.forEach((item, index) => {
+                    const statusBadge = getStatusBadge(item.status);
+
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-slate-50 transition-colors';
+                    row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap text-base font-medium text-slate-900">${index + 1}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-base text-slate-600">${item.department}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-base font-mono text-slate-900">${item.partNumber}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-base text-slate-900">${item.partName}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-base text-slate-600">${item.location}</td>
+          <td class="px-6 py-4 whitespace-nowrap">${statusBadge}</td>
+          <td class="px-6 py-4 whitespace-nowrap text-base">
+            <button onclick="window.open('verification.html', '_blank')" class="inline-flex items-center px-3 py-1.5 bg-yanmar-red text-white text-sm font-medium rounded-md hover:bg-yanmar-dark transition-colors">
+              <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+              View
+            </button>
+          </td>
+        `;
+                    tbody.appendChild(row);
+                });
+
+                // Update pagination info
+                document.getElementById('showingStart').textContent = filteredData.length > 0 ? 1 : 0;
+                document.getElementById('showingEnd').textContent = filteredData.length;
+                document.getElementById('totalRecords').textContent = ncrData.length;
+            }
+
+            // Get status badge HTML
+            function getStatusBadge(status) {
+                const badges = {
+                    'created': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">Created</span>',
+                    'process': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">Process</span>',
+                    'replied': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">Replied</span>',
+                    'waiting': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">Waiting</span>',
+                    'done': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-purple-100 text-purple-800">Done</span>'
+                };
+                return badges[status] || '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">Unknown</span>';
+            }
+
+            // View details modal
+            function viewDetails(id) {
+                const item = ncrData.find(record => record.id === id);
+                if (!item) return;
+
+                const modalContent = document.getElementById('modalContent');
+                modalContent.innerHTML = `
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">NCR ID</label>
+              <p class="text-sm text-slate-900">#NCR-${item.id.toString().padStart(3, '0')}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">Date</label>
+              <p class="text-sm text-slate-900">${item.date}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">Reporter</label>
+              <p class="text-sm text-slate-900">${item.name}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">Department</label>
+              <p class="text-sm text-slate-900">${item.department}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">Part Number</label>
+              <p class="text-sm font-mono text-slate-900">${item.partNumber}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">Part Name</label>
+              <p class="text-sm text-slate-900">${item.partName}</p>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700 mb-1">Location</label>
+              <p class="text-sm text-slate-900">${item.location}</p>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700 mb-1">Status</label>
+              <div>${getStatusBadge(item.status)}</div>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm font-medium text-slate-700 mb-1">Description</label>
+              <p class="text-sm text-slate-900 bg-slate-50 p-3 rounded-lg">${item.description}</p>
+            </div>
+            ${item.reply ? `
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-slate-700 mb-1">Reply</label>
+                <p class="text-sm text-slate-900 bg-yellow-50 p-3 rounded-lg border border-yellow-200">${item.reply}</p>
+              </div>
+            ` : ''}
+            ${item.resolution ? `
+              <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-slate-700 mb-1">Resolution</label>
+                <p class="text-sm text-slate-900 bg-green-50 p-3 rounded-lg border border-green-200">${item.resolution}</p>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+
+                document.getElementById('viewModal').classList.remove('hidden');
+            }
+
+            // Close modal
+            function closeModal() {
+                document.getElementById('viewModal').classList.add('hidden');
+            }
+
+            // Get priority badge
+            function getPriorityBadge(priority) {
+                const badges = {
+                    'High': { class: 'bg-red-100 text-red-800' },
+                    'Medium': { class: 'bg-yellow-100 text-yellow-800' },
+                    'Low': { class: 'bg-green-100 text-green-800' }
+                };
+                return badges[priority] || { class: 'bg-gray-100 text-gray-800' };
+            }
+
+            // Get priority icon
+            function getPriorityIcon(priority) {
+                const icons = {
+                    'High': 'fa-exclamation-triangle',
+                    'Medium': 'fa-clock',
+                    'Low': 'fa-minus-circle'
+                };
+                return icons[priority] || 'fa-circle';
+            }
+
+            // Initialize page on load
+            document.addEventListener('DOMContentLoaded', () => {
+                initializePage();
+
+                // Add event listeners for filters
+                const searchInput = document.getElementById('searchInput');
+                const departmentFilter = document.getElementById('departmentFilter');
+                const priorityFilter = document.getElementById('priorityFilter');
+                const dateSortFilter = document.getElementById('dateSortFilter');
+                const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', () => {
+                        currentSearchTerm = searchInput.value.toLowerCase();
+                        applyAllFilters();
+                    });
+                }
+                if (departmentFilter) {
+                    departmentFilter.addEventListener('change', () => {
+                        currentDepartmentFilter = departmentFilter.value;
+                        applyAllFilters();
+                    });
+                }
+                if (priorityFilter) {
+                    priorityFilter.addEventListener('change', () => {
+                        currentPriorityFilter = priorityFilter.value;
+                        applyAllFilters();
+                    });
+                }
+                if (dateSortFilter) {
+                    dateSortFilter.addEventListener('change', () => {
+                        currentDateSort = dateSortFilter.value;
+                        applyAllFilters();
+                    });
+                }
+                if (clearFiltersBtn) {
+                    clearFiltersBtn.addEventListener('click', clearAllFilters);
+                }
+            });
+        </script>
+
+        <!-- Custom Styles -->
+        <style>
+            /* Tab Styles */
+            .tab-button {
+                position: relative;
+                cursor: pointer;
+            }
+
+            .tab-button:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+
+            .tab-button.active {
+                border-color: #DC2626 !important;
+                color: #DC2626 !important;
+            }
+
+            /* Custom scrollbar */
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #f1f5f9;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #cbd5e1;
+                border-radius: 3px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #94a3b8;
+            }
+
+            /* Table hover effects */
+            tbody tr:hover {
+                background-color: #f8fafc;
+            }
+
+            /* Smooth transitions */
+            * {
+                transition: all 0.2s ease;
+            }
+        </style>
+
+    </main>
+
+</body>
+
+</html>
