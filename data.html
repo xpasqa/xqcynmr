@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Data Analytics Overview</h2>
+                        <p class="text-lg text-gray-600 mt-1">Comprehensive analysis of NCR performance, response rates, and monthly trends</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Year:</span>
+                            <span class="font-semibold text-blue-600 ml-2 text-lg">2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- NCR Status Summary -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                        <h3 class="text-lg font-semibold text-gray-900">NCR Status Summary</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-red-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-plus-circle text-red-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Created NCR</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="createdCount">5</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-paper-plane text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Process NCR</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="processCount">4</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-reply text-green-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Replied NCR</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="repliedCount">3</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-yellow-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-clock text-yellow-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Waiting NCR</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="waitingCount">2</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-check-circle text-purple-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Done NCR</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="doneCount">2</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-list text-gray-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Total NCR</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="totalCount">16</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Internal Response Rate -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-blue-50">
+                        <h3 class="text-lg font-semibold text-gray-900">Internal Response Rate</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-star text-green-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Quality Control</span>
+                                </div>
+                                <span class="text-sm font-semibold text-green-600">2.8h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-cog text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Engineering</span>
+                                </div>
+                                <span class="text-sm font-semibold text-blue-600">4.2h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-orange-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-wrench text-orange-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Maintenance</span>
+                                </div>
+                                <span class="text-sm font-semibold text-orange-600">12.3h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-industry text-purple-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Production</span>
+                                </div>
+                                <span class="text-sm font-semibold text-purple-600">18.5h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-red-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-fire text-red-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Welding</span>
+                                </div>
+                                <span class="text-sm font-semibold text-red-600">36.7h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-chart-line text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Average</span>
+                                </div>
+                                <span class="text-sm font-bold text-gray-900" id="avgInternalResponse">14.7h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- External Response Rate -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-green-50">
+                        <h3 class="text-lg font-semibold text-gray-900">External Response Rate</h3>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-star text-green-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Sapporo Electric</span>
+                                </div>
+                                <span class="text-sm font-semibold text-green-600">8.7h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-industry text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Kobe Steel</span>
+                                </div>
+                                <span class="text-sm font-semibold text-blue-600">14.6h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-yellow-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-truck text-yellow-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Fukuoka Mfg</span>
+                                </div>
+                                <span class="text-sm font-semibold text-yellow-600">16.8h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-orange-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-cogs text-orange-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Tokyo Precision</span>
+                                </div>
+                                <span class="text-sm font-semibold text-orange-600">22.1h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-red-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-tools text-red-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Others (5 more)</span>
+                                </div>
+                                <span class="text-sm font-semibold text-red-600">65.2h</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-chart-line text-green-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Average</span>
+                                </div>
+                                <span class="text-sm font-bold text-gray-900" id="avgExternalResponse">39.4h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Main Chart Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Monthly Performance Chart (Takes 2/3 width) -->
+                <div class="lg:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-semibold text-gray-900">Monthly NCR Performance Trends</h3>
+                        <p class="text-base text-gray-600 mt-1">Comparison of reported, replied, and completed NCR by month</p>
+                    </div>
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+
+                    <!-- Chart Legend -->
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <div class="flex flex-wrap gap-6 justify-center">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-red-500 rounded mr-2"></div>
+                                <span class="text-sm text-gray-700">NCR Reported</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-yellow-500 rounded mr-2"></div>
+                                <span class="text-sm text-gray-700">NCR Reply</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                                <span class="text-sm text-gray-700">NCR Done</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Statistics Table -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+                        <h3 class="text-xl font-semibold text-gray-900">Monthly Summary</h3>
+                    </div>
+                    <div class="max-h-96 overflow-y-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 sticky top-0">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Month</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Reports</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Done</th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody id="monthlyTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Response Rate Analysis -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Top Performers -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-semibold text-gray-900">Top Response Performers</h3>
+                        <p class="text-base text-gray-600 mt-1">Companies with fastest average response times</p>
+                    </div>
+                    <div class="space-y-4" id="topPerformersContainer">
+                        <!-- Top performers will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Response Time Distribution -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-semibold text-gray-900">Response Time Categories</h3>
+                        <p class="text-base text-gray-600 mt-1">Distribution of companies by response performance</p>
+                    </div>
+                    <div class="space-y-4" id="responseDistribution">
+                        <!-- Response distribution will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Response Rate Table -->
+            <div class="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-semibold text-gray-900">Detailed Response Rate Analysis</h3>
+                    <p class="text-base text-gray-600 mt-1">Complete overview of all departments and suppliers</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company/Department</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Parts</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Response</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Performance</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Response</th>
+                            </tr>
+                        </thead>
+                        <tbody id="responseTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // NCR Data from dashboard
+        const ncrData = [
+            // Created NCR (5 records)
+            { id: 1, status: "created" },
+            { id: 2, status: "created" },
+            { id: 3, status: "created" },
+            { id: 4, status: "created" },
+            { id: 5, status: "created" },
+            // Process NCR (4 records)
+            { id: 6, status: "process" },
+            { id: 7, status: "process" },
+            { id: 8, status: "process" },
+            { id: 9, status: "process" },
+            // Replied NCR (3 records)
+            { id: 10, status: "replied" },
+            { id: 11, status: "replied" },
+            { id: 12, status: "replied" },
+            // Waiting NCR (2 records)
+            { id: 13, status: "waiting" },
+            { id: 14, status: "waiting" },
+            // Done NCR (2 records)
+            { id: 15, status: "done" },
+            { id: 16, status: "done" }
+        ];
+
+        // Monthly performance data
+        const monthlyData = [
+            { month: 'January', reported: 45, reply: 38, done: 35 },
+            { month: 'February', reported: 52, reply: 44, done: 41 },
+            { month: 'March', reported: 48, reply: 42, done: 38 },
+            { month: 'April', reported: 58, reply: 50, done: 46 },
+            { month: 'May', reported: 41, reply: 36, done: 33 },
+            { month: 'June', reported: 55, reply: 48, done: 44 },
+            { month: 'July', reported: 49, reply: 43, done: 39 },
+            { month: 'August', reported: 53, reply: 46, done: 42 },
+            { month: 'September', reported: 47, reply: 41, done: 37 },
+            { month: 'October', reported: 56, reply: 49, done: 45 }
+        ];
+
+        // Response data from response.html
+        const responseData = [
+            { id: 1, name: "Quality Control", type: "internal", avgResponseHours: 2.8, totalParts: 35, lastResponse: "08-10-2025" },
+            { id: 2, name: "Engineering Department", type: "internal", avgResponseHours: 4.2, totalParts: 28, lastResponse: "07-10-2025" },
+            { id: 3, name: "Sapporo Electric", type: "external", avgResponseHours: 8.7, totalParts: 22, lastResponse: "06-10-2025" },
+            { id: 4, name: "Maintenance", type: "internal", avgResponseHours: 12.3, totalParts: 19, lastResponse: "05-10-2025" },
+            { id: 5, name: "Kobe Steel Industries", type: "external", avgResponseHours: 14.6, totalParts: 29, lastResponse: "04-10-2025" },
+            { id: 6, name: "Fukuoka Manufacturing", type: "external", avgResponseHours: 16.8, totalParts: 24, lastResponse: "03-10-2025" },
+            { id: 7, name: "Production Department", type: "internal", avgResponseHours: 18.5, totalParts: 42, lastResponse: "02-10-2025" },
+            { id: 8, name: "Tokyo Precision Co", type: "external", avgResponseHours: 22.1, totalParts: 25, lastResponse: "01-10-2025" },
+            { id: 9, name: "Suzuki Metal Works", type: "external", avgResponseHours: 28.4, totalParts: 32, lastResponse: "30-09-2025" },
+            { id: 10, name: "Hiroshima Tech", type: "external", avgResponseHours: 31.2, totalParts: 27, lastResponse: "29-09-2025" },
+            { id: 11, name: "Welding Department", type: "internal", avgResponseHours: 36.7, totalParts: 15, lastResponse: "28-09-2025" },
+            { id: 12, name: "Yokohama Systems", type: "external", avgResponseHours: 43.2, totalParts: 19, lastResponse: "27-09-2025" },
+            { id: 13, name: "Nagoya Components", type: "external", avgResponseHours: 54.3, totalParts: 21, lastResponse: "26-09-2025" },
+            { id: 14, name: "Sendai Automotive", type: "external", avgResponseHours: 78.5, totalParts: 16, lastResponse: "25-09-2025" },
+            { id: 15, name: "Osaka Engineering", type: "external", avgResponseHours: 96.8, totalParts: 18, lastResponse: "24-09-2025" }
+        ];
+
+        let chart;
+
+        // Helper functions
+        function getPerformanceCategory(hours) {
+            if (hours <= 6) return { class: 'text-green-600 bg-green-100', text: 'Excellent', category: 'excellent' };
+            if (hours <= 24) return { class: 'text-green-500 bg-green-50', text: 'Good', category: 'good' };
+            if (hours <= 72) return { class: 'text-yellow-600 bg-yellow-100', text: 'Average', category: 'average' };
+            if (hours <= 168) return { class: 'text-red-500 bg-red-100', text: 'Poor', category: 'poor' };
+            return { class: 'text-red-700 bg-red-200', text: 'Very Poor', category: 'very-poor' };
+        }
+
+        function formatResponseTime(hours) {
+            if (hours < 24) return hours.toFixed(1) + ' hours';
+            const days = (hours / 24).toFixed(1);
+            return days + ' days';
+        }
+
+        // Initialize chart
+        function initChart() {
+            console.log('Initializing chart...');
+            const canvas = document.getElementById('monthlyChart');
+            if (!canvas) {
+                console.error('Canvas element not found!');
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            console.log('Canvas context obtained, creating chart...');
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: monthlyData.map(item => item.month.substr(0, 3)),
+                    datasets: [
+                        {
+                            label: 'NCR Reported',
+                            data: monthlyData.map(item => item.reported),
+                            backgroundColor: '#ef4444',
+                            borderColor: '#dc2626',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                        },
+                        {
+                            label: 'NCR Reply',
+                            data: monthlyData.map(item => item.reply),
+                            backgroundColor: '#f59e0b',
+                            borderColor: '#d97706',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                        },
+                        {
+                            label: 'NCR Done',
+                            data: monthlyData.map(item => item.done),
+                            backgroundColor: '#10b981',
+                            borderColor: '#059669',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#374151',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            callbacks: {
+                                title: function (context) {
+                                    return context[0].label + ' 2025';
+                                },
+                                label: function (context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + ' cases';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f3f4f6'
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: 12
+                                },
+                                callback: function (value) {
+                                    return value + ' cases';
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Update NCR counts
+        function updateNCRCounts() {
+            console.log('Updating NCR counts...');
+            const createdCount = ncrData.filter(item => item.status === 'created').length;
+            const processCount = ncrData.filter(item => item.status === 'process').length;
+            const repliedCount = ncrData.filter(item => item.status === 'replied').length;
+            const waitingCount = ncrData.filter(item => item.status === 'waiting').length;
+            const doneCount = ncrData.filter(item => item.status === 'done').length;
+            const totalCount = ncrData.length;
+
+            console.log('NCR counts:', { createdCount, processCount, repliedCount, waitingCount, doneCount, totalCount });
+
+            document.getElementById('createdCount').textContent = createdCount;
+            document.getElementById('processCount').textContent = processCount;
+            document.getElementById('repliedCount').textContent = repliedCount;
+            document.getElementById('waitingCount').textContent = waitingCount;
+            document.getElementById('doneCount').textContent = doneCount;
+            document.getElementById('totalCount').textContent = totalCount;
+        }
+
+        // Populate monthly table
+        function populateMonthlyTable() {
+            const tableBody = document.getElementById('monthlyTableBody');
+            tableBody.innerHTML = monthlyData.map(month => {
+                const rate = month.reported > 0 ? Math.round((month.done / month.reported) * 100) : 0;
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3 text-base font-medium text-gray-900">${month.month.substr(0, 3)}</td>
+                        <td class="px-4 py-3 text-base text-red-600 font-semibold">${month.reported}</td>
+                        <td class="px-4 py-3 text-base text-green-600 font-semibold">${month.done}</td>
+                        <td class="px-4 py-3 text-base text-gray-900">
+                            <div class="flex items-center">
+                                <span class="text-sm font-semibold">${rate}%</span>
+                                <div class="ml-2 w-12 bg-gray-200 rounded-full h-1.5">
+                                    <div class="bg-gradient-to-r from-red-400 to-green-400 h-1.5 rounded-full" style="width: ${rate}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Populate top performers
+        function populateTopPerformers() {
+            const topPerformers = responseData
+                .sort((a, b) => a.avgResponseHours - b.avgResponseHours)
+                .slice(0, 5);
+
+            const container = document.getElementById('topPerformersContainer');
+            container.innerHTML = topPerformers.map((company, index) => {
+                const performance = getPerformanceCategory(company.avgResponseHours);
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '';
+
+                return `
+                    <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50">
+                        <div class="flex items-center">
+                            <span class="text-lg mr-3">${medal}</span>
+                            <div>
+                                <p class="text-base font-medium text-gray-900">${company.name}</p>
+                                <p class="text-sm text-gray-500">${company.type === 'internal' ? 'Internal' : 'External'}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-base font-semibold ${performance.class.split(' ')[0]}">${formatResponseTime(company.avgResponseHours)}</p>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${performance.class}">
+                                ${performance.text}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Populate response distribution
+        function populateResponseDistribution() {
+            const distribution = {
+                excellent: responseData.filter(c => c.avgResponseHours <= 6).length,
+                good: responseData.filter(c => c.avgResponseHours > 6 && c.avgResponseHours <= 24).length,
+                average: responseData.filter(c => c.avgResponseHours > 24 && c.avgResponseHours <= 72).length,
+                poor: responseData.filter(c => c.avgResponseHours > 72 && c.avgResponseHours <= 168).length,
+                veryPoor: responseData.filter(c => c.avgResponseHours > 168).length
+            };
+
+            const total = responseData.length;
+            const categories = [
+                { name: 'Excellent (≤6 hours)', count: distribution.excellent, color: 'bg-green-600', textColor: 'text-green-600' },
+                { name: 'Good (6-24 hours)', count: distribution.good, color: 'bg-green-400', textColor: 'text-green-500' },
+                { name: 'Average (1-3 days)', count: distribution.average, color: 'bg-yellow-500', textColor: 'text-yellow-600' },
+                { name: 'Poor (3-7 days)', count: distribution.poor, color: 'bg-red-500', textColor: 'text-red-500' },
+                { name: 'Very Poor (>7 days)', count: distribution.veryPoor, color: 'bg-red-700', textColor: 'text-red-700' }
+            ];
+
+            const container = document.getElementById('responseDistribution');
+            container.innerHTML = categories.map(category => {
+                const percentage = total > 0 ? Math.round((category.count / total) * 100) : 0;
+                return `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 ${category.color} rounded mr-3"></div>
+                            <span class="text-base text-gray-700">${category.name}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-base font-semibold ${category.textColor} mr-2">${category.count}</span>
+                            <span class="text-sm text-gray-500">(${percentage}%)</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Populate detailed response table
+        function populateResponseTable() {
+            const tableBody = document.getElementById('responseTableBody');
+            tableBody.innerHTML = responseData.map(company => {
+                const performance = getPerformanceCategory(company.avgResponseHours);
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-base font-medium text-gray-900">${company.name}</div>
+                            <div class="text-base text-gray-500">${company.type === 'internal' ? 'Internal Department' : 'External Supplier'}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${company.type === 'internal' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
+                                <i class="fas ${company.type === 'internal' ? 'fa-building' : 'fa-truck'} mr-1"></i>
+                                ${company.type.charAt(0).toUpperCase() + company.type.slice(1)}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-base text-gray-900 font-semibold">${company.totalParts}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-base ${performance.class.split(' ')[0]} font-semibold">${formatResponseTime(company.avgResponseHours)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${performance.class}">
+                                ${performance.text}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-base text-gray-900">${company.lastResponse}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Update response statistics
+        function updateResponseStatistics() {
+            const internalData = responseData.filter(c => c.type === 'internal');
+            const externalData = responseData.filter(c => c.type === 'external');
+
+            const internalCount = internalData.length;
+            const externalCount = externalData.length;
+
+            const internalAvg = internalData.reduce((sum, company) => sum + company.avgResponseHours, 0) / internalCount;
+            const externalAvg = externalData.reduce((sum, company) => sum + company.avgResponseHours, 0) / externalCount;
+
+            const totalResponseTime = responseData.reduce((sum, company) => sum + company.avgResponseHours, 0);
+            const overallAverage = totalResponseTime / responseData.length;
+
+            const topPerformer = responseData.reduce((best, company) =>
+                company.avgResponseHours < best.avgResponseHours ? company : best
+            );
+
+            // Update Internal and External response rate averages in the boxes
+            if (document.getElementById('avgInternalResponse')) {
+                document.getElementById('avgInternalResponse').textContent = formatResponseTime(internalAvg);
+            }
+            if (document.getElementById('avgExternalResponse')) {
+                document.getElementById('avgExternalResponse').textContent = formatResponseTime(externalAvg);
+            }
+        }
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM loaded, initializing dashboard...');
+
+            // Initialize basic data
+            updateNCRCounts();
+            updateResponseStatistics();
+            populateMonthlyTable();
+            populateTopPerformers();
+            populateResponseDistribution();
+            populateResponseTable();
+
+            // Check if Chart.js is loaded
+            if (typeof Chart !== 'undefined') {
+                console.log('Chart.js is loaded, initializing chart...');
+                // Small delay to ensure canvas is properly sized
+                setTimeout(() => {
+                    initChart();
+                }, 100);
+            } else {
+                console.error('Chart.js not loaded!');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function () {
+            if (chart) {
+                chart.resize();
+            }
+        });
+    </script>
+
+    <style>
+        .response-excellent { color: #059669; background-color: #d1fae5; }
+        .response-good { color: #16a34a; background-color: #dcfce7; }
+        .response-average { color: #ca8a04; background-color: #fef3c7; }
+        .response-poor { color: #dc2626; background-color: #fee2e2; }
+        .response-very-poor { color: #991b1b; background-color: #fecaca; }
+    </style>
+
+</body>
+
+</html>

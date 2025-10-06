@@ -162,48 +162,46 @@
             </div>
 
             <!-- Multi Tab Navigation -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 sticky top-16 z-10">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
                 <div class="border-b border-gray-200">
-                    <div class="overflow-x-auto">
-                        <nav class="flex space-x-8 px-6 min-w-max" aria-label="Tabs">
-                            <button onclick="filterByStatus('all')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-red-500 text-red-600 flex-shrink-0"
-                                data-status="all">
-                                <i class="fas fa-list mr-2"></i>
-                                All (<span id="allCount">0</span>)
-                            </button>
-                            <button onclick="filterByStatus('created')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
-                                data-status="created">
-                                <i class="fas fa-plus-circle mr-2"></i>
-                                Created (<span id="createdCount">0</span>)
-                            </button>
-                            <button onclick="filterByStatus('process')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
-                                data-status="process">
-                                <i class="fas fa-paper-plane mr-2"></i>
-                                Process (<span id="processCount">0</span>)
-                            </button>
-                            <button onclick="filterByStatus('replied')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
-                                data-status="replied">
-                                <i class="fas fa-reply mr-2"></i>
-                                Replied (<span id="repliedCount">0</span>)
-                            </button>
-                            <button onclick="filterByStatus('waiting')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
-                                data-status="waiting">
-                                <i class="fas fa-clock mr-2"></i>
-                                Waiting (<span id="waitingCount">0</span>)
-                            </button>
-                            <button onclick="filterByStatus('done')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
-                                data-status="done">
-                                <i class="fas fa-check-circle mr-2"></i>
-                                Done (<span id="doneCount">0</span>)
-                            </button>
-                        </nav>
-                    </div>
+                    <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                        <button onclick="filterByStatus('all')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-red-500 text-red-600"
+                            data-status="all">
+                            <i class="fas fa-list mr-2"></i>
+                            All (<span id="allCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('created')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="created">
+                            <i class="fas fa-plus-circle mr-2"></i>
+                            Created (<span id="createdCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('process')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="process">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Process (<span id="processCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('replied')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="replied">
+                            <i class="fas fa-reply mr-2"></i>
+                            Replied (<span id="repliedCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('waiting')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="waiting">
+                            <i class="fas fa-clock mr-2"></i>
+                            Waiting (<span id="waitingCount">0</span>)
+                        </button>
+                        <button onclick="filterByStatus('done')"
+                            class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                            data-status="done">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Done (<span id="doneCount">0</span>)
+                        </button>
+                    </nav>
                 </div>
             </div>
 
@@ -215,6 +213,12 @@
                         <!-- Title and Filter Status -->
                         <div class="flex items-center space-x-4">
                             <h4 class="text-xl font-semibold text-gray-800">NCR Records</h4>
+                            <span
+                                class="inline-flex items-center px-3 py-1 rounded-full text-base font-medium bg-slate-100 text-slate-800"
+                                id="filterBadge">
+                                <span class="w-2 h-2 bg-slate-500 rounded-full mr-2"></span>
+                                <span id="currentFilter">All NCR</span> - <span id="recordCount">0</span> Records
+                            </span>
                         </div>
 
                         <!-- Search and Filter Controls -->
@@ -490,6 +494,9 @@
                     activeTab.classList.add('border-red-500', 'text-red-600');
                 }
 
+                // Update filter display
+                updateFilterDisplay(status);
+
                 // Apply all filters
                 applyAllFilters();
             }
@@ -528,6 +535,28 @@
                 document.getElementById('activeNCRs').textContent = ncrData.length;
             }
 
+            // Update filter display
+            function updateFilterDisplay(status) {
+                const statusConfig = {
+                    all: { name: 'All NCR', color: 'slate', bgColor: 'bg-slate-100', textColor: 'text-slate-800' },
+                    created: { name: 'Created NCR', color: 'red', bgColor: 'bg-red-100', textColor: 'text-red-800' },
+                    process: { name: 'Process NCR', color: 'blue', bgColor: 'bg-blue-100', textColor: 'text-blue-800' },
+                    replied: { name: 'Replied NCR', color: 'green', bgColor: 'bg-green-100', textColor: 'text-green-800' },
+                    waiting: { name: 'Waiting NCR', color: 'yellow', bgColor: 'bg-yellow-100', textColor: 'text-yellow-800' },
+                    done: { name: 'Done NCR', color: 'purple', bgColor: 'bg-purple-100', textColor: 'text-purple-800' }
+                };
+
+                const config = statusConfig[status];
+                document.getElementById('currentFilter').textContent = config.name;
+                document.getElementById('recordCount').textContent = filteredData.length;
+                document.getElementById('filterBadge').className = `inline-flex items-center px-3 py-1 rounded-full text-base font-medium ${config.bgColor} ${config.textColor}`;
+
+                // Update the colored dot
+                const dot = document.getElementById('filterBadge').querySelector('span');
+                if (dot) {
+                    dot.className = `w-2 h-2 bg-${config.color}-500 rounded-full mr-2`;
+                }
+            }
 
             // Update table with filtered data
             function updateTable() {
@@ -536,10 +565,9 @@
 
                 filteredData.forEach((item, index) => {
                     const statusBadge = getStatusBadge(item.status);
-                    const rowBackgroundClass = getRowBackgroundClass(item.status);
 
                     const row = document.createElement('tr');
-                    row.className = `${rowBackgroundClass} transition-colors`;
+                    row.className = 'hover:bg-slate-50 transition-colors';
                     row.innerHTML = `
           <td class="px-6 py-4 whitespace-nowrap text-base font-medium text-slate-900">${index + 1}</td>
           <td class="px-6 py-4 whitespace-nowrap text-base text-slate-600">${item.department}</td>
@@ -577,18 +605,6 @@
                     'done': '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-purple-100 text-purple-800">Done</span>'
                 };
                 return badges[status] || '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">Unknown</span>';
-            }
-
-            // Get row background class based on status
-            function getRowBackgroundClass(status) {
-                const rowClasses = {
-                    'created': 'bg-red-50 hover:bg-red-100',
-                    'process': 'bg-blue-50 hover:bg-blue-100',
-                    'replied': 'bg-green-50 hover:bg-green-100',
-                    'waiting': 'bg-yellow-50 hover:bg-yellow-100',
-                    'done': 'bg-purple-50 hover:bg-purple-100'
-                };
-                return rowClasses[status] || 'bg-white hover:bg-slate-50';
             }
 
             // View details modal
