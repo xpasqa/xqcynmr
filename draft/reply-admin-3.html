@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanmar QC Dashboard - Admin Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button onclick="window.history.back()"
+                            class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                            <i class="fas fa-arrow-left text-gray-600"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-800">NCR Admin Review</h2>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Status:</span>
+                            <span class="font-semibold text-green-600 ml-2">Case Closed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Information -->
+            <div class="mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">PT. Maju Teknik Engineering</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-user text-gray-500"></i>
+                                <div>
+                                    <span class="text-base text-gray-500">PIC:</span>
+                                    <span class="font-medium text-gray-800 ml-1">Budi Santoso</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-phone text-gray-500"></i>
+                                <div>
+                                    <span class="text-base text-gray-500">Phone:</span>
+                                    <span class="font-medium text-gray-800 ml-1">021-8765432</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-envelope text-gray-500"></i>
+                                <div>
+                                    <span class="text-base text-gray-500">Email:</span>
+                                    <span class="font-medium text-gray-800 ml-1">budi@majuteknik.co.id</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Information -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden mb-8">
+                <div class="p-6 space-y-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Report Information
+                    </h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-8">
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">No. NCR</label>
+                            <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                NCR-20240815-1425
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Date</label>
+                            <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                Thursday, August 15, 2024
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Sender Department</label>
+                            <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                Quality Control
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <label class="block text-lg font-medium text-gray-700 mb-2">Report Title</label>
+                        <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                            Fuel Injection Pump Calibration Error - Performance Below Specification
+                        </div>
+                    </div>
+
+                    <!-- Data Parts Section -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            Data Parts
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Part No.</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    FIP-4TNE106-012
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Part Name</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    Fuel Injection Pump
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Model</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    4TNE106-GEE
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Engine No.</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    4TNE106-892451
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Class Part</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-base font-medium bg-red-100 text-red-800">
+                                        Safety
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Location</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    Engine Test Cell - Bay 4
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem Statement -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            Problem Statement
+                        </h4>
+                        <div class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg min-h-32">
+                            Fuel injection pump showing calibration drift during performance testing. Fuel delivery rate measured at 185 cc/min vs specification requirement of 200±5 cc/min at rated RPM. This represents 7.5% deviation below minimum acceptable range. Issue affects engine power output, fuel efficiency, and emission compliance. Found in 23 units from production batch FIP-240815 during final testing phase.
+                        </div>
+                    </div>
+
+                    <!-- Media Evidence -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            Media Evidence
+                        </h4>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Voice Notes</label>
+                                <div class="relative p-4 bg-gray-50 border border-slate-200 rounded-lg overflow-hidden">
+                                    <div class="flex items-center space-x-4">
+                                        <button type="button" id="voicePlayBtn"
+                                            class="flex items-center justify-center w-12 h-12 bg-red-700 hover:bg-red-800 rounded-full transition-all duration-200 transform hover:scale-105 shadow-md group">
+                                            <i id="voiceIcon" class="fas fa-play text-white text-lg transition-transform duration-200 group-hover:scale-110"></i>
+                                        </button>
+                                        <div class="flex-1">
+                                            <span class="text-lg text-gray-600 font-medium">Voice recording available (02:18)</span>
+                                        </div>
+                                        <div id="animatedLines" class="flex items-center space-x-1 opacity-0 transition-opacity duration-300">
+                                            <div class="w-1 h-8 bg-red-700 rounded-full animate-pulse" style="animation-delay: 0s; animation-duration: 0.8s;"></div>
+                                            <div class="w-1 h-6 bg-red-700 rounded-full animate-pulse" style="animation-delay: 0.1s; animation-duration: 0.9s;"></div>
+                                            <div class="w-1 h-10 bg-red-700 rounded-full animate-pulse" style="animation-delay: 0.2s; animation-duration: 0.7s;"></div>
+                                            <div class="w-1 h-4 bg-red-700 rounded-full animate-pulse" style="animation-delay: 0.3s; animation-duration: 1s;"></div>
+                                            <div class="w-1 h-7 bg-red-700 rounded-full animate-pulse" style="animation-delay: 0.4s; animation-duration: 0.6s;"></div>
+                                        </div>
+                                    </div>
+                                    <div id="progressLine" class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-700 to-red-500 transition-all duration-100 ease-out opacity-0" style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Images & Videos (6 files)</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                        <img src="images/baud.png" alt="Calibration Test Results" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                        <img src="images/baud-2.png" alt="Pump Assembly" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden relative">
+                                        <video class="w-full h-full object-cover" muted preload="metadata">
+                                            <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                        </video>
+                                        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                            <div class="bg-white bg-opacity-95 rounded-full w-16 h-16 flex items-center justify-center">
+                                                <i class="fas fa-play text-red-600 text-2xl ml-1"></i>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                                            <i class="fas fa-video mr-1"></i>CALIBRATION TEST
+                                        </div>
+                                    </div>
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                        <img src="images/baud.png" alt="Fuel Flow Measurement" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                        <img src="images/baud-2.png" alt="Test Setup" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden relative">
+                                        <video class="w-full h-full object-cover" muted preload="metadata">
+                                            <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                        </video>
+                                        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                            <div class="bg-white bg-opacity-95 rounded-full w-16 h-16 flex items-center justify-center">
+                                                <i class="fas fa-play text-red-600 text-2xl ml-1"></i>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                                            <i class="fas fa-video mr-1"></i>PERFORMANCE TEST
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vendor Reply Section -->
+            <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Vendor Reply</h3>
+                <p class="text-lg text-gray-600">Complete vendor analysis and corrective action implementation.</p>
+            </div>
+
+            <!-- Temporary Action -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden mb-8">
+                <div class="p-6 space-y-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                        <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        Temporary Action
+                    </h4>
+
+                    <div>
+                        <label class="block text-lg font-medium text-gray-700 mb-2">Action Taken</label>
+                        <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700 min-h-32">
+                            Immediate containment actions implemented: 1) Production halt for all fuel injection pumps in current batch. 2) Segregation of 23 affected units and 67 units in production pipeline. 3) Emergency calibration audit of all test equipment and measurement tools. 4) Temporary manual verification process established using master calibration gauge. 5) Enhanced inspection protocol implemented with dual verification. 6) Customer notification completed with impact assessment. 7) Alternative testing method validated using external calibration laboratory. 8) Expedited supplier audit initiated for calibration equipment manufacturer.
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Images (6 uploaded)</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                    <img src="images/baud.png" alt="Segregated Units" class="w-full h-full object-cover">
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                    <img src="images/baud-2.png" alt="Calibration Equipment" class="w-full h-full object-cover">
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                    <img src="images/baud.png" alt="Master Gauge" class="w-full h-full object-cover">
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                    <img src="images/baud-2.png" alt="Verification Process" class="w-full h-full object-cover">
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                    <img src="images/baud.png" alt="External Lab Test" class="w-full h-full object-cover">
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                    <img src="images/baud-2.png" alt="Audit Documentation" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Videos (3 uploaded)</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden relative">
+                                    <video class="w-full h-full object-cover" muted preload="metadata">
+                                        <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                        <div class="bg-white bg-opacity-95 rounded-full w-10 h-10 flex items-center justify-center">
+                                            <i class="fas fa-play text-red-600 text-sm ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-1 left-1 bg-black bg-opacity-70 text-white px-1 py-0.5 rounded text-xs">
+                                        CONTAINMENT
+                                    </div>
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden relative">
+                                    <video class="w-full h-full object-cover" muted preload="metadata">
+                                        <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                        <div class="bg-white bg-opacity-95 rounded-full w-10 h-10 flex items-center justify-center">
+                                            <i class="fas fa-play text-red-600 text-sm ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-1 left-1 bg-black bg-opacity-70 text-white px-1 py-0.5 rounded text-xs">
+                                        VERIFICATION
+                                    </div>
+                                </div>
+                                <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden relative">
+                                    <video class="w-full h-full object-cover" muted preload="metadata">
+                                        <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                    </video>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                        <div class="bg-white bg-opacity-95 rounded-full w-10 h-10 flex items-center justify-center">
+                                            <i class="fas fa-play text-red-600 text-sm ml-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-1 left-1 bg-black bg-opacity-70 text-white px-1 py-0.5 rounded text-xs">
+                                        EXTERNAL LAB
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Date Start</label>
+                            <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
+                                August 16, 2024
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Date Good Lot</label>
+                            <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
+                                August 28, 2024
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail Analysis -->
+            <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Detail Analysis</h3>
+                <p class="text-lg text-gray-600">Comprehensive root cause analysis and systematic countermeasures.</p>
+            </div>
+
+            <!-- Process Flow -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-medium text-gray-900">Process Flow</h2>
+                </div>
+                <div class="p-6">
+                    <div>
+                        <label class="block text-base font-medium text-gray-700 mb-2">Process Flow</label>
+                        <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700 min-h-32">
+                            Incoming inspection → Component machining → Sub-assembly of pump body → Plunger and barrel assembly → Governor mechanism installation → Initial calibration using test bench → Flow rate verification (200±5 cc/min) → Pressure testing (300 bar) → Final calibration adjustment → Performance validation → Final QC inspection → Packaging. Critical control point identified at initial calibration stage where test bench accuracy and environmental conditions significantly impact measurement precision and repeatability.
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <label class="block text-base font-medium text-gray-700 mb-3">Process Flow Attachments</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center space-x-2">
+                                <i class="fas fa-file-pdf text-red-600 text-lg"></i>
+                                <span class="text-sm text-gray-700 truncate">Calibration_Process_v3.1.pdf</span>
+                            </div>
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center space-x-2">
+                                <i class="fas fa-image text-blue-600 text-lg"></i>
+                                <span class="text-sm text-gray-700 truncate">Test_Bench_Setup.jpg</span>
+                            </div>
+                            <div class="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-center space-x-2">
+                                <i class="fas fa-video text-purple-600 text-lg"></i>
+                                <span class="text-sm text-gray-700 truncate">Calibration_Procedure.mp4</span>
+                            </div>
+                            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-center space-x-2">
+                                <i class="fas fa-file-excel text-green-600 text-lg"></i>
+                                <span class="text-sm text-gray-700 truncate">Control_Points.xlsx</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Occurs Analysis -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-medium text-gray-900">Problem Analysis: Why Occurs?</h2>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="border border-gray-300 w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 150px;">Category</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 1</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 2</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 3</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 4</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 5</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-blue-100 text-blue-800 rounded-md text-sm font-medium">Machine</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Calibration test bench showing drift</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Temperature compensation not functioning</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Thermal sensor calibration expired</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Calibration schedule not followed</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">No automated reminder system for equipment calibration</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-green-100 text-green-800 rounded-md text-sm font-medium">Method</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Calibration procedure lacks precision requirements</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Environmental conditions not controlled during calibration</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Temperature and humidity specifications missing</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Process design did not consider environmental impact</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Engineering validation insufficient for precision requirements</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-yellow-100 text-yellow-800 rounded-md text-sm font-medium">Material</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Calibration fluid viscosity variation</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Test fluid not temperature stabilized</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Storage tank lacks temperature control</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Cost saving decision eliminated heating system</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Impact on calibration accuracy not evaluated during cost reduction</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-red-100 text-red-800 rounded-md text-sm font-medium">Man</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Operator calibration technique inconsistent</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Training on precision calibration inadequate</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">New calibration equipment training not completed</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Equipment supplier training program delayed</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Supplier coordination with HR department poor</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-purple-100 text-purple-800 rounded-md text-sm font-medium">Environment</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Laboratory temperature fluctuation affects calibration</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">HVAC system inadequate for precision work</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Laboratory design specification insufficient</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Original facility not designed for high precision calibration</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Business expansion exceeded original facility capability</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Flow Out Analysis -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-medium text-gray-900">Problem Analysis: Why Flow Out?</h2>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="border border-gray-300 w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 150px;">Category</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 1</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 2</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 3</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 4</th>
+                                    <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 5</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-blue-100 text-blue-800 rounded-md text-sm font-medium">Method</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Final verification test failed to detect deviation</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Test acceptance criteria too wide (±10% vs ±2.5%)</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Specification review not updated with customer requirements</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Engineering change control process bypassed</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Production pressure prioritized over engineering review</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-green-100 text-green-800 rounded-md text-sm font-medium">Machine</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Final test equipment less sensitive than calibration bench</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Different measurement principle between calibration and final test</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Equipment procurement decision based on cost, not accuracy</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Technical requirements not communicated to purchasing</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Cross-functional equipment specification process missing</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-yellow-100 text-yellow-800 rounded-md text-sm font-medium">Man</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Final inspector missed calibration drift pattern</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">No statistical process control training</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Quality control focus on pass/fail only, not trend analysis</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">QC department methodology outdated</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">No continuous improvement culture in QC practices</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="px-3 py-2 bg-red-100 text-red-800 rounded-md text-sm font-medium">Material</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Final test using different grade test fluid</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Procurement substituted test fluid for cost savings</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Technical approval process not followed</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Engineering department not consulted on material change</div>
+                                    </td>
+                                    <td class="px-4 py-3 border border-gray-300">
+                                        <div class="text-sm text-gray-700">Organization lacks integrated change control system</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Countermeasures for Occurs -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-medium text-gray-900">Countermeasures for Occurs</h2>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">No</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Description</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">PIC</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Due Date</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Evidence</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Install automated calibration monitoring system with temperature compensation</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Engineering Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">September 15, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-file-pdf text-red-600"></i> Calibration_System_Upgrade.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Implement environmental control system for calibration laboratory</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Facility Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">September 30, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-thermometer-half text-blue-600"></i> HVAC_Upgrade_Certificate.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Install test fluid temperature stabilization system</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Production Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">October 10, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-flask text-blue-600"></i> Fluid_System_Installation.jpg
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">4</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Develop precision calibration training program for operators</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">HR Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">October 25, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-graduation-cap text-purple-600"></i> Training_Completion_Certificates.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">5</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Establish automated equipment calibration reminder system</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">IT Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">November 5, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-calendar-check text-green-600"></i> Calibration_Schedule_System.xlsx
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">6</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Upgrade facility design for high-precision calibration requirements</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Engineering Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">December 1, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-building text-gray-600"></i> Facility_Upgrade_Plans.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Countermeasures for Flow Out -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-medium text-gray-900">Countermeasures for Flow Out</h2>
+                </div>
+                <div class="p-6">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">No</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Description</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">PIC</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Due Date</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Status</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Evidence</th>
+                                    <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Verification</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Update final test acceptance criteria to ±2.5% precision requirement</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Quality Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">August 25, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-file-pdf text-red-600"></i> Updated_Test_Specifications.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Upgrade final test equipment to match calibration bench accuracy</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Engineering Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">September 10, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-cogs text-gray-600"></i> Equipment_Upgrade_Certificate.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">3</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Implement statistical process control for trend analysis</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">QC Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">September 20, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-chart-line text-green-600"></i> SPC_Implementation_Guide.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">4</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Standardize test fluid specifications across all test stations</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Procurement Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">August 30, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-flask text-blue-600"></i> Test_Fluid_Standards.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 text-sm text-gray-900">5</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Establish integrated change control system across all departments</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">Plant Manager</td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">October 15, 2024</td>
+                                    <td class="px-4 py-3">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                            Completed
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <i class="fas fa-sitemap text-purple-600"></i> Change_Control_System.pdf
+                                    </td>
+                                    <td class="px-4 py-3 text-sm text-gray-900">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                            Verified
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Effectiveness Verification -->
+            <div class="bg-white rounded-lg shadow mb-8">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-medium text-gray-900">Effectiveness Verification</h2>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Verification Start Date</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
+                                    December 15, 2024
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Verification End Date</label>
+                                <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
+                                    April 15, 2025
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Verification Results</label>
+                            <div class="w-full px-4 py-4 bg-green-50 border border-green-300 rounded-lg text-lg text-gray-700 min-h-32">
+                                Four-month verification period successfully completed with outstanding results. Key achievements: 1) Zero calibration deviations in 680 fuel injection pumps produced. 2) Process capability improved from Cpk=0.89 to Cpk=1.85 for flow rate calibration. 3) Customer field performance reports show 99.7% specification compliance. 4) Energy efficiency improved by 8% due to precise calibration. 5) Emission compliance rating upgraded to excellent. 6) All environmental controls sustained with automatic monitoring. 7) Operator competency assessments show 100% compliance. Effectiveness thoroughly confirmed across all critical parameters.
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-3">Supporting Documentation</label>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center space-x-2">
+                                    <i class="fas fa-chart-line text-green-600 text-lg"></i>
+                                    <span class="text-sm text-gray-700 truncate">Process_Capability_Study.pdf</span>
+                                </div>
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-center space-x-2">
+                                    <i class="fas fa-star text-blue-600 text-lg"></i>
+                                    <span class="text-sm text-gray-700 truncate">Customer_Performance_Report.pdf</span>
+                                </div>
+                                <div class="bg-purple-50 border border-purple-200 rounded-lg p-3 flex items-center space-x-2">
+                                    <i class="fas fa-leaf text-purple-600 text-lg"></i>
+                                    <span class="text-sm text-gray-700 truncate">Emission_Compliance_Certificate.pdf</span>
+                                </div>
+                                <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-center space-x-2">
+                                    <i class="fas fa-bolt text-orange-600 text-lg"></i>
+                                    <span class="text-sm text-gray-700 truncate">Efficiency_Improvement_Analysis.xlsx</span>
+                                </div>
+                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-center space-x-2">
+                                    <i class="fas fa-user-graduate text-yellow-600 text-lg"></i>
+                                    <span class="text-sm text-gray-700 truncate">Operator_Competency_Records.pdf</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Review & Action -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-medium text-gray-900">Admin Review & Action</h3>
+                </div>
+                <div class="p-6">
+                    <div class="mb-6">
+                        <label class="block text-lg font-medium text-gray-700 mb-2">Admin Remarks</label>
+                        <div class="w-full px-4 py-4 bg-green-50 border border-green-300 rounded-lg text-lg text-gray-700 min-h-24">
+                            Outstanding vendor response demonstrating world-class corrective action methodology. The systematic approach to root cause analysis, comprehensive countermeasure implementation, and thorough effectiveness verification represents best-in-class vendor performance. Process capability improvement from 0.89 to 1.85 Cpk demonstrates sustainable process control. Customer field performance validation confirms real-world effectiveness. This case study will be used as benchmark for vendor corrective action excellence. Full approval for case closure with commendation.
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-lg font-medium text-gray-700 mb-2">Final Decision</label>
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-green-100 border border-green-300 rounded-lg px-4 py-2">
+                                <span class="text-lg font-semibold text-green-800">CASE CLOSED - EXEMPLARY PERFORMANCE</span>
+                            </div>
+                            <div class="text-lg text-gray-600">
+                                Closed Date: <span class="font-medium">April 30, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                        <button type="button" disabled
+                            class="px-8 py-4 bg-gray-300 text-gray-500 text-lg font-medium rounded-lg cursor-not-allowed flex items-center justify-center space-x-2">
+                            <i class="fas fa-edit"></i>
+                            <span>Request Revision</span>
+                        </button>
+                        <button type="button" disabled
+                            class="px-8 py-4 bg-gray-300 text-gray-500 text-lg font-medium rounded-lg cursor-not-allowed flex items-center justify-center space-x-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Close Report</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                        <h4 class="text-lg font-medium text-gray-900 mb-4">Case History</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3 text-base text-gray-600">
+                                <i class="fas fa-circle text-blue-500 text-xs"></i>
+                                <span>August 15, 2024 - NCR Created by Quality Control</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-base text-gray-600">
+                                <i class="fas fa-circle text-yellow-500 text-xs"></i>
+                                <span>August 16, 2024 - Immediate Containment Actions Implemented</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-base text-gray-600">
+                                <i class="fas fa-circle text-orange-500 text-xs"></i>
+                                <span>December 1, 2024 - All Countermeasures Implementation Completed</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-base text-gray-600">
+                                <i class="fas fa-circle text-purple-500 text-xs"></i>
+                                <span>April 15, 2025 - Effectiveness Verification Completed Successfully</span>
+                            </div>
+                            <div class="flex items-center space-x-3 text-base text-gray-600">
+                                <i class="fas fa-circle text-green-500 text-xs"></i>
+                                <span>April 30, 2025 - Case Closed with Exemplary Performance Recognition</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            // Voice Player Functionality
+            document.addEventListener('DOMContentLoaded', function () {
+                const voicePlayBtn = document.getElementById('voicePlayBtn');
+                const voiceIcon = document.getElementById('voiceIcon');
+                const animatedLines = document.getElementById('animatedLines');
+                const progressLine = document.getElementById('progressLine');
+
+                let isPlaying = false;
+                let playInterval = null;
+                let currentSeconds = 0;
+                const totalSeconds = 138; // 02:18 in seconds
+
+                voicePlayBtn.addEventListener('click', function () {
+                    if (!isPlaying) {
+                        isPlaying = true;
+                        voiceIcon.classList.remove('fa-play');
+                        voiceIcon.classList.add('fa-pause');
+                        animatedLines.style.opacity = '1';
+                        progressLine.style.opacity = '1';
+
+                        playInterval = setInterval(() => {
+                            currentSeconds++;
+                            const progress = (currentSeconds / totalSeconds) * 100;
+                            progressLine.style.width = progress + '%';
+
+                            if (currentSeconds >= totalSeconds) {
+                                stopPlaying();
+                            }
+                        }, 80);
+
+                    } else {
+                        pausePlaying();
+                    }
+                });
+
+                function pausePlaying() {
+                    isPlaying = false;
+                    voiceIcon.classList.remove('fa-pause');
+                    voiceIcon.classList.add('fa-play');
+                    animatedLines.style.opacity = '0';
+
+                    if (playInterval) {
+                        clearInterval(playInterval);
+                        playInterval = null;
+                    }
+                }
+
+                function stopPlaying() {
+                    pausePlaying();
+                    setTimeout(() => {
+                        currentSeconds = 0;
+                        progressLine.style.width = '0%';
+                        progressLine.style.opacity = '0';
+                    }, 1000);
+
+                    voicePlayBtn.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.6)';
+                    setTimeout(() => {
+                        voicePlayBtn.style.boxShadow = '';
+                    }, 1000);
+                }
+            });
+        </script>
+    </main>
+
+</body>
+
+</html>

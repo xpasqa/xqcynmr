@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yanmar QC Dashboard - Admin Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        /* Toggle section styling */
+        .toggle-container {
+            margin-bottom: 2rem !important;
+        }
+
+        .toggle-section {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toggle-section.collapsed {
+            margin-bottom: 0 !important;
+        }
+
+        /* Ensure proper spacing for collapsed state */
+        .toggle-container:has(.collapsed) {
+            margin-bottom: 2rem !important;
+        }
+    </style>
+    <script src="components/header.js"></script>
+    <script src="components/sidebar.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+
+            <!-- Page Header -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button onclick="window.history.back()"
+                            class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                            <i class="fas fa-arrow-left text-gray-600"></i>
+                        </button>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-800">NCR Admin Review</h2>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Status:</span>
+                            <span class="font-semibold text-orange-600 ml-2">Under Review</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Company Information -->
+            <div class="mb-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                    <div class="mb-3">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">PT. Besi Kuat Manufacturing</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-user text-gray-500"></i>
+                                <div>
+                                    <span class="text-base text-gray-500">PIC:</span>
+                                    <span class="font-medium text-gray-800 ml-1">Ahmad Wijaya</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-phone text-gray-500"></i>
+                                <div>
+                                    <span class="text-base text-gray-500">Phone:</span>
+                                    <span class="font-medium text-gray-800 ml-1">021-5432167</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-envelope text-gray-500"></i>
+                                <div>
+                                    <span class="text-base text-gray-500">Email:</span>
+                                    <span class="font-medium text-gray-800 ml-1">ahmad@besikuat.co.id</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Form -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                <form class="p-6 space-y-6" method="post" id="reportForm">
+
+                    <!-- Report Info Section (Read-only) -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Report Information
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                            <!-- NO NCR -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">No. NCR</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    NCR-20250928-1425
+                                </div>
+                            </div>
+
+                            <!-- Date -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Date</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    Saturday, September 28, 2025
+                                </div>
+                            </div>
+
+                            <!-- Sender Department -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Sender Department</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    Machine Shop
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Title Section -->
+                    <div class="mb-8">
+                        <div>
+                            <label class="block text-lg font-medium text-gray-700 mb-2">Report Title</label>
+                            <div
+                                class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                Defect on Engine Mount Bracket - Crack in Welding Area
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Parts Section -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                            Data Parts
+                        </h4>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
+                            <!-- Part No -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Part No.</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    EMB-4TNV98-001
+                                </div>
+                            </div>
+
+                            <!-- Part Name -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Part Name</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    Engine Mount Bracket
+                                </div>
+                            </div>
+
+                            <!-- Model -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Model</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    4TNV98-ZNSA
+                                </div>
+                            </div>
+
+                            <!-- Engine NO -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Engine No.</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    4TNV98-523847
+                                </div>
+                            </div>
+
+                            <!-- Class Part -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Class Part</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-base font-medium bg-red-100 text-red-800">
+                                        Safety
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Location -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Location</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg">
+                                    QC Incoming - Line 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Problem Section -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                            </svg>
+                            Problem Statement
+                        </h4>
+
+                        <div class="mb-6">
+                            <div
+                                class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-lg min-h-32">
+                                Found crack in the welding area of engine mount bracket. Crack detected at the joint
+                                between base plate and mounting hole. Crack size approximately 15mm with depth reaching
+                                2-3mm. This condition has potential to cause failure during engine operation and may
+                                endanger operator safety.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Media Section -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            Media Evidence
+                        </h4>
+
+                        <div class="space-y-6">
+                            <!-- Voice Notes -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Voice Notes</label>
+                                <div class="relative p-4 bg-gray-50 border border-slate-200 rounded-lg overflow-hidden">
+                                    <div class="flex items-center space-x-4">
+                                        <!-- Play Button with Background Red -->
+                                        <button type="button" id="voicePlayBtn"
+                                            class="flex items-center justify-center w-12 h-12 bg-red-700 hover:bg-red-800 rounded-full transition-all duration-200 transform hover:scale-105 shadow-md group">
+                                            <i id="voiceIcon"
+                                                class="fas fa-play text-white text-lg transition-transform duration-200 group-hover:scale-110"></i>
+                                        </button>
+
+                                        <!-- Title and Duration -->
+                                        <div class="flex-1">
+                                            <span class="text-lg text-gray-600 font-medium">Voice recording
+                                                available</span>
+
+                                        </div>
+
+                                        <!-- Animated Lines (Right Side) -->
+                                        <div id="animatedLines"
+                                            class="flex items-center space-x-1 opacity-0 transition-opacity duration-300">
+                                            <div class="w-1 h-8 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0s; animation-duration: 0.8s;"></div>
+                                            <div class="w-1 h-6 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.1s; animation-duration: 0.9s;"></div>
+                                            <div class="w-1 h-10 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.2s; animation-duration: 0.7s;"></div>
+                                            <div class="w-1 h-4 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.3s; animation-duration: 1s;"></div>
+                                            <div class="w-1 h-7 bg-red-700 rounded-full animate-pulse"
+                                                style="animation-delay: 0.4s; animation-duration: 0.6s;"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Progress Line (Moving from Left to Right) -->
+                                    <div id="progressLine"
+                                        class="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-700 to-red-500 transition-all duration-100 ease-out opacity-0"
+                                        style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Images and Videos -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Images & Videos
+                                    (3)</label>
+                                <div class="grid grid-cols-3 gap-3">
+                                    <!-- Image 1 -->
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-red-600 transition-colors group"
+                                        onclick="openImageModal('images/baud.png', 'baud.png');">
+                                        <img src="images/baud.png" alt="Evidence Image 1"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                    </div>
+
+                                    <!-- Image 2 -->
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-red-600 transition-colors group"
+                                        onclick="openImageModal('images/baud-2.png', 'baud-2.png');">
+                                        <img src="images/baud-2.png" alt="Evidence Image 2"
+                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                    </div>
+
+                                    <!-- Video -->
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-red-600 transition-colors group relative"
+                                        onclick="openVideoModal('images/videos.mp4');">
+                                        <!-- Video Thumbnail -->
+                                        <video class="w-full h-full object-cover" muted preload="metadata" poster="">
+                                            <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                        </video>
+
+                                        <!-- Play overlay -->
+                                        <div
+                                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-200">
+                                            <div
+                                                class="bg-white bg-opacity-95 rounded-full w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-lg">
+                                                <i class="fas fa-play text-red-600 text-2xl ml-1"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Video Info Badge -->
+                                        <div
+                                            class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                                            <i class="fas fa-video mr-1"></i>VIDEO
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Vendor Reply Title -->
+            <div class="mb-6 mt-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Vendor Reply</h3>
+                <p class="text-lg text-gray-600">Vendor has provided their response and corrective actions for this NCR.</p>
+            </div>
+
+            <!-- Temporary Action Box (Filled with dummy data) -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                <div class="p-6 space-y-6">
+
+                    <!-- Temporary Action Section -->
+                    <div class="mb-8">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-6 flex items-center">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                            Temporary Action
+                        </h4>
+
+                        <div class="space-y-6">
+                            <!-- Temporary Action Description -->
+                            <div>
+                                <label class="block text-lg font-medium text-gray-700 mb-2">Action Taken</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700 min-h-32">
+                                    We have immediately stopped production of affected parts and segregated all inventory from lot EMB-2024-1201 to EMB-2024-1205. All welding equipment has been recalibrated and welding parameters have been adjusted. Additional QC inspection points have been implemented for welding quality check. New operator training session conducted for proper welding techniques. Production will resume only after approval from QC department.
+                                </div>
+                            </div>
+
+                            <!-- Upload Section - Showing uploaded files -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Image Upload - With dummy files -->
+                                <div>
+                                    <label class="block text-lg font-medium text-gray-700 mb-2">Images (2 uploaded)</label>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                            <img src="images/baud.png" alt="Temporary Action Image 1"
+                                                class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden">
+                                            <img src="images/baud-2.png" alt="Temporary Action Image 2"
+                                                class="w-full h-full object-cover">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Video Upload - With dummy file -->
+                                <div>
+                                    <label class="block text-lg font-medium text-gray-700 mb-2">Videos (1 uploaded)</label>
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden relative">
+                                        <video class="w-full h-full object-cover" muted preload="metadata">
+                                            <source src="images/videos.mp4#t=0.5" type="video/mp4">
+                                        </video>
+                                        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                            <div class="bg-white bg-opacity-95 rounded-full w-16 h-16 flex items-center justify-center">
+                                                <i class="fas fa-play text-red-600 text-2xl ml-1"></i>
+                                            </div>
+                                        </div>
+                                        <div class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                                            <i class="fas fa-video mr-1"></i>VIDEO
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date Section -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Date Start -->
+                                <div>
+                                    <label class="block text-lg font-medium text-gray-700 mb-2">Date Start</label>
+                                    <div
+                                        class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
+                                        September 29, 2024
+                                    </div>
+                                </div>
+
+                                <!-- Date Good Lot -->
+                                <div>
+                                    <label class="block text-lg font-medium text-gray-700 mb-2">Date Good Lot</label>
+                                    <div
+                                        class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
+                                        October 2, 2024
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Detail Analysis Title -->
+            <div class="mb-6 mt-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Detail Analysis</h3>
+                <p class="text-lg text-gray-600">Vendor has provided detailed analysis including process flow, problem analysis, and countermeasures.</p>
+            </div>
+
+            <!-- Advanced Analysis Section (Filled with dummy data) -->
+            <div>
+                <!-- Process Flow Section -->
+                <div class="bg-white rounded-lg shadow mb-8">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h2 class="text-xl font-medium text-gray-900">Process Flow</h2>
+                    </div>
+                    <div class="p-6">
+                        <div>
+                            <label class="block text-base font-medium text-gray-700 mb-2">Process Flow</label>
+                            <div class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700 min-h-20">
+                                Raw material inspection → Cutting → Welding (Manual MIG) → QC inspection → Packaging → Shipping. The issue occurred during welding process where operator used incorrect welding parameters due to outdated work instruction.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem Analysis: Why Occurs Section -->
+                <div class="bg-white rounded-lg shadow mb-8">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h2 class="text-xl font-medium text-gray-900">Problem Analysis: Why Occurs?</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="border border-gray-300 w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 150px;">Category</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 1</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 2</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 3</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 4</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="px-3 py-2 bg-blue-100 text-blue-800 rounded-md text-sm font-medium">Method</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Crack appeared in welding joint</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Welding penetration was insufficient</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Wrong welding parameters used</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Work instruction was outdated</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">No regular review system for work instructions</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="px-3 py-2 bg-green-100 text-green-800 rounded-md text-sm font-medium">Man</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Operator made error</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Lack of awareness about new standard</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Training was not updated</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">No retraining schedule</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">HR system lacks training tracking</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem Analysis: Why Flow Out Section -->
+                <div class="bg-white rounded-lg shadow mb-8">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h2 class="text-xl font-medium text-gray-900">Problem Analysis: Why Flow Out?</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="border border-gray-300 w-full">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 150px;">Category</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 1</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 2</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 3</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 4</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="px-3 py-2 bg-yellow-100 text-yellow-800 rounded-md text-sm font-medium">Method</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Defect was not detected during QC</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Visual inspection was inadequate</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">QC checklist was not comprehensive</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">No X-ray inspection for critical welds</div>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <div class="text-sm text-gray-700">Cost reduction decision eliminated NDT</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countermeasure Section -->
+                <div class="bg-white rounded-lg shadow mb-8">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h2 class="text-xl font-medium text-gray-900">Countermeasures</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">No</th>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Description</th>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">PIC</th>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Due Date</th>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Status</th>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Evidence</th>
+                                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 uppercase">Verification</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">Update welding work instruction with correct parameters</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">Production Manager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">October 15, 2024</td>
+                                        <td class="px-4 py-3">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <i class="fas fa-file-pdf text-red-600"></i> Updated_WI_v2.1.pdf
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                Verified
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">Conduct retraining for all welding operators</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">HR Manager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">October 20, 2024</td>
+                                        <td class="px-4 py-3">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <i class="fas fa-images text-blue-600"></i> Training_Photos.zip
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                Verified
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-900">3</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">Implement X-ray inspection for safety critical welds</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">QC Manager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">November 1, 2024</td>
+                                        <td class="px-4 py-3">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                In Progress
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <i class="fas fa-file-alt text-gray-400"></i> Pending
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                Pending
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-900">4</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">Establish quarterly review system for work instructions</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">Engineering Manager</td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">November 15, 2024</td>
+                                        <td class="px-4 py-3">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                In Progress
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <i class="fas fa-file-alt text-gray-400"></i> Pending
+                                        </td>
+                                        <td class="px-4 py-3 text-sm text-gray-900">
+                                            <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
+                                                Pending
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Action Section -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden mt-8">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-medium text-gray-900">Admin Review & Action</h3>
+                </div>
+                <div class="p-6">
+                    <!-- Admin Remarks -->
+                    <div class="mb-6">
+                        <label class="block text-lg font-medium text-gray-700 mb-2">Admin Remarks</label>
+                        <textarea
+                            class="w-full px-4 py-4 border border-gray-300 rounded-lg text-lg resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            rows="4"
+                            placeholder="Enter your review comments and feedback for the vendor..."></textarea>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                        <button type="button"
+                            class="px-8 py-4 bg-yellow-600 text-white text-lg font-medium rounded-lg hover:bg-yellow-700 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-edit"></i>
+                            <span>Request Revision</span>
+                        </button>
+                        <button type="button"
+                            class="px-8 py-4 bg-green-600 text-white text-lg font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Close Report</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            // Simple Voice Player Functionality
+            document.addEventListener('DOMContentLoaded', function () {
+                const voicePlayBtn = document.getElementById('voicePlayBtn');
+                const voiceIcon = document.getElementById('voiceIcon');
+                const animatedLines = document.getElementById('animatedLines');
+                const progressLine = document.getElementById('progressLine');
+
+                let isPlaying = false;
+                let playInterval = null;
+                let currentSeconds = 0;
+                const totalSeconds = 135; // 02:15 in seconds
+
+                voicePlayBtn.addEventListener('click', function () {
+                    if (!isPlaying) {
+                        // Start playing
+                        isPlaying = true;
+
+                        // Change icon to pause
+                        voiceIcon.classList.remove('fa-play');
+                        voiceIcon.classList.add('fa-pause');
+
+                        // Show animated lines and progress
+                        animatedLines.style.opacity = '1';
+                        progressLine.style.opacity = '1';
+
+                        // Start progress animation
+                        playInterval = setInterval(() => {
+                            currentSeconds++;
+                            const progress = (currentSeconds / totalSeconds) * 100;
+                            progressLine.style.width = progress + '%';
+
+                            // End of recording
+                            if (currentSeconds >= totalSeconds) {
+                                stopPlaying();
+                            }
+                        }, 80); // Smooth animation
+
+                    } else {
+                        // Pause playing
+                        pausePlaying();
+                    }
+                });
+
+                function pausePlaying() {
+                    isPlaying = false;
+
+                    // Change icon back to play
+                    voiceIcon.classList.remove('fa-pause');
+                    voiceIcon.classList.add('fa-play');
+
+                    // Hide animated lines
+                    animatedLines.style.opacity = '0';
+
+                    if (playInterval) {
+                        clearInterval(playInterval);
+                        playInterval = null;
+                    }
+                }
+
+                function stopPlaying() {
+                    pausePlaying();
+
+                    // Reset progress after delay
+                    setTimeout(() => {
+                        currentSeconds = 0;
+                        progressLine.style.width = '0%';
+                        progressLine.style.opacity = '0';
+                    }, 1000);
+
+                    // Add completion glow effect
+                    voicePlayBtn.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.6)';
+                    setTimeout(() => {
+                        voicePlayBtn.style.boxShadow = '';
+                    }, 1000);
+                }
+            });
+        </script>
+    </main>
+
+</body>
+
+</html>
