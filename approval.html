@@ -48,7 +48,7 @@
                     <div class="flex items-center space-x-3">
                         <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
                             <span class="text-base text-gray-500">Status:</span>
-                            <span class="font-semibold text-orange-600 ml-2">Vendor Confirmation</span>
+                            <span class="font-semibold text-blue-600 ml-2">Detail Analysis Required</span>
                         </div>
                     </div>
                 </div>
@@ -386,10 +386,9 @@
                             <!-- Temporary Action Description -->
                             <div>
                                 <label class="block text-base font-medium text-gray-700 mb-2">Action Taken</label>
-                                <textarea
-                                    class="w-full px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-lg resize-none"
-                                    rows="3"
-                                    placeholder="Describe the temporary action taken to address this NCR..."></textarea>
+                                <textarea readonly
+                                    class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg resize-none text-gray-700"
+                                    rows="3">We have immediately stopped production of affected parts and segregated all inventory from lot EMB-2024-1201 to EMB-2024-1205. All welding equipment has been recalibrated and welding parameters have been adjusted. Additional QC inspection points have been implemented for welding quality check. New operator training session conducted for proper welding techniques. Production will resume only after approval from QC department.</textarea>
                             </div>
 
                             <!-- Upload Section -->
@@ -463,15 +462,15 @@
                                 <!-- Date Start -->
                                 <div>
                                     <label class="block text-base font-medium text-gray-700 mb-2">Date Start</label>
-                                    <input type="date" id="dateStart"
-                                        class="w-full px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-lg">
+                                    <input type="date" id="dateStart" value="2024-09-29" readonly
+                                        class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
                                 </div>
 
                                 <!-- Date Good Lot -->
                                 <div>
                                     <label class="block text-base font-medium text-gray-700 mb-2">Date Good Lot</label>
-                                    <input type="date" id="dateGoodLot"
-                                        class="w-full px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 text-lg">
+                                    <input type="date" id="dateGoodLot" value="2024-10-02" readonly
+                                        class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg text-gray-700">
                                 </div>
                             </div>
                         </div>
@@ -480,14 +479,457 @@
                 </form>
             </div>
 
+            <!-- Detail Analysis Title -->
+            <div id="detailAnalysisTitle" class="mb-6 mt-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Detail Analysis</h3>
+                <p class="text-gray-600">Provide detailed analysis including process flow, problem analysis, and
+                    countermeasures.</p>
+            </div>
+
+            <!-- Advanced Analysis Section -->
+            <div id="advancedAnalysisSection">
+                <!-- Process Flow and Problem Analysis (Simple) -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('processFlowSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-medium text-gray-900">Process Flow</h2>
+                            <i id="processFlowIcon"
+                                class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                    <div id="processFlowSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+                        <!-- Process Flow -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Process Flow</label>
+                            <textarea
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm resize-none"
+                                rows="3" placeholder="Describe the process flow that led to this issue..."></textarea>
+                        </div>
+
+                        <!-- Process Flow Attachments -->
+                        <div class="mt-4">
+                            <button type="button" onclick="openProcessFlowAttachmentModal()"
+                                class="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors">
+                                <i class="fas fa-paperclip mr-2"></i>
+                                Add Attachments
+                            </button>
+
+                            <!-- Attachment Preview -->
+                            <div id="processFlowAttachments" class="mt-3 hidden">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="processFlowAttachmentGrid">
+                                    <!-- Attachments will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem Analysis: Why Occurs Section -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('whyOccursSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-medium text-gray-900">Problem Analysis: Why Occurs?</h2>
+                            <i id="whyOccursIcon"
+                                class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                    <div id="whyOccursSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+
+                        <!-- Problem Analysis Table -->
+                        <div class="overflow-x-auto">
+                            <table class="border border-gray-300" id="whyOccursTable" style="min-width: 1000px;">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 150px;">Category</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 1</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 2</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 3</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 4</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="whyOccursTableBody">
+                                    <tr>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <select
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                                <option value="">Select Category</option>
+                                                <option value="Man">Man</option>
+                                                <option value="Machine">Machine</option>
+                                                <option value="Method">Method</option>
+                                                <option value="Material">Material</option>
+                                                <option value="Environment">Environment</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add/Delete Row Buttons -->
+                        <div class="mt-4 flex justify-between">
+                            <button type="button" onclick="addWhyOccursRow()"
+                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Row
+                            </button>
+                            <button type="button" onclick="deleteWhyOccursRow()"
+                                class="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700">
+                                <i class="fas fa-trash mr-2"></i>
+                                Delete Row
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem Analysis: Why Flow Out Section -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('whyFlowOutSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-medium text-gray-900">Problem Analysis: Why Flow Out?</h2>
+                            <i id="whyFlowOutIcon"
+                                class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                    <div id="whyFlowOutSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+
+                        <!-- Problem Analysis Table -->
+                        <div class="overflow-x-auto">
+                            <table class="border border-gray-300" id="whyFlowOutTable" style="min-width: 1000px;">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 150px;">Category</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 1</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 2</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 3</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 4</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="whyFlowOutTableBody">
+                                    <tr>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <select
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                                <option value="">Select Category</option>
+                                                <option value="Man">Man</option>
+                                                <option value="Machine">Machine</option>
+                                                <option value="Method">Method</option>
+                                                <option value="Material">Material</option>
+                                                <option value="Environment">Environment</option>
+                                            </select>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                        <td class="px-4 py-3 border border-gray-300">
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add/Delete Row Buttons -->
+                        <div class="mt-4 flex justify-between">
+                            <button type="button" onclick="addWhyFlowOutRow()"
+                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Row
+                            </button>
+                            <button type="button" onclick="deleteWhyFlowOutRow()"
+                                class="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700">
+                                <i class="fas fa-trash mr-2"></i>
+                                Delete Row
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countermeasure for Occurs Section -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('countermeasureSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-medium text-gray-900">Countermeasure for Occurs</h2>
+                            <i id="countermeasureIcon"
+                                class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                    <div id="countermeasureSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Description</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PIC
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Due
+                                            Date</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Status</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Evidence</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Admin Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="countermeasureTableBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Dynamic countermeasure rows will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add Countermeasure Button -->
+                        <div class="mt-4 text-center">
+                            <button type="button" onclick="openCountermeasureModal()"
+                                class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 flex items-center space-x-2 mx-auto text-sm">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Countermeasure</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countermeasure for Flow Out Section -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('countermeasureFlowOutSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-medium text-gray-900">Countermeasure for Flow Out</h2>
+                            <i id="countermeasureFlowOutIcon"
+                                class="fas fa-chevron-up text-gray-500 transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                    <div id="countermeasureFlowOutSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">No
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Description</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">PIC
+                                        </th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Due
+                                            Date</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Status</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Evidence</th>
+                                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                                            Admin Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="countermeasureFlowOutTableBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Dynamic countermeasure flow out rows will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Add Countermeasure Flow Out Button -->
+                        <div class="mt-4 text-center">
+                            <button type="button" onclick="openCountermeasureFlowOutModal()"
+                                class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 flex items-center space-x-2 mx-auto text-sm">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Countermeasure</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Remarks Section -->
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden mt-8">
+                <div class="p-6 space-y-6">
+
+                    <!-- Enable Detail Analysis Checkbox -->
+                    <div class="">
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" id="enableDetailAnalysis" checked disabled
+                                class="w-4 h-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
+                            <label for="enableDetailAnalysis" class="text-base font-medium text-gray-700">
+                                Enable detailed analysis (Process Flow, Problem Analysis & Countermeasures)
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Remarks Text Area -->
+                    <div>
+                        <label class="block text-base font-medium text-gray-700 mb-2">Admin Remarks</label>
+                        <textarea readonly
+                            class="w-full px-4 py-4 bg-gray-100 border border-gray-300 rounded-lg text-lg resize-none text-gray-700"
+                            rows="4">Vendor response looks adequate but requires detailed analysis to ensure proper root cause identification and preventive measures. Please provide comprehensive process flow analysis, problem analysis using appropriate methodology, and detailed countermeasures for both occurrence and flow-out prevention.</textarea>
+
+                        <!-- Reply Button -->
+                        <div class="mt-3">
+                            <button type="button" onclick="openReplyModal()"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-reply mr-2"></i>
+                                Reply to Admin
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Conversation Section -->
+                    <div id="conversationSection" class="hidden">
+                        <div class="border-t border-gray-200 pt-4">
+                            <h4 class="text-base font-medium text-gray-700 mb-3">Conversation</h4>
+                            <div id="conversationList" class="space-y-3">
+                                <!-- Conversation messages will be added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
 
-            <!-- Submit Section -->
+            <!-- Approval Section -->
             <div class="mt-8 mb-8">
-                <button type="button" onclick="submitToAdmin()"
-                    class="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700">
-                    Submit
-                </button>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Admin Approval -->
+                    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                <i class="fas fa-user-shield text-blue-600 mr-2"></i>
+                                Admin Approval
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <div id="adminApprovalBox" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
+                                onclick="handleAdminApproval()">
+                                <div id="adminApprovalContent">
+                                    <div class="text-gray-400 mb-3">
+                                        <i class="fas fa-hand-pointer text-3xl"></i>
+                                    </div>
+                                    <p class="text-gray-600 font-medium">Click to Approve</p>
+                                    <p class="text-sm text-gray-500 mt-1">Admin signature required</p>
+                                </div>
+                                <div id="adminApprovalSigned" class="hidden">
+                                    <div class="text-green-600 mb-3">
+                                        <i class="fas fa-check-circle text-3xl"></i>
+                                    </div>
+                                    <p class="text-green-700 font-medium" id="adminApprovalName">Admin Name</p>
+                                    <p class="text-sm text-gray-600 mt-1" id="adminApprovalDate">Date & Time</p>
+                                    <div class="mt-3">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            <i class="fas fa-shield-alt mr-1"></i>
+                                            Approved
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manager Approval -->
+                    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                            <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                                <i class="fas fa-crown text-purple-600 mr-2"></i>
+                                Manager Approval
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <div id="managerApprovalBox" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+                                onclick="handleManagerApproval()">
+                                <div id="managerApprovalContent">
+                                    <div class="text-gray-400 mb-3">
+                                        <i class="fas fa-hand-pointer text-3xl"></i>
+                                    </div>
+                                    <p class="text-gray-600 font-medium">Click to Approve</p>
+                                    <p class="text-sm text-gray-500 mt-1">Manager signature required</p>
+                                </div>
+                                <div id="managerApprovalSigned" class="hidden">
+                                    <div class="text-green-600 mb-3">
+                                        <i class="fas fa-check-circle text-3xl"></i>
+                                    </div>
+                                    <p class="text-green-700 font-medium" id="managerApprovalName">Manager Name</p>
+                                    <p class="text-sm text-gray-600 mt-1" id="managerApprovalDate">Date & Time</p>
+                                    <div class="mt-3">
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            <i class="fas fa-crown mr-1"></i>
+                                            Approved
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -669,6 +1111,143 @@
             </div>
         </div>
 
+        <!-- Reply Modal -->
+        <div id="replyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-900">Reply to Admin</h3>
+                        <button onclick="closeReplyModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Conversation History -->
+                <div class="px-6 py-4 border-b border-gray-200 max-h-60 overflow-y-auto">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Conversation History</h4>
+                    <div id="conversationHistory" class="space-y-3">
+                        <!-- Admin Message -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user-tie text-red-600 text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="bg-gray-100 rounded-lg p-3">
+                                    <div class="text-xs text-gray-500 mb-1">Admin • 2 hours ago</div>
+                                    <p class="text-sm text-gray-700">Vendor response looks adequate but requires
+                                        detailed analysis to ensure proper root cause identification and preventive
+                                        measures. Please provide comprehensive process flow analysis, problem analysis
+                                        using appropriate methodology, and detailed countermeasures for both occurrence
+                                        and flow-out prevention.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reply Form -->
+                <form id="replyForm" class="p-6">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Reply</label>
+                        <textarea name="replyMessage" required rows="4"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                            placeholder="Type your reply to admin..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeReplyModal()"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            Send Reply
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Process Flow Attachment Modal -->
+        <div id="processFlowAttachmentModal"
+            class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-900">Add Attachments - Process Flow</h3>
+                        <button onclick="closeProcessFlowAttachmentModal()" class="text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <!-- Upload Sections -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Photo Upload -->
+                        <div
+                            class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-500 transition-colors">
+                            <input type="file" id="processFlowPhotoUpload" accept="image/*" multiple class="hidden">
+                            <div onclick="document.getElementById('processFlowPhotoUpload').click()"
+                                class="cursor-pointer">
+                                <i class="fas fa-camera text-4xl text-gray-400 mb-4"></i>
+                                <h4 class="text-lg font-medium text-gray-700 mb-2">Photos</h4>
+                                <p class="text-sm text-gray-500">PNG, JPG, GIF</p>
+                                <p class="text-xs text-gray-400">Max 10MB each</p>
+                            </div>
+                        </div>
+
+                        <!-- Video Upload -->
+                        <div
+                            class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-500 transition-colors">
+                            <input type="file" id="processFlowVideoUpload" accept="video/*" multiple class="hidden">
+                            <div onclick="document.getElementById('processFlowVideoUpload').click()"
+                                class="cursor-pointer">
+                                <i class="fas fa-video text-4xl text-gray-400 mb-4"></i>
+                                <h4 class="text-lg font-medium text-gray-700 mb-2">Videos</h4>
+                                <p class="text-sm text-gray-500">MP4, MOV, AVI</p>
+                                <p class="text-xs text-gray-400">Max 50MB each</p>
+                            </div>
+                        </div>
+
+                        <!-- Document Upload -->
+                        <div
+                            class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-red-500 transition-colors">
+                            <input type="file" id="processFlowDocumentUpload"
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" multiple class="hidden">
+                            <div onclick="document.getElementById('processFlowDocumentUpload').click()"
+                                class="cursor-pointer">
+                                <i class="fas fa-file-alt text-4xl text-gray-400 mb-4"></i>
+                                <h4 class="text-lg font-medium text-gray-700 mb-2">Documents</h4>
+                                <p class="text-sm text-gray-500">PDF, Word, Excel, PowerPoint</p>
+                                <p class="text-xs text-gray-400">Max 25MB each</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uploaded Files Preview -->
+                    <div id="processFlowUploadPreview" class="mt-6 hidden">
+                        <h4 class="text-sm font-medium text-gray-700 mb-3">Uploaded Files</h4>
+                        <div id="processFlowUploadList" class="space-y-2">
+                            <!-- Uploaded files will appear here -->
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex justify-end space-x-3 mt-6 pt-4 border-t">
+                        <button type="button" onclick="closeProcessFlowAttachmentModal()"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button type="button" onclick="saveProcessFlowAttachments()"
+                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                            Save Attachments
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- JavaScript -->
         <script>
             // Media Modal Functions - Global functions outside DOMContentLoaded
@@ -748,99 +1327,7 @@
                 }
             }
 
-            // Admin Edit Mode Functionality
-            let isEditMode = false;
 
-            function enableEditMode() {
-                console.log('Enabling edit mode for admin...');
-                isEditMode = true;
-
-                // Enable all form inputs
-                const form = document.getElementById('reportForm');
-                if (form) {
-                    const inputs = form.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.disabled = false;
-                        input.style.backgroundColor = '#fff';
-                        input.style.border = '2px solid #3b82f6';
-                    });
-
-                    // Enable radio buttons
-                    const radioButtons = form.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(radio => {
-                        radio.disabled = false;
-                        const label = radio.closest('label');
-                        if (label) {
-                            label.style.opacity = '1';
-                            label.style.pointerEvents = 'auto';
-                        }
-                    });
-
-                    // Show save/cancel buttons
-                    showEditButtons();
-
-                    // Update status
-                    updateStatusToEditing();
-
-                    showNotification('Edit mode enabled. You can now modify the form.', 'info');
-                } else {
-                    console.error('Report form not found!');
-                }
-            }
-
-            function disableEditMode() {
-                console.log('Disabling edit mode...');
-                isEditMode = false;
-
-                // Disable all form inputs
-                const form = document.getElementById('reportForm');
-                if (form) {
-                    const inputs = form.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.disabled = true;
-                        input.style.backgroundColor = '#f9fafb';
-                        input.style.border = '1px solid #d1d5db';
-                    });
-
-                    // Disable radio buttons
-                    const radioButtons = form.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(radio => {
-                        radio.disabled = true;
-                        const label = radio.closest('label');
-                        if (label) {
-                            label.style.opacity = '0.6';
-                            label.style.pointerEvents = 'none';
-                        }
-                    });
-
-                    // Hide save/cancel buttons
-                    hideEditButtons();
-
-                    // Restore status
-                    updateStatusToPending();
-
-                    showNotification('Edit mode disabled. Form is now read-only.', 'info');
-                }
-            }
-
-            function saveEditChanges() {
-                console.log('Saving edit changes...');
-
-                // Here you would typically send data to server
-                // For now, just disable edit mode
-                disableEditMode();
-
-                showNotification('Changes saved successfully!', 'success');
-            }
-
-            function cancelEditChanges() {
-                console.log('Cancelling edit changes...');
-
-                // Reload page to revert changes (or implement proper revert logic)
-                if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
-                    window.location.reload();
-                }
-            }
 
             // Temporary Action Upload Functionality
             const tempImageUpload = document.getElementById('tempImageUpload');
@@ -1044,23 +1531,86 @@
                 }
             }
 
-            // Add text box functionality
-            function addTextBox(containerId) {
-                const container = document.getElementById(containerId);
-                const textarea = document.createElement('textarea');
-                textarea.className = 'w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 text-sm';
-                textarea.rows = 3;
-                textarea.placeholder = 'Additional analysis...';
-                container.appendChild(textarea);
-            }
 
             // Countermeasure functionality
-            let countermeasures = [];
+            let countermeasures = [
+                {
+                    id: 1,
+                    description: "Optimize heat treatment cycle for improved thermal stress resistance",
+                    pic: "Materials Engineer",
+                    dueDate: "2024-11-15",
+                    status: "submitted",
+                    evidence: "Heat_Treatment_Protocol.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud.png"]
+                },
+                {
+                    id: 2,
+                    description: "Implement stress relief machining operation between valve seat preparation",
+                    pic: "Manufacturing Manager",
+                    dueDate: "2024-11-30",
+                    status: "submitted",
+                    evidence: "Machining_Process_Plan.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud-2.png"]
+                },
+                {
+                    id: 3,
+                    description: "Upgrade material specification to higher thermal fatigue resistance alloy",
+                    pic: "Design Engineer",
+                    dueDate: "2024-12-10",
+                    status: "submitted",
+                    evidence: "Material_Specification.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud.png"]
+                },
+                {
+                    id: 4,
+                    description: "Install thermal monitoring system during cylinder head manufacturing",
+                    pic: "Quality Manager",
+                    dueDate: "2024-12-20",
+                    status: "submitted",
+                    evidence: "Thermal_Monitoring_System.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud-2.png"]
+                }
+            ];
             let editingCountermeasure = null;
             let countermeasureUploadedImages = [];
 
             // Countermeasure Flow Out functionality
-            let countermeasuresFlowOut = [];
+            let countermeasuresFlowOut = [
+                {
+                    id: 1,
+                    description: "Enhance thermal cycle test protocol with progressive load steps",
+                    pic: "Test Engineer",
+                    dueDate: "2024-11-10",
+                    status: "submitted",
+                    evidence: "Enhanced_Test_Protocol.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud.png"]
+                },
+                {
+                    id: 2,
+                    description: "Implement automated crack detection system using ultrasonic inspection",
+                    pic: "QC Manager",
+                    dueDate: "2024-12-05",
+                    status: "submitted",
+                    evidence: "Ultrasonic_Inspection_System.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud-2.png"]
+                },
+                {
+                    id: 3,
+                    description: "Establish statistical process control for material properties monitoring",
+                    pic: "Quality Manager",
+                    dueDate: "2024-11-25",
+                    status: "submitted",
+                    evidence: "SPC_Material_Control.pdf",
+                    verification: "pending",
+                    evidencePhotos: ["images/baud.png"]
+                }
+            ];
             let editingCountermeasureFlowOut = null;
             let countermeasureFlowOutUploadedImages = [];
 
@@ -1156,10 +1706,6 @@
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-2">
                                 ${statusBadge}
-                                <button onclick="editCountermeasure(${item.id})"
-                                    class="text-blue-600 hover:text-blue-800 text-xs font-medium underline">
-                                    Edit
-                                </button>
                             </div>
                         </td>
                         <td class="px-4 py-3">
@@ -1168,10 +1714,18 @@
                             </div>
                         </td>
                         <td class="px-4 py-3">
-                            <div class="flex items-center">
-                                <button class="w-6 h-6 bg-gray-300 text-white rounded-full flex items-center justify-center cursor-not-allowed" disabled>
-                                    <i class="fas fa-clock text-xs"></i>
-                                </button>
+                            <div class="flex items-center space-x-2">
+                                ${item.verification === 'approved' ?
+                            '<span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Approved</span>' :
+                            item.verification === 'rejected' ?
+                                '<span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>' :
+                                `<button onclick="approveCountermeasure(${item.id})" class="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </button>
+                                    <button onclick="rejectCountermeasure(${item.id})" class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fas fa-times text-xs"></i>
+                                    </button>`
+                        }
                             </div>
                         </td>
                     </tr>
@@ -1281,10 +1835,6 @@
                         <td class="px-4 py-3">
                             <div class="flex items-center space-x-2">
                                 ${statusBadge}
-                                <button onclick="editCountermeasureFlowOut(${item.id})"
-                                    class="text-blue-600 hover:text-blue-800 text-xs font-medium underline">
-                                    Edit
-                                </button>
                             </div>
                         </td>
                         <td class="px-4 py-3">
@@ -1293,10 +1843,18 @@
                             </div>
                         </td>
                         <td class="px-4 py-3">
-                            <div class="flex items-center">
-                                <button class="w-6 h-6 bg-gray-300 text-white rounded-full flex items-center justify-center cursor-not-allowed" disabled>
-                                    <i class="fas fa-clock text-xs"></i>
-                                </button>
+                            <div class="flex items-center space-x-2">
+                                ${item.verification === 'approved' ?
+                            '<span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Approved</span>' :
+                            item.verification === 'rejected' ?
+                                '<span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">Rejected</span>' :
+                                `<button onclick="approveCountermeasure(${item.id})" class="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fas fa-check text-xs"></i>
+                                    </button>
+                                    <button onclick="rejectCountermeasure(${item.id})" class="w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors">
+                                        <i class="fas fa-times text-xs"></i>
+                                    </button>`
+                        }
                             </div>
                         </td>
                     </tr>
@@ -1538,15 +2096,389 @@
                 });
             });
 
-            // Submit Function
-            function submitToAdmin() {
-                if (confirm('Submit to admin?')) {
-                    // Collect form data and submit
-                    console.log('Submitting to admin...');
-                    alert('Submitted successfully!');
+            // Submit Detail Analysis Function
+            function submitDetailAnalysis() {
+                if (confirm('Submit detail analysis to admin?')) {
+                    console.log('Submitting detail analysis...');
+
+                    // Here you would typically:
+                    // 1. Collect all form data including detail analysis
+                    // 2. Send data to server
+                    // 3. Update report status to "Under Review"
+
+                    alert('Detail analysis submitted successfully!');
+
+                    // Optionally redirect to dashboard
+                    // window.location.href = 'dashboard.html';
                 }
             }
 
+            // Reply Modal Functions
+            let conversationMessages = [];
+
+            function openReplyModal() {
+                const modal = document.getElementById('replyModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeReplyModal() {
+                const modal = document.getElementById('replyModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+
+                // Reset form
+                document.getElementById('replyForm').reset();
+            }
+
+            function addMessageToConversation(message, sender, timestamp) {
+                const conversationHistory = document.getElementById('conversationHistory');
+                const isAdmin = sender === 'admin';
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3';
+
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 ${isAdmin ? 'bg-red-100' : 'bg-blue-100'} rounded-full flex items-center justify-center">
+                        <i class="fas ${isAdmin ? 'fa-user-tie text-red-600' : 'fa-user text-blue-600'} text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-100 rounded-lg p-3">
+                            <div class="text-xs text-gray-500 mb-1">${isAdmin ? 'Admin' : 'Vendor'} • ${timestamp}</div>
+                            <p class="text-sm text-gray-700">${message}</p>
+                        </div>
+                    </div>
+                `;
+
+                conversationHistory.appendChild(messageDiv);
+
+                // Scroll to bottom
+                conversationHistory.scrollTop = conversationHistory.scrollHeight;
+            }
+
+            function addMessageToMainConversation(message, sender, timestamp) {
+                const conversationList = document.getElementById('conversationList');
+                const isAdmin = sender === 'admin';
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3';
+
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 ${isAdmin ? 'bg-red-100' : 'bg-blue-100'} rounded-full flex items-center justify-center">
+                        <i class="fas ${isAdmin ? 'fa-user-tie text-red-600' : 'fa-user text-blue-600'} text-sm"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-gray-100 rounded-lg p-3">
+                            <div class="text-xs text-gray-500 mb-1">${isAdmin ? 'Admin' : 'Vendor'} • ${timestamp}</div>
+                            <p class="text-sm text-gray-700">${message}</p>
+                        </div>
+                    </div>
+                `;
+
+                conversationList.appendChild(messageDiv);
+            }
+
+            // Handle reply form submission
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('replyForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    const replyMessage = formData.get('replyMessage').trim();
+
+                    if (replyMessage) {
+                        // Add vendor reply to conversation
+                        const now = new Date();
+                        const timestamp = 'Just now';
+
+                        addMessageToConversation(replyMessage, 'vendor', timestamp);
+                        addMessageToMainConversation(replyMessage, 'vendor', timestamp);
+
+                        // Store message (in real app, send to server)
+                        conversationMessages.push({
+                            message: replyMessage,
+                            sender: 'vendor',
+                            timestamp: now
+                        });
+
+                        // Show conversation section
+                        const conversationSection = document.getElementById('conversationSection');
+                        conversationSection.classList.remove('hidden');
+
+                        // Reset form and close modal
+                        this.reset();
+                        closeReplyModal();
+
+                        // Show success message
+                        alert('Reply sent successfully!');
+
+                        console.log('Reply sent:', replyMessage);
+                    }
+                });
+            });
+
+            // Process Flow Attachment Functions
+            let processFlowAttachments = [];
+
+            function openProcessFlowAttachmentModal() {
+                const modal = document.getElementById('processFlowAttachmentModal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            function closeProcessFlowAttachmentModal() {
+                const modal = document.getElementById('processFlowAttachmentModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
+            function saveProcessFlowAttachments() {
+                // Update attachment display in main form
+                displayProcessFlowAttachments();
+                closeProcessFlowAttachmentModal();
+                alert('Attachments saved successfully!');
+            }
+
+            function displayProcessFlowAttachments() {
+                const attachmentContainer = document.getElementById('processFlowAttachments');
+                const attachmentGrid = document.getElementById('processFlowAttachmentGrid');
+
+                if (processFlowAttachments.length > 0) {
+                    attachmentContainer.classList.remove('hidden');
+
+                    attachmentGrid.innerHTML = processFlowAttachments.map((file, index) => {
+                        const isImage = file.type.startsWith('image/');
+                        const isVideo = file.type.startsWith('video/');
+                        const isDocument = !isImage && !isVideo;
+
+                        let icon = 'fa-file';
+                        let bgColor = 'bg-gray-100';
+                        let iconColor = 'text-gray-600';
+
+                        if (isImage) {
+                            icon = 'fa-image';
+                            bgColor = 'bg-green-100';
+                            iconColor = 'text-green-600';
+                        } else if (isVideo) {
+                            icon = 'fa-video';
+                            bgColor = 'bg-blue-100';
+                            iconColor = 'text-blue-600';
+                        } else if (isDocument) {
+                            icon = 'fa-file-alt';
+                            bgColor = 'bg-yellow-100';
+                            iconColor = 'text-yellow-600';
+                        }
+
+                        return `
+                            <div class="relative ${bgColor} border border-gray-200 rounded-lg p-3">
+                                <div class="text-center">
+                                    <i class="fas ${icon} text-2xl ${iconColor} mb-2"></i>
+                                    <p class="text-xs text-gray-700 truncate">${file.name}</p>
+                                    <p class="text-xs text-gray-500">${(file.size / 1024 / 1024).toFixed(1)}MB</p>
+                                </div>
+                                <button onclick="removeProcessFlowAttachment(${index})"
+                                    class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full text-xs hover:bg-red-600">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    attachmentContainer.classList.add('hidden');
+                }
+            }
+
+            function removeProcessFlowAttachment(index) {
+                processFlowAttachments.splice(index, 1);
+                displayProcessFlowAttachments();
+                updateProcessFlowUploadPreview();
+            }
+
+            function updateProcessFlowUploadPreview() {
+                const preview = document.getElementById('processFlowUploadPreview');
+                const list = document.getElementById('processFlowUploadList');
+
+                if (processFlowAttachments.length > 0) {
+                    preview.classList.remove('hidden');
+
+                    list.innerHTML = processFlowAttachments.map((file, index) => {
+                        const isImage = file.type.startsWith('image/');
+                        const isVideo = file.type.startsWith('video/');
+
+                        let icon = 'fa-file';
+                        let iconColor = 'text-gray-600';
+
+                        if (isImage) {
+                            icon = 'fa-image';
+                            iconColor = 'text-green-600';
+                        } else if (isVideo) {
+                            icon = 'fa-video';
+                            iconColor = 'text-blue-600';
+                        } else {
+                            icon = 'fa-file-alt';
+                            iconColor = 'text-yellow-600';
+                        }
+
+                        return `
+                            <div class="flex items-center justify-between p-2 bg-gray-50 rounded border">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas ${icon} ${iconColor}"></i>
+                                    <div>
+                                        <p class="text-sm text-gray-700">${file.name}</p>
+                                        <p class="text-xs text-gray-500">${(file.size / 1024 / 1024).toFixed(1)}MB</p>
+                                    </div>
+                                </div>
+                                <button onclick="removeProcessFlowAttachment(${index})"
+                                    class="text-red-600 hover:text-red-800 text-sm">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    preview.classList.add('hidden');
+                }
+            }
+
+            // File upload event listeners
+            document.addEventListener('DOMContentLoaded', function () {
+                // Photo upload
+                document.getElementById('processFlowPhotoUpload').addEventListener('change', function (e) {
+                    handleProcessFlowFileUpload(e.target.files);
+                });
+
+                // Video upload
+                document.getElementById('processFlowVideoUpload').addEventListener('change', function (e) {
+                    handleProcessFlowFileUpload(e.target.files);
+                });
+
+                // Document upload
+                document.getElementById('processFlowDocumentUpload').addEventListener('change', function (e) {
+                    handleProcessFlowFileUpload(e.target.files);
+                });
+            });
+
+            function handleProcessFlowFileUpload(files) {
+                Array.from(files).forEach(file => {
+                    // Validate file size
+                    const maxSize = file.type.startsWith('video/') ? 50 * 1024 * 1024 : // 50MB for videos
+                        file.type.startsWith('image/') ? 10 * 1024 * 1024 : // 10MB for images
+                            25 * 1024 * 1024; // 25MB for documents
+
+                    if (file.size > maxSize) {
+                        alert(`File ${file.name} is too large. Maximum size: ${maxSize / 1024 / 1024}MB`);
+                        return;
+                    }
+
+                    // Add to attachments array
+                    processFlowAttachments.push(file);
+                });
+
+                updateProcessFlowUploadPreview();
+
+                // Reset file inputs
+                document.getElementById('processFlowPhotoUpload').value = '';
+                document.getElementById('processFlowVideoUpload').value = '';
+                document.getElementById('processFlowDocumentUpload').value = '';
+            }
+
+            // Problem Analysis Table Functions
+            function addWhyOccursRow() {
+                const tbody = document.getElementById('whyOccursTableBody');
+                const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                    <td class="px-4 py-3 border border-gray-300">
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                            <option value="">Select Category</option>
+                            <option value="Man">Man</option>
+                            <option value="Machine">Machine</option>
+                            <option value="Method">Method</option>
+                            <option value="Material">Material</option>
+                            <option value="Environment">Environment</option>
+                        </select>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                `;
+
+                tbody.appendChild(newRow);
+            }
+
+            function addWhyFlowOutRow() {
+                const tbody = document.getElementById('whyFlowOutTableBody');
+                const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                    <td class="px-4 py-3 border border-gray-300">
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                            <option value="">Select Category</option>
+                            <option value="Man">Man</option>
+                            <option value="Machine">Machine</option>
+                            <option value="Method">Method</option>
+                            <option value="Material">Material</option>
+                            <option value="Environment">Environment</option>
+                        </select>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                    <td class="px-4 py-3 border border-gray-300">
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                    </td>
+                `;
+
+                tbody.appendChild(newRow);
+            }
+
+            // Delete Row Functions
+            function deleteWhyOccursRow() {
+                const tbody = document.getElementById('whyOccursTableBody');
+                const rows = tbody.getElementsByTagName('tr');
+
+                if (rows.length > 1) { // Keep at least one row
+                    if (confirm('Are you sure you want to delete the last row?')) {
+                        tbody.removeChild(rows[rows.length - 1]);
+                    }
+                } else {
+                    alert('Cannot delete the last row. At least one row must remain.');
+                }
+            }
+
+            function deleteWhyFlowOutRow() {
+                const tbody = document.getElementById('whyFlowOutTableBody');
+                const rows = tbody.getElementsByTagName('tr');
+
+                if (rows.length > 1) { // Keep at least one row
+                    if (confirm('Are you sure you want to delete the last row?')) {
+                        tbody.removeChild(rows[rows.length - 1]);
+                    }
+                } else {
+                    alert('Cannot delete the last row. At least one row must remain.');
+                }
+            }
 
             // Simple Voice Player Functionality
             document.addEventListener('DOMContentLoaded', function () {
@@ -1623,6 +2555,149 @@
                         voicePlayBtn.style.boxShadow = '';
                     }, 1000);
                 }
+            });
+
+            // Admin approval functions for countermeasures
+            function approveCountermeasure(id) {
+                const countermeasure = countermeasures.find(c => c.id === id);
+                if (countermeasure) {
+                    countermeasure.verification = 'approved';
+                    renderCountermeasureTable();
+                    renderCountermeasureFlowOutTable();
+                }
+            }
+
+            function rejectCountermeasure(id) {
+                const countermeasure = countermeasures.find(c => c.id === id);
+                if (countermeasure) {
+                    countermeasure.verification = 'rejected';
+                    renderCountermeasureTable();
+                    renderCountermeasureFlowOutTable();
+                }
+            }
+
+            // Admin approval functions for flow out countermeasures
+            function approveCountermeasureFlowOut(id) {
+                const countermeasure = countermeasuresFlowOut.find(c => c.id === id);
+                if (countermeasure) {
+                    countermeasure.verification = 'approved';
+                    renderCountermeasureTable();
+                    renderCountermeasureFlowOutTable();
+                }
+            }
+
+            function rejectCountermeasureFlowOut(id) {
+                const countermeasure = countermeasuresFlowOut.find(c => c.id === id);
+                if (countermeasure) {
+                    countermeasure.verification = 'rejected';
+                    renderCountermeasureTable();
+                    renderCountermeasureFlowOutTable();
+                }
+            }
+
+            // Approval functions
+            function handleAdminApproval() {
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                // Simulate admin name (in real app, this would come from login session)
+                const adminName = 'John Smith';
+
+                // Hide the click content and show approved content
+                document.getElementById('adminApprovalContent').classList.add('hidden');
+                document.getElementById('adminApprovalSigned').classList.remove('hidden');
+
+                // Update the approval details
+                document.getElementById('adminApprovalName').textContent = adminName;
+                document.getElementById('adminApprovalDate').textContent = currentDateTime;
+
+                // Update the box styling to show it's approved
+                const approvalBox = document.getElementById('adminApprovalBox');
+                approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
+                approvalBox.onclick = null; // Remove click handler
+
+                // Show success notification
+                showNotification('Admin approval completed successfully!', 'success');
+            }
+
+            function handleManagerApproval() {
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                // Simulate manager name (in real app, this would come from login session)
+                const managerName = 'Sarah Johnson';
+
+                // Hide the click content and show approved content
+                document.getElementById('managerApprovalContent').classList.add('hidden');
+                document.getElementById('managerApprovalSigned').classList.remove('hidden');
+
+                // Update the approval details
+                document.getElementById('managerApprovalName').textContent = managerName;
+                document.getElementById('managerApprovalDate').textContent = currentDateTime;
+
+                // Update the box styling to show it's approved
+                const approvalBox = document.getElementById('managerApprovalBox');
+                approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
+                approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
+                approvalBox.onclick = null; // Remove click handler
+
+                // Show success notification
+                showNotification('Manager approval completed successfully!', 'success');
+            }
+
+            // Simple notification function
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `fixed top-20 right-4 z-50 px-6 py-3 rounded-lg shadow-lg text-white transition-all duration-300 transform translate-x-full`;
+
+                if (type === 'success') {
+                    notification.classList.add('bg-green-600');
+                } else if (type === 'error') {
+                    notification.classList.add('bg-red-600');
+                } else {
+                    notification.classList.add('bg-blue-600');
+                }
+
+                notification.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+
+                document.body.appendChild(notification);
+
+                // Slide in
+                setTimeout(() => {
+                    notification.classList.remove('translate-x-full');
+                }, 100);
+
+                // Slide out and remove
+                setTimeout(() => {
+                    notification.classList.add('translate-x-full');
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            // Call render functions when page loads
+            document.addEventListener('DOMContentLoaded', function () {
+                renderCountermeasureTable();
+                renderCountermeasureFlowOutTable();
             });
         </script>
     </main>

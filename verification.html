@@ -33,12 +33,6 @@
                             <span class="text-base text-gray-500">Status:</span>
                             <span class="font-semibold text-orange-600 ml-2">Pending Verification</span>
                         </div>
-                        <!-- Admin Edit Button -->
-                        <button type="button" onclick="enableEditMode()"
-                            class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                            <i class="fas fa-edit mr-2"></i>
-                            <span>Edit</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -147,6 +141,27 @@
                                 </div>
                             </div>
 
+                            <!-- Quantity Defects -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Quantity Defects</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    3
+                                </div>
+                            </div>
+
+                            <!-- Problem Definition -->
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Problem Definition</label>
+                                <div
+                                    class="w-full px-4 py-4 bg-gray-100 border border-slate-300 rounded-lg text-gray-600 text-base">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+                                        Reoccurrence / Berulang
+                                    </span>
+                                </div>
+                            </div>
+
                             <!-- Class Part -->
                             <div>
                                 <label class="block text-base font-medium text-gray-700 mb-2">Class Part</label>
@@ -218,7 +233,8 @@
 
                                         <!-- Title and Duration -->
                                         <div class="flex-1">
-                                            <span class="text-base text-gray-600 font-medium">Voice recording available</span>
+                                            <span class="text-base text-gray-600 font-medium">Voice recording
+                                                available</span>
                                             <div class="text-sm text-gray-500">Duration: 00:10</div>
                                         </div>
 
@@ -247,21 +263,51 @@
 
                             <!-- Images and Videos -->
                             <div>
-                                <label class="block text-base font-medium text-gray-700 mb-2">Images & Videos
-                                    (3)</label>
-                                <div class="grid grid-cols-3 gap-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="block text-base font-medium text-gray-700">Images & Videos
+                                        (3)</label>
+                                    <!-- Admin Upload Buttons -->
+                                    <div class="flex gap-2" id="admin-upload-controls">
+                                        <button onclick="triggerImageUpload()"
+                                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                            <i class="fas fa-image"></i>
+                                            Add Image
+                                        </button>
+                                        <button onclick="triggerVideoUpload()"
+                                                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                            <i class="fas fa-video"></i>
+                                            Add Video
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden file inputs -->
+                                <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;" onchange="handleImageUpload(event)">
+                                <input type="file" id="videoUpload" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)">
+
+                                <div class="grid grid-cols-3 gap-3" id="media-grid">
                                     <!-- Image 1 -->
-                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group"
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group relative"
                                         onclick="openImageModal('images/baud.png', 'baud.png');">
                                         <img src="images/baud.png" alt="Evidence Image 1"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                        <!-- Admin Delete Button -->
+                                        <button onclick="removeMedia(this); event.stopPropagation();"
+                                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity admin-only">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
 
                                     <!-- Image 2 -->
-                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group"
+                                    <div class="aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group relative"
                                         onclick="openImageModal('images/baud-2.png', 'baud-2.png');">
                                         <img src="images/baud-2.png" alt="Evidence Image 2"
                                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
+                                        <!-- Admin Delete Button -->
+                                        <button onclick="removeMedia(this); event.stopPropagation();"
+                                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity admin-only">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
 
                                     <!-- Video -->
@@ -286,6 +332,12 @@
                                             class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
                                             <i class="fas fa-video mr-1"></i>VIDEO
                                         </div>
+
+                                        <!-- Admin Delete Button -->
+                                        <button onclick="removeMedia(this); event.stopPropagation();"
+                                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity admin-only">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -487,7 +539,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12" />
                             </svg>
-                            Tolak
+                            Reject
                         </button>
 
                         <button type="submit"
@@ -496,7 +548,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Verifikasi & Lanjutkan
+                            Submit
                         </button>
                     </div>
                 </form>
@@ -907,187 +959,192 @@
                 }
             }
 
-            // Admin Edit Mode Functionality
-            let isEditMode = false;
+            // Upload Functions - Global
+            function triggerImageUpload() {
+                document.getElementById('imageUpload').click();
+            }
 
-            function enableEditMode() {
-                console.log('Enabling edit mode for admin...');
-                isEditMode = true;
+            function triggerVideoUpload() {
+                document.getElementById('videoUpload').click();
+            }
 
-                // Enable all form inputs
-                const form = document.getElementById('reportForm');
-                if (form) {
-                    const inputs = form.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.disabled = false;
-                        input.style.backgroundColor = '#fff';
-                        input.style.border = '2px solid #3b82f6';
-                    });
-
-                    // Enable radio buttons
-                    const radioButtons = form.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(radio => {
-                        radio.disabled = false;
-                        const label = radio.closest('label');
-                        if (label) {
-                            label.style.opacity = '1';
-                            label.style.pointerEvents = 'auto';
+            function handleImageUpload(event) {
+                const files = event.target.files;
+                if (files.length > 0) {
+                    for (let file of files) {
+                        if (file.type.startsWith('image/')) {
+                            addImageToGrid(file);
                         }
-                    });
-
-                    // Show save/cancel buttons
-                    showEditButtons();
-
-                    // Update status
-                    updateStatusToEditing();
-
-                    showNotification('Edit mode enabled. You can now modify the form.', 'info');
-                } else {
-                    console.error('Report form not found!');
+                    }
+                    // Update count
+                    updateMediaCount();
                 }
             }
 
-            function disableEditMode() {
-                console.log('Disabling edit mode...');
-                isEditMode = false;
-
-                // Disable all form inputs
-                const form = document.getElementById('reportForm');
-                if (form) {
-                    const inputs = form.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.disabled = true;
-                        input.style.backgroundColor = '#f9fafb';
-                        input.style.border = '1px solid #d1d5db';
-                    });
-
-                    // Disable radio buttons
-                    const radioButtons = form.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(radio => {
-                        radio.disabled = true;
-                        const label = radio.closest('label');
-                        if (label) {
-                            label.style.opacity = '0.6';
-                            label.style.pointerEvents = 'none';
-                        }
-                    });
-
-                    // Hide save/cancel buttons
-                    hideEditButtons();
-
-                    // Restore status
-                    updateStatusToPending();
-
-                    showNotification('Edit mode disabled. Form is now read-only.', 'info');
+            function handleVideoUpload(event) {
+                const file = event.target.files[0];
+                if (file && file.type.startsWith('video/')) {
+                    addVideoToGrid(file);
+                    // Update count
+                    updateMediaCount();
                 }
             }
 
-            function saveEditChanges() {
-                console.log('Saving edit changes...');
+            function addImageToGrid(file) {
+                const mediaGrid = document.getElementById('media-grid');
+                const reader = new FileReader();
 
-                // Here you would typically send data to server
-                // For now, just disable edit mode
-                disableEditMode();
+                reader.onload = function(e) {
+                    const imageDiv = document.createElement('div');
+                    imageDiv.className = 'aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group relative';
 
-                showNotification('Changes saved successfully!', 'success');
-            }
-
-            function cancelEditChanges() {
-                console.log('Cancelling edit changes...');
-
-                // Reload page to revert changes (or implement proper revert logic)
-                if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
-                    window.location.reload();
-                }
-            }
-
-            function showEditButtons() {
-                // Find the submit button area and add edit buttons
-                const submitArea = document.querySelector('form button[type="submit"]').parentElement;
-
-                if (!document.getElementById('editButtons')) {
-                    const editButtonsDiv = document.createElement('div');
-                    editButtonsDiv.id = 'editButtons';
-                    editButtonsDiv.className = 'flex gap-3 mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg';
-                    editButtonsDiv.innerHTML = `
-                        <div class="flex-1">
-                            <p class="text-sm text-blue-700 mb-2"><i class="fas fa-info-circle mr-1"></i>Admin Edit Mode Active</p>
-                        </div>
-                        <button type="button" onclick="saveEditChanges()"
-                            class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                            <i class="fas fa-save mr-2"></i>Save Changes
-                        </button>
-                        <button type="button" onclick="cancelEditChanges()"
-                            class="px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                            <i class="fas fa-times mr-2"></i>Cancel
+                    imageDiv.innerHTML = `
+                        <img src="${e.target.result}" alt="Uploaded Image"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                             onclick="openImageModal('${e.target.result}', '${file.name}');">
+                        <!-- Admin Delete Button -->
+                        <button onclick="removeMedia(this)"
+                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity admin-only">
+                            <i class="fas fa-times"></i>
                         </button>
                     `;
 
-                    submitArea.parentElement.insertBefore(editButtonsDiv, submitArea);
+                    mediaGrid.appendChild(imageDiv);
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            function addVideoToGrid(file) {
+                const mediaGrid = document.getElementById('media-grid');
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const videoDiv = document.createElement('div');
+                    videoDiv.className = 'aspect-square bg-gray-200 rounded-lg border-2 border-gray-300 overflow-hidden cursor-pointer hover:border-yanmar-red transition-colors group relative';
+
+                    videoDiv.innerHTML = `
+                        <!-- Video Thumbnail -->
+                        <video class="w-full h-full object-cover" muted preload="metadata">
+                            <source src="${e.target.result}#t=0.5" type="${file.type}">
+                        </video>
+
+                        <!-- Play overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-200"
+                             onclick="openVideoModal('${e.target.result}');">
+                            <div class="bg-white bg-opacity-95 rounded-full w-16 h-16 flex items-center justify-center group-hover:scale-110 transition-transform duration-200 shadow-lg">
+                                <i class="fas fa-play text-yanmar-red text-2xl ml-1"></i>
+                            </div>
+                        </div>
+
+                        <!-- Video Info Badge -->
+                        <div class="absolute top-2 left-2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs font-medium">
+                            <i class="fas fa-video mr-1"></i>VIDEO
+                        </div>
+
+                        <!-- Admin Delete Button -->
+                        <button onclick="removeMedia(this)"
+                                class="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity admin-only">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+
+                    mediaGrid.appendChild(videoDiv);
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            function removeMedia(button) {
+                const mediaItem = button.closest('.aspect-square');
+                if (mediaItem && confirm('Are you sure you want to remove this media?')) {
+                    mediaItem.remove();
+                    updateMediaCount();
                 }
             }
 
-            function hideEditButtons() {
-                const editButtons = document.getElementById('editButtons');
-                if (editButtons) {
-                    editButtons.remove();
+            function updateMediaCount() {
+                const mediaGrid = document.getElementById('media-grid');
+                const mediaItems = mediaGrid.children.length;
+                const label = document.querySelector('label');
+                if (label) {
+                    label.innerHTML = label.innerHTML.replace(/\(\d+\)/, `(${mediaItems})`);
                 }
             }
 
-            function updateStatusToEditing() {
-                const statusSpan = document.querySelector('.text-orange-600');
-                if (statusSpan) {
-                    statusSpan.textContent = 'Editing Mode';
-                    statusSpan.className = 'font-semibold text-blue-600 ml-2';
-                }
 
-                const editButton = document.querySelector('button[onclick="enableEditMode()"]');
-                if (editButton) {
-                    editButton.disabled = true;
-                    editButton.style.opacity = '0.5';
+
+            // Admin role detection and control functions
+            function isAdminUser() {
+                // Simple admin check - you can modify this logic based on your authentication system
+                // For now, we'll assume admin role is stored in localStorage or session
+                const userRole = localStorage.getItem('userRole') || 'user';
+                return userRole === 'admin';
+            }
+
+            // Helper functions for testing - you can call these in browser console
+            function setAdminRole() {
+                localStorage.setItem('userRole', 'admin');
+                console.log('Admin role set! Refresh the page to see admin controls.');
+                return 'Admin role set successfully';
+            }
+
+            function setUserRole() {
+                localStorage.setItem('userRole', 'user');
+                console.log('User role set! Refresh the page to hide admin controls.');
+                return 'User role set successfully';
+            }
+
+            // Make functions globally available for console testing
+            window.setAdminRole = setAdminRole;
+            window.setUserRole = setUserRole;
+
+            function initializeAdminControls() {
+                console.log('Initializing admin controls...');
+
+                if (isAdminUser()) {
+                    console.log('Admin user detected - showing admin controls');
+                    showAdminUploadControls();
+                } else {
+                    console.log('Regular user - hiding admin controls');
+                    hideAdminUploadControls();
                 }
             }
 
-            function updateStatusToPending() {
-                const statusSpan = document.querySelector('.text-blue-600');
-                if (statusSpan) {
-                    statusSpan.textContent = 'Pending Verification';
-                    statusSpan.className = 'font-semibold text-orange-600 ml-2';
+            function showAdminUploadControls() {
+                console.log('Showing admin upload controls...');
+
+                // Show upload buttons
+                const uploadControls = document.getElementById('admin-upload-controls');
+                if (uploadControls) {
+                    uploadControls.style.display = 'flex';
                 }
 
-                const editButton = document.querySelector('button[onclick="enableEditMode()"]');
-                if (editButton) {
-                    editButton.disabled = false;
-                    editButton.style.opacity = '1';
-                }
+                // Show delete buttons on existing media
+                const deleteButtons = document.querySelectorAll('.admin-only');
+                deleteButtons.forEach(button => {
+                    button.style.display = 'flex';
+                });
+
+                console.log('Admin upload controls are now visible');
             }
 
-            function initializeReadOnlyMode() {
-                console.log('Initializing form in read-only mode...');
+            function hideAdminUploadControls() {
+                console.log('Hiding admin upload controls...');
 
-                // Disable all form inputs initially (since form is submitted)
-                const form = document.getElementById('reportForm');
-                if (form) {
-                    const inputs = form.querySelectorAll('input, textarea, select');
-                    inputs.forEach(input => {
-                        input.disabled = true;
-                        input.style.backgroundColor = '#f9fafb';
-                        input.style.border = '1px solid #d1d5db';
-                    });
-
-                    // Disable radio buttons
-                    const radioButtons = form.querySelectorAll('input[type="radio"]');
-                    radioButtons.forEach(radio => {
-                        radio.disabled = true;
-                        const label = radio.closest('label');
-                        if (label) {
-                            label.style.opacity = '0.6';
-                            label.style.pointerEvents = 'none';
-                        }
-                    });
-
-                    console.log('Form initialized in read-only mode');
+                // Hide upload buttons
+                const uploadControls = document.getElementById('admin-upload-controls');
+                if (uploadControls) {
+                    uploadControls.style.display = 'none';
                 }
+
+                // Hide delete buttons on media
+                const deleteButtons = document.querySelectorAll('.admin-only');
+                deleteButtons.forEach(button => {
+                    button.style.display = 'none';
+                });
+
+                console.log('Admin upload controls are now hidden');
             }
 
             document.addEventListener('DOMContentLoaded', function () {
@@ -1765,6 +1822,10 @@
                     }, 1000);
                 }
             }
+
+            // Initialize admin controls on page load
+            initializeAdminControls();
+        });
         </script>
     </main>
 

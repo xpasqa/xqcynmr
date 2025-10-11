@@ -37,7 +37,7 @@
   <!-- Left edge hover trigger -->
   <div id="leftEdgeTrigger" class="fixed left-0 top-0 bottom-0 w-3 z-50"></div>
   <aside id="sidebar" class="bg-white border-r border-gray-200 fixed top-16 bottom-0 z-40 overflow-hidden transition-all duration-200 ease-out" style="left: -16rem; width: 16rem;">
-      <div class="h-full flex flex-col">
+      <div class="h-full flex flex-col overflow-y-auto">
           <!-- Menu Items -->
           <nav class="flex-1 py-4">
               <!-- NCR Section -->
@@ -134,6 +134,12 @@
                       <i class="fas fa-chart-bar mr-3"></i>
                       <span class="font-medium">Reply admin 2</span>
                       <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">NCR Performance</div>
+
+
+                      <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="approval">
+                      <i class="fas fa-chart-bar mr-3"></i>
+                      <span class="font-medium">Manager Approval</span>
+                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">NCR Performance</div>
                   </a>
               </div>
           </nav>
@@ -154,6 +160,7 @@
 
     function showSidebar() {
       sidebarEl.style.left = '0';
+      sidebarEl.style.zIndex = '9999'; // Highest z-index when open
       if (mainContent) {
         mainContent.style.marginLeft = '16rem';
         mainContent.style.transition = 'margin-left 200ms ease-out';
@@ -162,6 +169,7 @@
 
     function hideSidebar() {
       sidebarEl.style.left = '-16rem';
+      sidebarEl.style.zIndex = '40'; // Return to default z-index when hidden
       if (mainContent) {
         mainContent.style.marginLeft = '0';
         mainContent.style.transition = 'margin-left 200ms ease-out';

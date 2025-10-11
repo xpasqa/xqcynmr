@@ -162,48 +162,46 @@
             </div>
 
             <!-- Multi Tab Navigation -->
-            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6 sticky top-16 z-10">
-                <div class="border-b border-gray-200">
-                    <div class="overflow-x-auto">
-                        <nav class="flex space-x-8 px-6 min-w-max" aria-label="Tabs">
-                            <button onclick="filterByStatus('all')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-red-500 text-red-600 flex-shrink-0"
-                                data-status="all">
-                                <i class="fas fa-list mr-2"></i>
-                                All (<span id="allCount">0</span>)
-                            </button>
+            <div class="mb-6 sticky top-16 z-10">
+                <div class="overflow-x-auto">
+                    <nav class="flex space-x-2 pr-6 min-w-max" aria-label="Tabs">
+                        <button onclick="filterByStatus('all')"
+                            class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base transition-all duration-200 border-transparent bg-gray-600 hover:bg-gray-800 text-white flex-shrink-0 rounded-lg shadow-sm"
+                            data-status="all">
+                            <i class="fas fa-list mr-2"></i>
+                            All (<span id="allCount">0</span>)
+                        </button>
                             <button onclick="filterByStatus('created')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
+                                class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base transition-all duration-200 border-transparent bg-red-500 hover:bg-red-800 text-white flex-shrink-0 rounded-lg shadow-sm mx-1"
                                 data-status="created">
                                 <i class="fas fa-plus-circle mr-2"></i>
                                 Created (<span id="createdCount">0</span>)
                             </button>
                             <button onclick="filterByStatus('process')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
+                                class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base transition-all duration-200 border-transparent bg-blue-500 hover:bg-blue-800 text-white flex-shrink-0 rounded-lg shadow-sm mx-1"
                                 data-status="process">
                                 <i class="fas fa-paper-plane mr-2"></i>
                                 Process (<span id="processCount">0</span>)
                             </button>
                             <button onclick="filterByStatus('replied')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
+                                class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base transition-all duration-200 border-transparent bg-green-500 hover:bg-green-800 text-white flex-shrink-0 rounded-lg shadow-sm mx-1"
                                 data-status="replied">
                                 <i class="fas fa-reply mr-2"></i>
                                 Replied (<span id="repliedCount">0</span>)
                             </button>
                             <button onclick="filterByStatus('waiting')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
+                                class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base transition-all duration-200 border-transparent bg-amber-500 hover:bg-amber-800 text-white flex-shrink-0 rounded-lg shadow-sm mx-1"
                                 data-status="waiting">
                                 <i class="fas fa-clock mr-2"></i>
                                 Waiting (<span id="waitingCount">0</span>)
                             </button>
                             <button onclick="filterByStatus('done')"
-                                class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-base transition-colors duration-200 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 flex-shrink-0"
+                                class="tab-button whitespace-nowrap py-3 px-4 border-b-2 font-medium text-base transition-all duration-200 border-transparent bg-indigo-500 hover:bg-indigo-800 text-white flex-shrink-0 rounded-lg shadow-sm mx-1"
                                 data-status="done">
                                 <i class="fas fa-check-circle mr-2"></i>
                                 Done (<span id="doneCount">0</span>)
                             </button>
-                        </nav>
-                    </div>
+                    </nav>
                 </div>
             </div>
 
@@ -478,16 +476,22 @@
             function filterByStatus(status) {
                 currentFilter = status;
 
-                // Update active tab
+                // Update active tab - keep text white for all tabs
                 document.querySelectorAll('.tab-button').forEach(tab => {
-                    tab.classList.remove('border-red-500', 'text-red-600');
-                    tab.classList.add('border-transparent', 'text-gray-500');
+                    tab.classList.remove('border-red-500');
+                    tab.classList.add('border-transparent');
+                    // Keep text white
+                    tab.classList.add('text-white');
+                    tab.classList.remove('text-red-600', 'text-gray-500');
                 });
 
                 const activeTab = document.querySelector(`[data-status="${status}"]`);
                 if (activeTab) {
-                    activeTab.classList.remove('border-transparent', 'text-gray-500');
-                    activeTab.classList.add('border-red-500', 'text-red-600');
+                    activeTab.classList.remove('border-transparent');
+                    activeTab.classList.add('border-red-500');
+                    // Ensure active tab text stays white
+                    activeTab.classList.add('text-white');
+                    activeTab.classList.remove('text-red-600', 'text-gray-500');
                 }
 
                 // Apply all filters
@@ -549,13 +553,18 @@
           <td class="px-6 py-4 whitespace-nowrap text-base text-slate-600">${item.vendor}</td>
           <td class="px-6 py-4 whitespace-nowrap">${statusBadge}</td>
           <td class="px-6 py-4 whitespace-nowrap text-base">
-            <button onclick="window.open('verification.html', '_blank')" class="inline-flex items-center px-3 py-1.5 bg-yanmar-red text-white text-sm font-medium rounded-md hover:bg-yanmar-dark transition-colors">
-              <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-              </svg>
-              View
-            </button>
+            <div class="flex items-center space-x-2">
+              <button onclick="window.open('verification.html', '_blank')" class="inline-flex items-center px-3 py-1.5 bg-yanmar-red text-white text-sm font-medium rounded-md hover:bg-yanmar-dark transition-colors">
+                <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                </svg>
+                View
+              </button>
+              <button class="inline-flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors">
+                <i class="fas fa-bell text-sm"></i>
+              </button>
+            </div>
           </td>
         `;
                     tbody.appendChild(row);
@@ -729,8 +738,29 @@
                 cursor: pointer;
             }
 
-            .tab-button:hover {
-                background-color: rgba(0, 0, 0, 0.05);
+            /* Override default hover to use darker color variants */
+            .tab-button[data-status="all"]:hover {
+                background-color: #1f2937 !important; /* gray-800 */
+            }
+
+            .tab-button[data-status="created"]:hover {
+                background-color: #991b1b !important; /* red-800 */
+            }
+
+            .tab-button[data-status="process"]:hover {
+                background-color: #1e40af !important; /* blue-800 */
+            }
+
+            .tab-button[data-status="replied"]:hover {
+                background-color: #166534 !important; /* green-800 */
+            }
+
+            .tab-button[data-status="waiting"]:hover {
+                background-color: #92400e !important; /* amber-800 */
+            }
+
+            .tab-button[data-status="done"]:hover {
+                background-color: #3730a3 !important; /* indigo-800 */
             }
 
             .tab-button.active {
