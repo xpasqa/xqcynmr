@@ -50,16 +50,16 @@
                       <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Dashboard</div>
                   </a>
 
+                   <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="status">
+                      <i class="fas fa-chart-line mr-3"></i>
+                      <span class="font-medium">Status</span>
+                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Status</div>
+                  </a>
+
                   <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="create">
                       <i class="fas fa-plus-circle mr-3"></i>
                       <span class="font-medium">Create</span>
                       <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Create</div>
-                  </a>
-
-                  <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="reports">
-                      <i class="fas fa-chart-line mr-3"></i>
-                      <span class="font-medium">Report</span>
-                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">Reports</div>
                   </a>
               </div>
 

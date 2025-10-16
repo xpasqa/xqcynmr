@@ -857,6 +857,81 @@
             </div>
 
 
+            <!-- Hasil Approval dari PT Besi Kuat Section -->
+            <div class="mt-8 mb-8">
+                <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                    <div class="bg-green-50 px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-800 flex items-center">
+                            <i class="fas fa-building text-green-600 mr-2"></i>
+                            Hasil Approval dari PT Besi Kuat
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- PT Besi Kuat Admin Approval Result -->
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="mb-3">
+                                    <h4 class="text-base font-medium text-gray-700 flex items-center">
+                                        <i class="fas fa-user-shield text-blue-600 mr-2"></i>
+                                        Admin Approval
+                                    </h4>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                            <i class="fas fa-shield-alt mr-1"></i>
+                                            Approved
+                                        </span>
+                                        <p class="text-green-700 font-medium">Ahmad Susanto</p>
+                                        <p class="text-sm text-gray-600">Oct 16, 2025 at 03:45 PM</p>
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <div
+                                            class="w-20 h-20 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                                                class="max-w-full max-h-full object-contain"
+                                                alt="PT Besi Kuat Admin Signature"
+                                                style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><path d=\'M10 40 Q 20 20, 30 40 T 50 40 Q 60 30, 70 40\' stroke=\'%23000\' stroke-width=\'2\' fill=\'none\'/></svg>');">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PT Besi Kuat Manager Approval Result -->
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="mb-3">
+                                    <h4 class="text-base font-medium text-gray-700 flex items-center">
+                                        <i class="fas fa-crown text-purple-600 mr-2"></i>
+                                        Manager Approval
+                                    </h4>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                            <i class="fas fa-crown mr-1"></i>
+                                            Approved
+                                        </span>
+                                        <p class="text-green-700 font-medium">Budi Santoso</p>
+                                        <p class="text-sm text-gray-600">Oct 16, 2025 at 04:12 PM</p>
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <div
+                                            class="w-20 h-20 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+                                                class="max-w-full max-h-full object-contain"
+                                                alt="PT Besi Kuat Manager Signature"
+                                                style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 80 80\'><path d=\'M15 45 Q 25 25, 35 45 T 55 45 Q 65 35, 75 45\' stroke=\'%23000\' stroke-width=\'2\' fill=\'none\'/><path d=\'M20 50 Q 40 30, 60 50\' stroke=\'%23000\' stroke-width=\'2\' fill=\'none\'/></svg>');">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Approval Section -->
             <div class="mt-8 mb-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -865,11 +940,12 @@
                         <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800 flex items-center">
                                 <i class="fas fa-user-shield text-blue-600 mr-2"></i>
-                                Admin Approval
+                                QC Admin Approval
                             </h3>
                         </div>
                         <div class="p-6">
-                            <div id="adminApprovalBox" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
+                            <div id="adminApprovalBox"
+                                class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
                                 onclick="handleAdminApproval()">
                                 <div id="adminApprovalContent">
                                     <div class="text-gray-400 mb-3">
@@ -879,16 +955,29 @@
                                     <p class="text-sm text-gray-500 mt-1">Admin signature required</p>
                                 </div>
                                 <div id="adminApprovalSigned" class="hidden">
-                                    <div class="text-green-600 mb-3">
-                                        <i class="fas fa-check-circle text-3xl"></i>
-                                    </div>
-                                    <p class="text-green-700 font-medium" id="adminApprovalName">Admin Name</p>
-                                    <p class="text-sm text-gray-600 mt-1" id="adminApprovalDate">Date & Time</p>
-                                    <div class="mt-3">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                            <i class="fas fa-shield-alt mr-1"></i>
-                                            Approved
-                                        </span>
+                                    <div class="relative">
+                                        <button onclick="cancelAdminApproval()"
+                                                class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full hover:bg-red-600 flex items-center justify-center text-xs z-10 shadow-lg">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="grid grid-cols-2 gap-4" id="adminSignatureDisplay">
+                                            <div>
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                                    <i class="fas fa-shield-alt mr-1"></i>
+                                                    Approved
+                                                </span>
+                                                <p class="text-green-700 font-medium" id="adminApprovalName">Admin Name</p>
+                                                <p class="text-sm text-gray-600" id="adminApprovalDate">Date & Time</p>
+                                            </div>
+                                            <div class="flex justify-center">
+                                                <div
+                                                    class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                                    <img id="adminSignatureImage"
+                                                        class="max-w-full max-h-full object-contain" alt="Admin Signature">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -900,11 +989,12 @@
                         <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
                             <h3 class="text-lg font-semibold text-gray-800 flex items-center">
                                 <i class="fas fa-crown text-purple-600 mr-2"></i>
-                                Manager Approval
+                                QC Manager Approval
                             </h3>
                         </div>
                         <div class="p-6">
-                            <div id="managerApprovalBox" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+                            <div id="managerApprovalBox"
+                                class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
                                 onclick="handleManagerApproval()">
                                 <div id="managerApprovalContent">
                                     <div class="text-gray-400 mb-3">
@@ -914,21 +1004,52 @@
                                     <p class="text-sm text-gray-500 mt-1">Manager signature required</p>
                                 </div>
                                 <div id="managerApprovalSigned" class="hidden">
-                                    <div class="text-green-600 mb-3">
-                                        <i class="fas fa-check-circle text-3xl"></i>
-                                    </div>
-                                    <p class="text-green-700 font-medium" id="managerApprovalName">Manager Name</p>
-                                    <p class="text-sm text-gray-600 mt-1" id="managerApprovalDate">Date & Time</p>
-                                    <div class="mt-3">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                            <i class="fas fa-crown mr-1"></i>
-                                            Approved
-                                        </span>
+                                    <div class="relative">
+                                        <button onclick="cancelManagerApproval()"
+                                                class="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full hover:bg-red-600 flex items-center justify-center text-xs z-10 shadow-lg">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                        <div class="grid grid-cols-2 gap-4" id="managerSignatureDisplay">
+                                            <div>
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                                    <i class="fas fa-crown mr-1"></i>
+                                                    Approved
+                                                </span>
+                                                <p class="text-green-700 font-medium" id="managerApprovalName">Manager Name
+                                                </p>
+                                                <p class="text-sm text-gray-600" id="managerApprovalDate">Date & Time</p>
+                                            </div>
+                                            <div class="flex justify-center">
+                                                <div
+                                                    class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                                    <img id="managerSignatureImage"
+                                                        class="max-w-full max-h-full object-contain"
+                                                        alt="Manager Signature">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Closed Report Button Section -->
+            <div class="mt-8 mb-8">
+                <div class="text-center">
+                    <button id="closedReportBtn"
+                            onclick="handleClosedReport()"
+                            class="px-8 py-4 bg-gray-400 text-white rounded-lg font-semibold text-lg cursor-not-allowed opacity-50 transition-all duration-200"
+                            disabled>
+                        <i class="fas fa-lock mr-2"></i>
+                        Closed Report
+                    </button>
+                    <p id="closedReportStatus" class="text-sm text-gray-500 mt-2">
+                        Waiting for both QC Admin and QC Manager approvals to activate
+                    </p>
                 </div>
             </div>
         </div>
@@ -2595,8 +2716,70 @@
                 }
             }
 
+            // Digital signature variables
+            let adminSignatureCanvas = null;
+            let adminSignatureCtx = null;
+            let managerSignatureCanvas = null;
+            let managerSignatureCtx = null;
+            let isDrawing = false;
+
+            // Approval tracking variables
+            let adminApproved = false;
+            let managerApproved = false;
+
+            // Check approval status and update closed report button
+            function checkApprovalStatus() {
+                const closedReportBtn = document.getElementById('closedReportBtn');
+                const closedReportStatus = document.getElementById('closedReportStatus');
+
+                if (adminApproved && managerApproved) {
+                    // Both approved - enable button
+                    closedReportBtn.disabled = false;
+                    closedReportBtn.classList.remove('bg-gray-400', 'cursor-not-allowed', 'opacity-50');
+                    closedReportBtn.classList.add('bg-red-600', 'hover:bg-red-700', 'cursor-pointer');
+                    closedReportBtn.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Closed Report';
+                    closedReportStatus.textContent = 'Both approvals completed. Click to close the report.';
+                    closedReportStatus.classList.remove('text-gray-500');
+                    closedReportStatus.classList.add('text-green-600');
+                } else {
+                    // Not all approved - keep disabled
+                    const pending = [];
+                    if (!adminApproved) pending.push('QC Admin');
+                    if (!managerApproved) pending.push('QC Manager');
+
+                    closedReportStatus.textContent = `Waiting for ${pending.join(' and ')} approval${pending.length > 1 ? 's' : ''} to activate`;
+                }
+            }
+
+            // Handle closed report action
+            function handleClosedReport() {
+                if (adminApproved && managerApproved) {
+                    if (confirm('Are you sure you want to close this report? This action cannot be undone.')) {
+                        // Show success notification
+                        showNotification('Report has been successfully closed!', 'success');
+
+                        // Update button to show closed state
+                        const closedReportBtn = document.getElementById('closedReportBtn');
+                        const closedReportStatus = document.getElementById('closedReportStatus');
+
+                        closedReportBtn.disabled = true;
+                        closedReportBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                        closedReportBtn.classList.add('bg-green-600', 'cursor-not-allowed');
+                        closedReportBtn.innerHTML = '<i class="fas fa-lock mr-2"></i>Report Closed';
+                        closedReportStatus.textContent = 'This report has been successfully closed.';
+                        closedReportStatus.classList.remove('text-green-600');
+                        closedReportStatus.classList.add('text-gray-600');
+                    }
+                }
+            }
+
             // Approval functions
             function handleAdminApproval() {
+                // Show the admin signature popup
+                document.getElementById('adminSignaturePopup').classList.remove('hidden');
+                initializeAdminSignatureCanvas();
+
+                // Set current date
                 const currentDateTime = new Date().toLocaleString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -2605,9 +2788,41 @@
                     minute: '2-digit',
                     hour12: true
                 });
+                document.getElementById('adminSignatureDate').textContent = currentDateTime;
+            }
 
-                // Simulate admin name (in real app, this would come from login session)
-                const adminName = 'John Smith';
+            function submitAdminSignature() {
+                const nameInput = document.getElementById('adminSignatureName');
+                const adminName = nameInput.value.trim();
+
+                if (!adminName) {
+                    alert('Please enter your name');
+                    return;
+                }
+
+                // Check if signature is drawn
+                const canvas = document.getElementById('adminSignatureCanvas');
+                const signatureData = canvas.toDataURL();
+
+                // Simple check for blank canvas
+                const blankCanvas = document.createElement('canvas');
+                blankCanvas.width = canvas.width;
+                blankCanvas.height = canvas.height;
+                const blankData = blankCanvas.toDataURL();
+
+                if (signatureData === blankData) {
+                    alert('Please provide your signature');
+                    return;
+                }
+
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
 
                 // Hide the click content and show approved content
                 document.getElementById('adminApprovalContent').classList.add('hidden');
@@ -2617,17 +2832,78 @@
                 document.getElementById('adminApprovalName').textContent = adminName;
                 document.getElementById('adminApprovalDate').textContent = currentDateTime;
 
+                // Save and display signature
+                document.getElementById('adminSignatureImage').src = signatureData;
+                document.getElementById('adminSignatureDisplay').classList.remove('hidden');
+
                 // Update the box styling to show it's approved
                 const approvalBox = document.getElementById('adminApprovalBox');
                 approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
                 approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
                 approvalBox.onclick = null; // Remove click handler
 
+                // Hide popup
+                document.getElementById('adminSignaturePopup').classList.add('hidden');
+
+                // Clear the form
+                nameInput.value = '';
+                clearAdminSignature();
+
+                // Set admin approval status and check if closed report button should be enabled
+                adminApproved = true;
+                checkApprovalStatus();
+
                 // Show success notification
                 showNotification('Admin approval completed successfully!', 'success');
             }
 
+            function cancelAdminSignature() {
+                document.getElementById('adminSignaturePopup').classList.add('hidden');
+                document.getElementById('adminSignatureName').value = '';
+                clearAdminSignature();
+            }
+
             function handleManagerApproval() {
+                // Show the manager signature popup
+                document.getElementById('managerSignaturePopup').classList.remove('hidden');
+                initializeManagerSignatureCanvas();
+
+                // Set current date
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+                document.getElementById('managerSignatureDate').textContent = currentDateTime;
+            }
+
+            function submitManagerSignature() {
+                const nameInput = document.getElementById('managerSignatureName');
+                const managerName = nameInput.value.trim();
+
+                if (!managerName) {
+                    alert('Please enter your name');
+                    return;
+                }
+
+                // Check if signature is drawn
+                const canvas = document.getElementById('managerSignatureCanvas');
+                const signatureData = canvas.toDataURL();
+
+                // Simple check for blank canvas
+                const blankCanvas = document.createElement('canvas');
+                blankCanvas.width = canvas.width;
+                blankCanvas.height = canvas.height;
+                const blankData = blankCanvas.toDataURL();
+
+                if (signatureData === blankData) {
+                    alert('Please provide your signature');
+                    return;
+                }
+
                 const currentDateTime = new Date().toLocaleString('en-US', {
                     year: 'numeric',
                     month: 'short',
@@ -2637,9 +2913,6 @@
                     hour12: true
                 });
 
-                // Simulate manager name (in real app, this would come from login session)
-                const managerName = 'Sarah Johnson';
-
                 // Hide the click content and show approved content
                 document.getElementById('managerApprovalContent').classList.add('hidden');
                 document.getElementById('managerApprovalSigned').classList.remove('hidden');
@@ -2648,14 +2921,211 @@
                 document.getElementById('managerApprovalName').textContent = managerName;
                 document.getElementById('managerApprovalDate').textContent = currentDateTime;
 
+                // Save and display signature
+                document.getElementById('managerSignatureImage').src = signatureData;
+                document.getElementById('managerSignatureDisplay').classList.remove('hidden');
+
                 // Update the box styling to show it's approved
                 const approvalBox = document.getElementById('managerApprovalBox');
                 approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
                 approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
                 approvalBox.onclick = null; // Remove click handler
 
+                // Hide popup
+                document.getElementById('managerSignaturePopup').classList.add('hidden');
+
+                // Clear the form
+                nameInput.value = '';
+                clearManagerSignature();
+
+                // Set manager approval status and check if closed report button should be enabled
+                managerApproved = true;
+                checkApprovalStatus();
+
                 // Show success notification
                 showNotification('Manager approval completed successfully!', 'success');
+            }
+
+            function cancelManagerSignature() {
+                document.getElementById('managerSignaturePopup').classList.add('hidden');
+                document.getElementById('managerSignatureName').value = '';
+                clearManagerSignature();
+            }
+
+            // Cancel approval functions
+            function cancelAdminApproval() {
+                if (confirm('Are you sure you want to cancel the admin approval? This will reset the signature and you will need to sign again.')) {
+                    // Reset admin approval state
+                    adminApproved = false;
+
+                    // Hide approved content and show click content
+                    document.getElementById('adminApprovalSigned').classList.add('hidden');
+                    document.getElementById('adminApprovalContent').classList.remove('hidden');
+
+                    // Reset the box styling
+                    const approvalBox = document.getElementById('adminApprovalBox');
+                    approvalBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    approvalBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                    approvalBox.onclick = handleAdminApproval; // Restore click handler
+
+                    // Clear signature image
+                    document.getElementById('adminSignatureImage').src = '';
+
+                    // Update closed report button status
+                    checkApprovalStatus();
+
+                    // Show notification
+                    showNotification('Admin approval has been cancelled. You can sign again.', 'info');
+                }
+            }
+
+            function cancelManagerApproval() {
+                if (confirm('Are you sure you want to cancel the manager approval? This will reset the signature and you will need to sign again.')) {
+                    // Reset manager approval state
+                    managerApproved = false;
+
+                    // Hide approved content and show click content
+                    document.getElementById('managerApprovalSigned').classList.add('hidden');
+                    document.getElementById('managerApprovalContent').classList.remove('hidden');
+
+                    // Reset the box styling
+                    const approvalBox = document.getElementById('managerApprovalBox');
+                    approvalBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    approvalBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
+                    approvalBox.onclick = handleManagerApproval; // Restore click handler
+
+                    // Clear signature image
+                    document.getElementById('managerSignatureImage').src = '';
+
+                    // Update closed report button status
+                    checkApprovalStatus();
+
+                    // Show notification
+                    showNotification('Manager approval has been cancelled. You can sign again.', 'info');
+                }
+            }
+
+            // Digital signature canvas functions
+            function initializeAdminSignatureCanvas() {
+                adminSignatureCanvas = document.getElementById('adminSignatureCanvas');
+                adminSignatureCtx = adminSignatureCanvas.getContext('2d');
+
+                // Set canvas properties
+                adminSignatureCtx.strokeStyle = '#000000';
+                adminSignatureCtx.lineWidth = 2;
+                adminSignatureCtx.lineCap = 'round';
+                adminSignatureCtx.lineJoin = 'round';
+
+                // Add event listeners
+                adminSignatureCanvas.addEventListener('mousedown', startDrawingAdmin);
+                adminSignatureCanvas.addEventListener('mousemove', drawAdmin);
+                adminSignatureCanvas.addEventListener('mouseup', stopDrawingAdmin);
+                adminSignatureCanvas.addEventListener('mouseout', stopDrawingAdmin);
+
+                // Touch events for mobile
+                adminSignatureCanvas.addEventListener('touchstart', handleTouchAdmin);
+                adminSignatureCanvas.addEventListener('touchmove', handleTouchAdmin);
+                adminSignatureCanvas.addEventListener('touchend', stopDrawingAdmin);
+            }
+
+            function initializeManagerSignatureCanvas() {
+                managerSignatureCanvas = document.getElementById('managerSignatureCanvas');
+                managerSignatureCtx = managerSignatureCanvas.getContext('2d');
+
+                // Set canvas properties
+                managerSignatureCtx.strokeStyle = '#000000';
+                managerSignatureCtx.lineWidth = 2;
+                managerSignatureCtx.lineCap = 'round';
+                managerSignatureCtx.lineJoin = 'round';
+
+                // Add event listeners
+                managerSignatureCanvas.addEventListener('mousedown', startDrawingManager);
+                managerSignatureCanvas.addEventListener('mousemove', drawManager);
+                managerSignatureCanvas.addEventListener('mouseup', stopDrawingManager);
+                managerSignatureCanvas.addEventListener('mouseout', stopDrawingManager);
+
+                // Touch events for mobile
+                managerSignatureCanvas.addEventListener('touchstart', handleTouchManager);
+                managerSignatureCanvas.addEventListener('touchmove', handleTouchManager);
+                managerSignatureCanvas.addEventListener('touchend', stopDrawingManager);
+            }
+
+            // Admin signature drawing functions
+            function startDrawingAdmin(e) {
+                isDrawing = true;
+                const rect = adminSignatureCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                adminSignatureCtx.beginPath();
+                adminSignatureCtx.moveTo(x, y);
+            }
+
+            function drawAdmin(e) {
+                if (!isDrawing) return;
+                const rect = adminSignatureCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                adminSignatureCtx.lineTo(x, y);
+                adminSignatureCtx.stroke();
+            }
+
+            function stopDrawingAdmin() {
+                isDrawing = false;
+            }
+
+            function handleTouchAdmin(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                adminSignatureCanvas.dispatchEvent(mouseEvent);
+            }
+
+            function clearAdminSignature() {
+                if (adminSignatureCtx) {
+                    adminSignatureCtx.clearRect(0, 0, adminSignatureCanvas.width, adminSignatureCanvas.height);
+                }
+            }
+
+            // Manager signature drawing functions
+            function startDrawingManager(e) {
+                isDrawing = true;
+                const rect = managerSignatureCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                managerSignatureCtx.beginPath();
+                managerSignatureCtx.moveTo(x, y);
+            }
+
+            function drawManager(e) {
+                if (!isDrawing) return;
+                const rect = managerSignatureCanvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                managerSignatureCtx.lineTo(x, y);
+                managerSignatureCtx.stroke();
+            }
+
+            function stopDrawingManager() {
+                isDrawing = false;
+            }
+
+            function handleTouchManager(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                managerSignatureCanvas.dispatchEvent(mouseEvent);
+            }
+
+            function clearManagerSignature() {
+                if (managerSignatureCtx) {
+                    managerSignatureCtx.clearRect(0, 0, managerSignatureCanvas.width, managerSignatureCanvas.height);
+                }
             }
 
             // Simple notification function
@@ -2701,6 +3171,126 @@
             });
         </script>
     </main>
+
+    <!-- Admin Signature Popup -->
+    <div id="adminSignaturePopup"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">
+                    <i class="fas fa-user-shield text-blue-600 mr-2"></i>
+                    Admin Digital Signature
+                </h3>
+                <p class="text-sm text-gray-600">Please enter your name and provide your digital signature</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Name Input -->
+                <div>
+                    <label class="block text-base font-medium text-gray-700 mb-2">Name</label>
+                    <input type="text" id="adminSignatureName"
+                        class="w-full text-lg px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Enter your full name">
+                </div>
+
+                <!-- Date Display -->
+                <div>
+                    <label class="block text-base font-medium text-gray-700 mb-2">Date & Time</label>
+                    <p id="adminSignatureDate"
+                        class="text-lg px-4 py-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"></p>
+                </div>
+
+                <!-- Signature Canvas -->
+                <div>
+                    <label class="block text-base font-medium text-gray-700 mb-2">Digital Signature</label>
+                    <div class="border-2 border-gray-300 rounded-lg p-2">
+                        <canvas id="adminSignatureCanvas" width="400" height="150"
+                            class="w-full border border-gray-200 rounded cursor-crosshair"
+                            style="touch-action: none;"></canvas>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <p class="text-sm text-gray-500">Draw your signature above</p>
+                        <button type="button" onclick="clearAdminSignature()"
+                            class="text-sm text-red-600 hover:text-red-800">
+                            <i class="fas fa-eraser mr-1"></i>Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="cancelAdminSignature()"
+                        class="flex-1 text-lg px-8 py-4 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="button" onclick="submitAdminSignature()"
+                        class="flex-1 text-lg px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-check mr-2"></i>Approve
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manager Signature Popup -->
+    <div id="managerSignaturePopup"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-2">
+                    <i class="fas fa-crown text-purple-600 mr-2"></i>
+                    Manager Digital Signature
+                </h3>
+                <p class="text-sm text-gray-600">Please enter your name and provide your digital signature</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Name Input -->
+                <div>
+                    <label class="block text-base font-medium text-gray-700 mb-2">Name</label>
+                    <input type="text" id="managerSignatureName"
+                        class="w-full text-lg px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        placeholder="Enter your full name">
+                </div>
+
+                <!-- Date Display -->
+                <div>
+                    <label class="block text-base font-medium text-gray-700 mb-2">Date & Time</label>
+                    <p id="managerSignatureDate"
+                        class="text-lg px-4 py-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"></p>
+                </div>
+
+                <!-- Signature Canvas -->
+                <div>
+                    <label class="block text-base font-medium text-gray-700 mb-2">Digital Signature</label>
+                    <div class="border-2 border-gray-300 rounded-lg p-2">
+                        <canvas id="managerSignatureCanvas" width="400" height="150"
+                            class="w-full border border-gray-200 rounded cursor-crosshair"
+                            style="touch-action: none;"></canvas>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <p class="text-sm text-gray-500">Draw your signature above</p>
+                        <button type="button" onclick="clearManagerSignature()"
+                            class="text-sm text-red-600 hover:text-red-800">
+                            <i class="fas fa-eraser mr-1"></i>Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex space-x-3 pt-4">
+                    <button type="button" onclick="cancelManagerSignature()"
+                        class="flex-1 text-lg px-8 py-4 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="button" onclick="submitManagerSignature()"
+                        class="flex-1 text-lg px-8 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+                        <i class="fas fa-check mr-2"></i>Approve
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 
