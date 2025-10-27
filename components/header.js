@@ -9,9 +9,8 @@ const header = `
                 <i id="toggleIcon" class="fas fa-bars text-gray-600"></i>
             </button>
             <div class="flex items-center space-x-3">
-                <img src="/images/yanmar-log.png" alt="Yanmar Logo" class="w-10 h-7 rounded-lg">
                 <div>
-                    <h1 class="text-xl font-bold text-red-700">YANMAR</h1>
+                    <h1 class="text-xl font-bold text-red-700">OFFICE</h1>
                 </div>
             </div>
         </div>

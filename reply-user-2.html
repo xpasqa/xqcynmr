@@ -58,8 +58,18 @@
             <div class="mb-6">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                     <div class="mb-3">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">PT. Besi Kuat Manufacturing</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Supplier Header -->
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">PT Besi Kuat</h3>
+
+                        <!-- Supplier Details Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-id-card text-gray-500"></i>
+                                <div>
+                                    <span class="text-sm text-gray-500">Code:</span>
+                                    <span class="font-medium text-gray-800 ml-1">08-2382</span>
+                                </div>
+                            </div>
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-user text-gray-500"></i>
                                 <div>
@@ -68,17 +78,17 @@
                                 </div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <i class="fas fa-phone text-gray-500"></i>
-                                <div>
-                                    <span class="text-sm text-gray-500">Phone:</span>
-                                    <span class="font-medium text-gray-800 ml-1">021-5432167</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
                                 <i class="fas fa-envelope text-gray-500"></i>
                                 <div>
                                     <span class="text-sm text-gray-500">Email:</span>
                                     <span class="font-medium text-gray-800 ml-1">ahmad@besikuat.co.id</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fab fa-whatsapp text-green-500"></i>
+                                <div>
+                                    <span class="text-sm text-gray-500">WhatsApp:</span>
+                                    <span class="font-medium text-gray-800 ml-1">08567773131</span>
                                 </div>
                             </div>
                         </div>
@@ -546,18 +556,25 @@
                             <table class="border border-gray-300" id="whyOccursTable" style="min-width: 1000px;">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 150px;">Category</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 1</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 2</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 3</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 4</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 5</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 150px;">Category</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 1</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 2</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 3</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 4</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 5</th>
                                     </tr>
                                 </thead>
                                 <tbody id="whyOccursTableBody">
                                     <tr>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                            <select
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
                                                 <option value="">Select Category</option>
                                                 <option value="Man">Man</option>
                                                 <option value="Machine">Machine</option>
@@ -567,19 +584,29 @@
                                             </select>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -616,18 +643,25 @@
                             <table class="border border-gray-300" id="whyFlowOutTable" style="min-width: 1000px;">
                                 <thead class="bg-gray-50">
                                     <tr>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 150px;">Category</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 1</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 2</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 3</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 4</th>
-                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900" style="width: 200px;">Why 5</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 150px;">Category</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 1</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 2</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 3</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 4</th>
+                                        <th class="px-4 py-3 border border-gray-300 text-left text-sm font-medium text-gray-900"
+                                            style="width: 200px;">Why 5</th>
                                     </tr>
                                 </thead>
                                 <tbody id="whyFlowOutTableBody">
                                     <tr>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                                            <select
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500">
                                                 <option value="">Select Category</option>
                                                 <option value="Man">Man</option>
                                                 <option value="Machine">Machine</option>
@@ -637,19 +671,29 @@
                                             </select>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                         <td class="px-4 py-3 border border-gray-300">
-                                            <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500" rows="3" placeholder="Why..."></textarea>
+                                            <textarea
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                                                rows="3" placeholder="Why..."></textarea>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -793,17 +837,20 @@
                         <div class="mt-3">
                             <button type="button" onclick="openReplyModal()"
                                 class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                <i class="fas fa-reply mr-2"></i>
-                                Reply to Admin
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Message
                             </button>
                         </div>
                     </div>
 
                     <!-- Conversation Section -->
                     <div id="conversationSection" class="hidden">
-                        <div class="border-t border-gray-200 pt-4">
-                            <h4 class="text-base font-medium text-gray-700 mb-3">Conversation</h4>
-                            <div id="conversationList" class="space-y-3">
+                        <div class="border-t border-gray-200 pt-6">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-comments text-blue-600 mr-2"></i>
+                                Reply to Admin
+                            </h4>
+                            <div id="conversationList" class="space-y-4 max-h-96 overflow-y-auto">
                                 <!-- Conversation messages will be added here -->
                             </div>
                         </div>
@@ -812,40 +859,52 @@
                 </div>
             </div>
 
-            <!-- Approval Section -->
+            <!-- Verification Section -->
             <div class="mt-8 mb-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Admin Approval Card -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Admin Verification Card -->
                     <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-                        <div class="px-6 py-4 bg-blue-50 border-b border-gray-200">
+                        <div class="px-6 py-4 bg-blue-50 border-b border-gray-200 relative">
                             <h3 class="text-lg font-medium text-gray-800 flex items-center">
                                 <i class="fas fa-user-shield text-blue-600 mr-2"></i>
-                                PT Besi Kuat (Admin Approval)
+                                Admin Verification
                             </h3>
+                            <!-- Reset button - only visible when verified -->
+                            <button id="adminVerificationResetButton"
+                                onclick="resetAdminVerification()"
+                                class="hidden absolute top-4 right-4 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                                title="Reset verification">
+                                <i class="fas fa-times text-sm"></i>
+                            </button>
                         </div>
                         <div class="p-6">
-                            <div id="adminApprovalBox" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
-                                onclick="handleAdminApproval()">
-                                <div id="adminApprovalContent">
+                            <div id="adminVerificationBox"
+                                class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
+                                onclick="handleAdminVerification()">
+                                <div id="adminVerificationContent">
                                     <div class="text-gray-400 mb-3">
                                         <i class="fas fa-hand-pointer text-3xl"></i>
                                     </div>
-                                    <p class="text-gray-600 font-medium">Click to Approve</p>
+                                    <p class="text-gray-600 font-medium">Click to Verify</p>
                                     <p class="text-sm text-gray-500 mt-1">Admin signature required</p>
                                 </div>
-                                <div id="adminApprovalSigned" class="hidden">
-                                    <div class="grid grid-cols-2 gap-4" id="adminSignatureDisplay">
+                                <div id="adminVerificationSigned" class="hidden">
+                                    <div class="grid grid-cols-2 gap-4" id="adminVerificationSignatureDisplay">
                                         <div>
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
-                                                <i class="fas fa-shield-alt mr-1"></i>
-                                                Approved
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                                <i class="fas fa-user-shield mr-1"></i>
+                                                Verified
                                             </span>
-                                            <p class="text-green-700 font-medium" id="adminApprovalName">Admin Name</p>
-                                            <p class="text-sm text-gray-600" id="adminApprovalDate">Date & Time</p>
+                                            <p class="text-green-700 font-medium" id="adminVerificationName">Admin Name</p>
+                                            <p class="text-sm text-gray-600" id="adminVerificationDate">Date & Time</p>
                                         </div>
                                         <div class="flex justify-center">
-                                            <div class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
-                                                <img id="adminSignatureImage" class="max-w-full max-h-full object-contain" alt="Admin Signature">
+                                            <div
+                                                class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                                <img id="adminVerificationSignatureImage"
+                                                    class="max-w-full max-h-full object-contain"
+                                                    alt="Admin Verification Signature">
                                             </div>
                                         </div>
                                     </div>
@@ -854,37 +913,49 @@
                         </div>
                     </div>
 
-                    <!-- Manager Approval Card -->
+                    <!-- Manager Verification Card -->
                     <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
-                        <div class="px-6 py-4 bg-purple-50 border-b border-gray-200">
+                        <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 relative">
                             <h3 class="text-lg font-medium text-gray-800 flex items-center">
                                 <i class="fas fa-crown text-purple-600 mr-2"></i>
-                                PT Besi Kuat (Manager Approval)
+                                Manager Verification
                             </h3>
+                            <!-- Reset button - only visible when verified -->
+                            <button id="managerVerificationResetButton"
+                                onclick="resetManagerVerification()"
+                                class="hidden absolute top-4 right-4 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                                title="Reset verification">
+                                <i class="fas fa-times text-sm"></i>
+                            </button>
                         </div>
                         <div class="p-6">
-                            <div id="managerApprovalBox" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
-                                onclick="handleManagerApproval()">
-                                <div id="managerApprovalContent">
+                            <div id="managerVerificationBox"
+                                class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+                                onclick="handleManagerVerification()">
+                                <div id="managerVerificationContent">
                                     <div class="text-gray-400 mb-3">
                                         <i class="fas fa-hand-pointer text-3xl"></i>
                                     </div>
-                                    <p class="text-gray-600 font-medium">Click to Approve</p>
+                                    <p class="text-gray-600 font-medium">Click to Verify</p>
                                     <p class="text-sm text-gray-500 mt-1">Manager signature required</p>
                                 </div>
-                                <div id="managerApprovalSigned" class="hidden">
-                                    <div class="grid grid-cols-2 gap-4" id="managerSignatureDisplay">
+                                <div id="managerVerificationSigned" class="hidden">
+                                    <div class="grid grid-cols-2 gap-4" id="managerVerificationSignatureDisplay">
                                         <div>
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
                                                 <i class="fas fa-crown mr-1"></i>
-                                                Approved
+                                                Verified
                                             </span>
-                                            <p class="text-green-700 font-medium" id="managerApprovalName">Manager Name</p>
-                                            <p class="text-sm text-gray-600" id="managerApprovalDate">Date & Time</p>
+                                            <p class="text-green-700 font-medium" id="managerVerificationName">Manager Name</p>
+                                            <p class="text-sm text-gray-600" id="managerVerificationDate">Date & Time</p>
                                         </div>
                                         <div class="flex justify-center">
-                                            <div class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
-                                                <img id="managerSignatureImage" class="max-w-full max-h-full object-contain" alt="Manager Signature">
+                                            <div
+                                                class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                                <img id="managerVerificationSignatureImage"
+                                                    class="max-w-full max-h-full object-contain"
+                                                    alt="Manager Verification Signature">
                                             </div>
                                         </div>
                                     </div>
@@ -1082,48 +1153,25 @@
             </div>
         </div>
 
-        <!-- Reply Modal -->
+        <!-- Add Message Modal -->
         <div id="replyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-medium text-gray-900">Reply to Admin</h3>
+                        <h3 class="text-lg font-medium text-gray-900">Add Message</h3>
                         <button onclick="closeReplyModal()" class="text-gray-400 hover:text-gray-600">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Conversation History -->
-                <div class="px-6 py-4 border-b border-gray-200 max-h-60 overflow-y-auto">
-                    <h4 class="text-sm font-medium text-gray-700 mb-3">Conversation History</h4>
-                    <div id="conversationHistory" class="space-y-3">
-                        <!-- Admin Message -->
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user-tie text-red-600 text-sm"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="bg-gray-100 rounded-lg p-3">
-                                    <div class="text-xs text-gray-500 mb-1">Admin • 2 hours ago</div>
-                                    <p class="text-sm text-gray-700">Vendor response looks adequate but requires
-                                        detailed analysis to ensure proper root cause identification and preventive
-                                        measures. Please provide comprehensive process flow analysis, problem analysis
-                                        using appropriate methodology, and detailed countermeasures for both occurrence
-                                        and flow-out prevention.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Reply Form -->
                 <form id="replyForm" class="p-6">
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Reply</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
                         <textarea name="replyMessage" required rows="4"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                            placeholder="Type your reply to admin..."></textarea>
+                            placeholder="Type your message..."></textarea>
                     </div>
 
                     <div class="flex justify-end space-x-3">
@@ -1132,7 +1180,7 @@
                             Cancel
                         </button>
                         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                            Send Reply
+                            Send Message
                         </button>
                     </div>
                 </form>
@@ -1214,6 +1262,70 @@
                             class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                             Save Attachments
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Verification Signature Popup -->
+        <div id="adminVerificationSignaturePopup" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Admin Verification Signature</h3>
+                </div>
+                <div class="p-6">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Signature Name</label>
+                        <input type="text" id="adminVerificationSignatureName"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Enter your name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Draw Your Signature</label>
+                        <div class="border border-gray-300 rounded-md">
+                            <canvas id="adminVerificationSignatureCanvas" width="300" height="150"
+                                class="w-full border rounded-md cursor-crosshair"></canvas>
+                        </div>
+                        <button type="button" onclick="clearAdminVerificationSignature()"
+                            class="mt-2 text-sm text-gray-500 hover:text-gray-700">Clear Signature</button>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeAdminVerificationSignaturePopup()"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Cancel</button>
+                        <button type="button" onclick="saveAdminVerificationSignature()"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save Signature</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager Verification Signature Popup -->
+        <div id="managerVerificationSignaturePopup" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Manager Verification Signature</h3>
+                </div>
+                <div class="p-6">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Signature Name</label>
+                        <input type="text" id="managerVerificationSignatureName"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Enter your name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Draw Your Signature</label>
+                        <div class="border border-gray-300 rounded-md">
+                            <canvas id="managerVerificationSignatureCanvas" width="300" height="150"
+                                class="w-full border rounded-md cursor-crosshair"></canvas>
+                        </div>
+                        <button type="button" onclick="clearManagerVerificationSignature()"
+                            class="mt-2 text-sm text-gray-500 hover:text-gray-700">Clear Signature</button>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeManagerVerificationSignaturePopup()"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Cancel</button>
+                        <button type="button" onclick="saveManagerVerificationSignature()"
+                            class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">Save Signature</button>
                     </div>
                 </div>
             </div>
@@ -2044,19 +2156,36 @@
                 const isAdmin = sender === 'admin';
 
                 const messageDiv = document.createElement('div');
-                messageDiv.className = 'flex items-start space-x-3';
 
-                messageDiv.innerHTML = `
-                    <div class="w-8 h-8 ${isAdmin ? 'bg-red-100' : 'bg-blue-100'} rounded-full flex items-center justify-center">
-                        <i class="fas ${isAdmin ? 'fa-user-tie text-red-600' : 'fa-user text-blue-600'} text-sm"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="bg-gray-100 rounded-lg p-3">
-                            <div class="text-xs text-gray-500 mb-1">${isAdmin ? 'Admin' : 'Vendor'} • ${timestamp}</div>
-                            <p class="text-sm text-gray-700">${message}</p>
+                if (isAdmin) {
+                    // QC Admin Reply (Left Side)
+                    messageDiv.className = 'flex justify-start';
+                    messageDiv.innerHTML = `
+                        <div class="max-w-md">
+                            <div class="bg-gray-200 text-gray-800 rounded-lg rounded-bl-sm px-4 py-3 shadow-sm">
+                                <p class="text-sm leading-relaxed">${message}</p>
+                            </div>
+                            <div class="text-left mt-1">
+                                <span class="text-xs text-gray-500">QC Admin</span>
+                                <span class="text-xs text-gray-400 ml-2">${timestamp}</span>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    // Vendor Message (Right Side)
+                    messageDiv.className = 'flex justify-end';
+                    messageDiv.innerHTML = `
+                        <div class="max-w-md">
+                            <div class="bg-blue-500 text-white rounded-lg rounded-br-sm px-4 py-3 shadow-sm">
+                                <p class="text-sm leading-relaxed">${message}</p>
+                            </div>
+                            <div class="text-right mt-1">
+                                <span class="text-xs text-gray-500">Ahmad Wijaya (PT Besi Kuat)</span>
+                                <span class="text-xs text-gray-400 ml-2">${timestamp}</span>
+                            </div>
+                        </div>
+                    `;
+                }
 
                 conversationList.appendChild(messageDiv);
             }
@@ -2070,11 +2199,10 @@
                     const replyMessage = formData.get('replyMessage').trim();
 
                     if (replyMessage) {
-                        // Add vendor reply to conversation
+                        // Add vendor message to conversation
                         const now = new Date();
                         const timestamp = 'Just now';
 
-                        addMessageToConversation(replyMessage, 'vendor', timestamp);
                         addMessageToMainConversation(replyMessage, 'vendor', timestamp);
 
                         // Store message (in real app, send to server)
@@ -2093,7 +2221,7 @@
                         closeReplyModal();
 
                         // Show success message
-                        alert('Reply sent successfully!');
+                        alert('Message sent successfully!');
 
                         console.log('Reply sent:', replyMessage);
                     }
@@ -2417,8 +2545,6 @@
             // Digital signature variables
             let adminSignatureCanvas = null;
             let adminSignatureCtx = null;
-            let managerSignatureCanvas = null;
-            let managerSignatureCtx = null;
             let isDrawing = false;
 
             // Approval functions
@@ -2490,6 +2616,9 @@
                 approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
                 approvalBox.onclick = null; // Remove click handler
 
+                // Show reset button
+                document.getElementById('adminResetButton').classList.remove('hidden');
+
                 // Hide popup
                 document.getElementById('adminSignaturePopup').classList.add('hidden');
 
@@ -2507,90 +2636,32 @@
                 clearAdminSignature();
             }
 
-            function handleManagerApproval() {
-                // Show the manager signature popup
-                document.getElementById('managerSignaturePopup').classList.remove('hidden');
-                initializeManagerSignatureCanvas();
+            function resetAdminApproval() {
+                // Show confirmation dialog
+                if (confirm('Are you sure you want to reset the admin approval? This will clear the signature and allow you to sign again.')) {
+                    // Hide the approved content and show the click content
+                    document.getElementById('adminApprovalSigned').classList.add('hidden');
+                    document.getElementById('adminApprovalContent').classList.remove('hidden');
 
-                // Set current date
-                const currentDateTime = new Date().toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                });
-                document.getElementById('managerSignatureDate').textContent = currentDateTime;
-            }
+                    // Reset the box styling to original state
+                    const approvalBox = document.getElementById('adminApprovalBox');
+                    approvalBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    approvalBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                    approvalBox.onclick = handleAdminApproval; // Restore click handler
 
-            function submitManagerSignature() {
-                const nameInput = document.getElementById('managerSignatureName');
-                const managerName = nameInput.value.trim();
+                    // Hide reset button
+                    document.getElementById('adminResetButton').classList.add('hidden');
 
-                if (!managerName) {
-                    alert('Please enter your name');
-                    return;
+                    // Clear stored data
+                    document.getElementById('adminApprovalName').textContent = 'Admin Name';
+                    document.getElementById('adminApprovalDate').textContent = 'Date & Time';
+                    document.getElementById('adminSignatureImage').src = '';
+
+                    // Show success notification
+                    showNotification('Admin approval has been reset. You can now sign again.', 'info');
                 }
-
-                // Check if signature is drawn
-                const canvas = document.getElementById('managerSignatureCanvas');
-                const signatureData = canvas.toDataURL();
-
-                // Simple check for blank canvas
-                const blankCanvas = document.createElement('canvas');
-                blankCanvas.width = canvas.width;
-                blankCanvas.height = canvas.height;
-                const blankData = blankCanvas.toDataURL();
-
-                if (signatureData === blankData) {
-                    alert('Please provide your signature');
-                    return;
-                }
-
-                const currentDateTime = new Date().toLocaleString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: true
-                });
-
-                // Hide the click content and show approved content
-                document.getElementById('managerApprovalContent').classList.add('hidden');
-                document.getElementById('managerApprovalSigned').classList.remove('hidden');
-
-                // Update the approval details
-                document.getElementById('managerApprovalName').textContent = managerName;
-                document.getElementById('managerApprovalDate').textContent = currentDateTime;
-
-                // Save and display signature
-                document.getElementById('managerSignatureImage').src = signatureData;
-                document.getElementById('managerSignatureDisplay').classList.remove('hidden');
-
-                // Update the box styling to show it's approved
-                const approvalBox = document.getElementById('managerApprovalBox');
-                approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
-                approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
-                approvalBox.onclick = null; // Remove click handler
-
-                // Hide popup
-                document.getElementById('managerSignaturePopup').classList.add('hidden');
-
-                // Clear the form
-                nameInput.value = '';
-                clearManagerSignature();
-
-                // Show success notification
-                showNotification('Manager approval completed successfully!', 'success');
             }
 
-            function cancelManagerSignature() {
-                document.getElementById('managerSignaturePopup').classList.add('hidden');
-                document.getElementById('managerSignatureName').value = '';
-                clearManagerSignature();
-            }
 
             // Digital signature canvas functions
             function initializeAdminSignatureCanvas() {
@@ -2615,27 +2686,6 @@
                 adminSignatureCanvas.addEventListener('touchend', stopDrawingAdmin);
             }
 
-            function initializeManagerSignatureCanvas() {
-                managerSignatureCanvas = document.getElementById('managerSignatureCanvas');
-                managerSignatureCtx = managerSignatureCanvas.getContext('2d');
-
-                // Set canvas properties
-                managerSignatureCtx.strokeStyle = '#000000';
-                managerSignatureCtx.lineWidth = 2;
-                managerSignatureCtx.lineCap = 'round';
-                managerSignatureCtx.lineJoin = 'round';
-
-                // Add event listeners
-                managerSignatureCanvas.addEventListener('mousedown', startDrawingManager);
-                managerSignatureCanvas.addEventListener('mousemove', drawManager);
-                managerSignatureCanvas.addEventListener('mouseup', stopDrawingManager);
-                managerSignatureCanvas.addEventListener('mouseout', stopDrawingManager);
-
-                // Touch events for mobile
-                managerSignatureCanvas.addEventListener('touchstart', handleTouchManager);
-                managerSignatureCanvas.addEventListener('touchmove', handleTouchManager);
-                managerSignatureCanvas.addEventListener('touchend', stopDrawingManager);
-            }
 
             // Admin signature drawing functions
             function startDrawingAdmin(e) {
@@ -2676,44 +2726,6 @@
                 }
             }
 
-            // Manager signature drawing functions
-            function startDrawingManager(e) {
-                isDrawing = true;
-                const rect = managerSignatureCanvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                managerSignatureCtx.beginPath();
-                managerSignatureCtx.moveTo(x, y);
-            }
-
-            function drawManager(e) {
-                if (!isDrawing) return;
-                const rect = managerSignatureCanvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                managerSignatureCtx.lineTo(x, y);
-                managerSignatureCtx.stroke();
-            }
-
-            function stopDrawingManager() {
-                isDrawing = false;
-            }
-
-            function handleTouchManager(e) {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
-                });
-                managerSignatureCanvas.dispatchEvent(mouseEvent);
-            }
-
-            function clearManagerSignature() {
-                if (managerSignatureCtx) {
-                    managerSignatureCtx.clearRect(0, 0, managerSignatureCanvas.width, managerSignatureCanvas.height);
-                }
-            }
 
             // Simple notification function
             function showNotification(message, type = 'info') {
@@ -2750,128 +2762,260 @@
                     }, 300);
                 }, 3000);
             }
+            // Admin Verification Functions
+            let adminVerificationCanvas, adminVerificationCtx, adminVerificationIsDrawing = false;
+
+            function handleAdminVerification() {
+                document.getElementById('adminVerificationSignaturePopup').classList.remove('hidden');
+                document.getElementById('adminVerificationSignaturePopup').classList.add('flex');
+                initializeAdminVerificationSignatureCanvas();
+
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('adminVerificationSignatureName').value = '';
+            }
+
+            function initializeAdminVerificationSignatureCanvas() {
+                adminVerificationCanvas = document.getElementById('adminVerificationSignatureCanvas');
+                adminVerificationCtx = adminVerificationCanvas.getContext('2d');
+                adminVerificationCtx.strokeStyle = '#000';
+                adminVerificationCtx.lineWidth = 2;
+                adminVerificationCtx.lineCap = 'round';
+
+                adminVerificationCanvas.addEventListener('mousedown', startAdminVerificationDrawing);
+                adminVerificationCanvas.addEventListener('mousemove', drawAdminVerification);
+                adminVerificationCanvas.addEventListener('mouseup', stopAdminVerificationDrawing);
+                adminVerificationCanvas.addEventListener('touchstart', handleAdminVerificationTouch);
+                adminVerificationCanvas.addEventListener('touchmove', handleAdminVerificationTouch);
+                adminVerificationCanvas.addEventListener('touchend', stopAdminVerificationDrawing);
+            }
+
+            function startAdminVerificationDrawing(e) {
+                adminVerificationIsDrawing = true;
+                const rect = adminVerificationCanvas.getBoundingClientRect();
+                adminVerificationCtx.beginPath();
+                adminVerificationCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            }
+
+            function drawAdminVerification(e) {
+                if (!adminVerificationIsDrawing) return;
+                const rect = adminVerificationCanvas.getBoundingClientRect();
+                adminVerificationCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                adminVerificationCtx.stroke();
+            }
+
+            function stopAdminVerificationDrawing() {
+                adminVerificationIsDrawing = false;
+            }
+
+            function handleAdminVerificationTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                adminVerificationCanvas.dispatchEvent(mouseEvent);
+            }
+
+            function clearAdminVerificationSignature() {
+                adminVerificationCtx.clearRect(0, 0, adminVerificationCanvas.width, adminVerificationCanvas.height);
+            }
+
+            function saveAdminVerificationSignature() {
+                const name = document.getElementById('adminVerificationSignatureName').value.trim();
+                if (!name) {
+                    alert('Please enter your name');
+                    return;
+                }
+
+                const signatureImage = adminVerificationCanvas.toDataURL();
+
+                document.getElementById('adminVerificationName').textContent = name;
+                document.getElementById('adminVerificationDate').textContent = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('adminVerificationSignatureImage').src = signatureImage;
+
+                document.getElementById('adminVerificationContent').classList.add('hidden');
+                document.getElementById('adminVerificationSigned').classList.remove('hidden');
+
+                const verificationBox = document.getElementById('adminVerificationBox');
+                verificationBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                verificationBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
+                verificationBox.onclick = null;
+
+                document.getElementById('adminVerificationResetButton').classList.remove('hidden');
+
+                closeAdminVerificationSignaturePopup();
+
+                alert('Admin verification completed successfully!');
+            }
+
+            function closeAdminVerificationSignaturePopup() {
+                document.getElementById('adminVerificationSignaturePopup').classList.add('hidden');
+                document.getElementById('adminVerificationSignaturePopup').classList.remove('flex');
+                clearAdminVerificationSignature();
+            }
+
+            function resetAdminVerification() {
+                if (confirm('Are you sure you want to reset the admin verification? This will clear the signature and allow you to sign again.')) {
+                    document.getElementById('adminVerificationSigned').classList.add('hidden');
+                    document.getElementById('adminVerificationContent').classList.remove('hidden');
+
+                    const verificationBox = document.getElementById('adminVerificationBox');
+                    verificationBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    verificationBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                    verificationBox.onclick = handleAdminVerification;
+
+                    document.getElementById('adminVerificationResetButton').classList.add('hidden');
+
+                    document.getElementById('adminVerificationName').textContent = 'Admin Name';
+                    document.getElementById('adminVerificationDate').textContent = 'Date & Time';
+                    document.getElementById('adminVerificationSignatureImage').src = '';
+
+                    alert('Admin verification has been reset.');
+                }
+            }
+
+            // Manager Verification Functions
+            let managerVerificationCanvas, managerVerificationCtx, managerVerificationIsDrawing = false;
+
+            function handleManagerVerification() {
+                document.getElementById('managerVerificationSignaturePopup').classList.remove('hidden');
+                document.getElementById('managerVerificationSignaturePopup').classList.add('flex');
+                initializeManagerVerificationSignatureCanvas();
+
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('managerVerificationSignatureName').value = '';
+            }
+
+            function initializeManagerVerificationSignatureCanvas() {
+                managerVerificationCanvas = document.getElementById('managerVerificationSignatureCanvas');
+                managerVerificationCtx = managerVerificationCanvas.getContext('2d');
+                managerVerificationCtx.strokeStyle = '#000';
+                managerVerificationCtx.lineWidth = 2;
+                managerVerificationCtx.lineCap = 'round';
+
+                managerVerificationCanvas.addEventListener('mousedown', startManagerVerificationDrawing);
+                managerVerificationCanvas.addEventListener('mousemove', drawManagerVerification);
+                managerVerificationCanvas.addEventListener('mouseup', stopManagerVerificationDrawing);
+                managerVerificationCanvas.addEventListener('touchstart', handleManagerVerificationTouch);
+                managerVerificationCanvas.addEventListener('touchmove', handleManagerVerificationTouch);
+                managerVerificationCanvas.addEventListener('touchend', stopManagerVerificationDrawing);
+            }
+
+            function startManagerVerificationDrawing(e) {
+                managerVerificationIsDrawing = true;
+                const rect = managerVerificationCanvas.getBoundingClientRect();
+                managerVerificationCtx.beginPath();
+                managerVerificationCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            }
+
+            function drawManagerVerification(e) {
+                if (!managerVerificationIsDrawing) return;
+                const rect = managerVerificationCanvas.getBoundingClientRect();
+                managerVerificationCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                managerVerificationCtx.stroke();
+            }
+
+            function stopManagerVerificationDrawing() {
+                managerVerificationIsDrawing = false;
+            }
+
+            function handleManagerVerificationTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                managerVerificationCanvas.dispatchEvent(mouseEvent);
+            }
+
+            function clearManagerVerificationSignature() {
+                managerVerificationCtx.clearRect(0, 0, managerVerificationCanvas.width, managerVerificationCanvas.height);
+            }
+
+            function saveManagerVerificationSignature() {
+                const name = document.getElementById('managerVerificationSignatureName').value.trim();
+                if (!name) {
+                    alert('Please enter your name');
+                    return;
+                }
+
+                const signatureImage = managerVerificationCanvas.toDataURL();
+
+                document.getElementById('managerVerificationName').textContent = name;
+                document.getElementById('managerVerificationDate').textContent = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('managerVerificationSignatureImage').src = signatureImage;
+
+                document.getElementById('managerVerificationContent').classList.add('hidden');
+                document.getElementById('managerVerificationSigned').classList.remove('hidden');
+
+                const verificationBox = document.getElementById('managerVerificationBox');
+                verificationBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
+                verificationBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
+                verificationBox.onclick = null;
+
+                document.getElementById('managerVerificationResetButton').classList.remove('hidden');
+
+                closeManagerVerificationSignaturePopup();
+
+                alert('Manager verification completed successfully!');
+            }
+
+            function closeManagerVerificationSignaturePopup() {
+                document.getElementById('managerVerificationSignaturePopup').classList.add('hidden');
+                document.getElementById('managerVerificationSignaturePopup').classList.remove('flex');
+                clearManagerVerificationSignature();
+            }
+
+            function resetManagerVerification() {
+                if (confirm('Are you sure you want to reset the manager verification? This will clear the signature and allow you to sign again.')) {
+                    document.getElementById('managerVerificationSigned').classList.add('hidden');
+                    document.getElementById('managerVerificationContent').classList.remove('hidden');
+
+                    const verificationBox = document.getElementById('managerVerificationBox');
+                    verificationBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    verificationBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
+                    verificationBox.onclick = handleManagerVerification;
+
+                    document.getElementById('managerVerificationResetButton').classList.add('hidden');
+
+                    document.getElementById('managerVerificationName').textContent = 'Manager Name';
+                    document.getElementById('managerVerificationDate').textContent = 'Date & Time';
+                    document.getElementById('managerVerificationSignatureImage').src = '';
+
+                    alert('Manager verification has been reset.');
+                }
+            }
+
         </script>
     </main>
 
-    <!-- Admin Signature Popup -->
-    <div id="adminSignaturePopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <div class="text-center mb-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">
-                    <i class="fas fa-user-shield text-blue-600 mr-2"></i>
-                    Admin Digital Signature
-                </h3>
-                <p class="text-sm text-gray-600">Please enter your name and provide your digital signature</p>
-            </div>
 
-            <div class="space-y-4">
-                <!-- Name Input -->
-                <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">Name</label>
-                    <input type="text" id="adminSignatureName"
-                           class="w-full text-lg px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                           placeholder="Enter your full name">
-                </div>
-
-                <!-- Date Display -->
-                <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">Date & Time</label>
-                    <p id="adminSignatureDate" class="text-lg px-4 py-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"></p>
-                </div>
-
-                <!-- Signature Canvas -->
-                <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">Digital Signature</label>
-                    <div class="border-2 border-gray-300 rounded-lg p-2">
-                        <canvas id="adminSignatureCanvas"
-                                width="400"
-                                height="150"
-                                class="w-full border border-gray-200 rounded cursor-crosshair"
-                                style="touch-action: none;"></canvas>
-                    </div>
-                    <div class="flex justify-between mt-2">
-                        <p class="text-sm text-gray-500">Draw your signature above</p>
-                        <button type="button" onclick="clearAdminSignature()"
-                                class="text-sm text-red-600 hover:text-red-800">
-                            <i class="fas fa-eraser mr-1"></i>Clear
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="cancelAdminSignature()"
-                            class="flex-1 text-lg px-8 py-4 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
-                        Cancel
-                    </button>
-                    <button type="button" onclick="submitAdminSignature()"
-                            class="flex-1 text-lg px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-check mr-2"></i>Approve
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Manager Signature Popup -->
-    <div id="managerSignaturePopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <div class="text-center mb-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">
-                    <i class="fas fa-crown text-purple-600 mr-2"></i>
-                    Manager Digital Signature
-                </h3>
-                <p class="text-sm text-gray-600">Please enter your name and provide your digital signature</p>
-            </div>
-
-            <div class="space-y-4">
-                <!-- Name Input -->
-                <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">Name</label>
-                    <input type="text" id="managerSignatureName"
-                           class="w-full text-lg px-4 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                           placeholder="Enter your full name">
-                </div>
-
-                <!-- Date Display -->
-                <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">Date & Time</label>
-                    <p id="managerSignatureDate" class="text-lg px-4 py-4 bg-gray-50 border border-gray-300 rounded-lg text-gray-800"></p>
-                </div>
-
-                <!-- Signature Canvas -->
-                <div>
-                    <label class="block text-base font-medium text-gray-700 mb-2">Digital Signature</label>
-                    <div class="border-2 border-gray-300 rounded-lg p-2">
-                        <canvas id="managerSignatureCanvas"
-                                width="400"
-                                height="150"
-                                class="w-full border border-gray-200 rounded cursor-crosshair"
-                                style="touch-action: none;"></canvas>
-                    </div>
-                    <div class="flex justify-between mt-2">
-                        <p class="text-sm text-gray-500">Draw your signature above</p>
-                        <button type="button" onclick="clearManagerSignature()"
-                                class="text-sm text-red-600 hover:text-red-800">
-                            <i class="fas fa-eraser mr-1"></i>Clear
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="cancelManagerSignature()"
-                            class="flex-1 text-lg px-8 py-4 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
-                        Cancel
-                    </button>
-                    <button type="button" onclick="submitManagerSignature()"
-                            class="flex-1 text-lg px-8 py-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-                        <i class="fas fa-check mr-2"></i>Approve
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 

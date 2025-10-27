@@ -58,8 +58,18 @@
             <div class="mb-6">
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
                     <div class="mb-3">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">PT. Besi Kuat Manufacturing</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Supplier Header -->
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">PT Besi Kuat</h3>
+
+                        <!-- Supplier Details Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-id-card text-gray-500"></i>
+                                <div>
+                                    <span class="text-sm text-gray-500">Code:</span>
+                                    <span class="font-medium text-gray-800 ml-1">08-2382</span>
+                                </div>
+                            </div>
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-user text-gray-500"></i>
                                 <div>
@@ -68,18 +78,25 @@
                                 </div>
                             </div>
                             <div class="flex items-center space-x-2">
-                                <i class="fas fa-phone text-gray-500"></i>
-                                <div>
-                                    <span class="text-sm text-gray-500">Phone:</span>
-                                    <span class="font-medium text-gray-800 ml-1">021-5432167</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center space-x-2">
                                 <i class="fas fa-envelope text-gray-500"></i>
                                 <div>
                                     <span class="text-sm text-gray-500">Email:</span>
                                     <span class="font-medium text-gray-800 ml-1">ahmad@besikuat.co.id</span>
                                 </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fab fa-whatsapp text-green-500"></i>
+                                <div class="flex-1">
+                                    <span class="text-sm text-gray-500">WhatsApp:</span>
+                                    <span class="font-medium text-gray-800 ml-1">08567773131</span>
+                                </div>
+                                <a href="https://wa.me/628567773131?text=Hai,%20kamu%20dapat%201%20pesan%20NCR.%20Silahkan%20cek%20email.!"
+                                   target="_blank"
+                                   class="ml-3 px-4 py-2 bg-green-500 hover:bg-green-600 text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center space-x-2 transform hover:scale-105"
+                                   title="Send WhatsApp Message">
+                                    <i class="fab fa-whatsapp text-base"></i>
+                                    <span>Send Message</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -837,22 +854,132 @@
                         <div class="mt-3">
                             <button type="button" onclick="openReplyModal()"
                                 class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                                <i class="fas fa-reply mr-2"></i>
-                                Reply to Admin
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Message
                             </button>
                         </div>
                     </div>
 
                     <!-- Conversation Section -->
                     <div id="conversationSection" class="hidden">
-                        <div class="border-t border-gray-200 pt-4">
-                            <h4 class="text-base font-medium text-gray-700 mb-3">Conversation</h4>
-                            <div id="conversationList" class="space-y-3">
+                        <div class="border-t border-gray-200 pt-6">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-comments text-blue-600 mr-2"></i>
+                                Reply to Admin
+                            </h4>
+                            <div id="conversationList" class="space-y-4 max-h-96 overflow-y-auto">
                                 <!-- Conversation messages will be added here -->
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+
+            <!-- Approval Section -->
+            <div class="mt-8 mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Admin Approval Card -->
+                    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-blue-50 border-b border-gray-200 relative">
+                            <h3 class="text-lg font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-user-shield text-blue-600 mr-2"></i>
+                                Admin Approval
+                            </h3>
+                            <!-- Reset button - only visible when approved -->
+                            <button id="adminResetButton"
+                                onclick="resetAdminApproval()"
+                                class="hidden absolute top-4 right-4 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                                title="Reset approval">
+                                <i class="fas fa-times text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div id="adminApprovalBox"
+                                class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200"
+                                onclick="handleAdminApproval()">
+                                <div id="adminApprovalContent">
+                                    <div class="text-gray-400 mb-3">
+                                        <i class="fas fa-hand-pointer text-3xl"></i>
+                                    </div>
+                                    <p class="text-gray-600 font-medium">Click to Approve</p>
+                                    <p class="text-sm text-gray-500 mt-1">Admin signature required</p>
+                                </div>
+                                <div id="adminApprovalSigned" class="hidden">
+                                    <div class="grid grid-cols-2 gap-4" id="adminSignatureDisplay">
+                                        <div>
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                                <i class="fas fa-user-shield mr-1"></i>
+                                                Approved
+                                            </span>
+                                            <p class="text-green-700 font-medium" id="adminApprovalName">Admin Name</p>
+                                            <p class="text-sm text-gray-600" id="adminApprovalDate">Date & Time</p>
+                                        </div>
+                                        <div class="flex justify-center">
+                                            <div
+                                                class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                                <img id="adminSignatureImage"
+                                                    class="max-w-full max-h-full object-contain"
+                                                    alt="Admin Signature">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manager Approval Card -->
+                    <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                        <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 relative">
+                            <h3 class="text-lg font-medium text-gray-800 flex items-center">
+                                <i class="fas fa-crown text-purple-600 mr-2"></i>
+                                Manager Approval
+                            </h3>
+                            <!-- Reset button - only visible when approved -->
+                            <button id="managerResetButton"
+                                onclick="resetManagerApproval()"
+                                class="hidden absolute top-4 right-4 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
+                                title="Reset approval">
+                                <i class="fas fa-times text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <div id="managerApprovalBox"
+                                class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+                                onclick="handleManagerApproval()">
+                                <div id="managerApprovalContent">
+                                    <div class="text-gray-400 mb-3">
+                                        <i class="fas fa-hand-pointer text-3xl"></i>
+                                    </div>
+                                    <p class="text-gray-600 font-medium">Click to Approve</p>
+                                    <p class="text-sm text-gray-500 mt-1">Manager signature required</p>
+                                </div>
+                                <div id="managerApprovalSigned" class="hidden">
+                                    <div class="grid grid-cols-2 gap-4" id="managerSignatureDisplay">
+                                        <div>
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 mb-2">
+                                                <i class="fas fa-crown mr-1"></i>
+                                                Approved
+                                            </span>
+                                            <p class="text-green-700 font-medium" id="managerApprovalName">Manager Name</p>
+                                            <p class="text-sm text-gray-600" id="managerApprovalDate">Date & Time</p>
+                                        </div>
+                                        <div class="flex justify-center">
+                                            <div
+                                                class="w-24 h-24 border border-gray-300 rounded bg-white flex items-center justify-center">
+                                                <img id="managerSignatureImage"
+                                                    class="max-w-full max-h-full object-contain"
+                                                    alt="Manager Signature">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1054,48 +1181,25 @@
             </div>
         </div>
 
-        <!-- Reply Modal -->
+        <!-- Add Message Modal -->
         <div id="replyModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-medium text-gray-900">Reply to Admin</h3>
+                        <h3 class="text-lg font-medium text-gray-900">Add Message</h3>
                         <button onclick="closeReplyModal()" class="text-gray-400 hover:text-gray-600">
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Conversation History -->
-                <div class="px-6 py-4 border-b border-gray-200 max-h-60 overflow-y-auto">
-                    <h4 class="text-sm font-medium text-gray-700 mb-3">Conversation History</h4>
-                    <div id="conversationHistory" class="space-y-3">
-                        <!-- Admin Message -->
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user-tie text-red-600 text-sm"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="bg-gray-100 rounded-lg p-3">
-                                    <div class="text-xs text-gray-500 mb-1">Admin • 2 hours ago</div>
-                                    <p class="text-sm text-gray-700">Vendor response looks adequate but requires
-                                        detailed analysis to ensure proper root cause identification and preventive
-                                        measures. Please provide comprehensive process flow analysis, problem analysis
-                                        using appropriate methodology, and detailed countermeasures for both occurrence
-                                        and flow-out prevention.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Reply Form -->
                 <form id="replyForm" class="p-6">
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Reply</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
                         <textarea name="replyMessage" required rows="4"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                            placeholder="Type your reply to admin..."></textarea>
+                            placeholder="Type your message..."></textarea>
                     </div>
 
                     <div class="flex justify-end space-x-3">
@@ -1104,7 +1208,7 @@
                             Cancel
                         </button>
                         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                            Send Reply
+                            Send Message
                         </button>
                     </div>
                 </form>
@@ -1186,6 +1290,70 @@
                             class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                             Save Attachments
                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Signature Popup -->
+        <div id="adminSignaturePopup" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Admin Digital Signature</h3>
+                </div>
+                <div class="p-6">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Signature Name</label>
+                        <input type="text" id="adminSignatureName"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Enter your name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Draw Your Signature</label>
+                        <div class="border border-gray-300 rounded-md">
+                            <canvas id="adminSignatureCanvas" width="300" height="150"
+                                class="w-full border rounded-md cursor-crosshair"></canvas>
+                        </div>
+                        <button type="button" onclick="clearAdminSignature()"
+                            class="mt-2 text-sm text-gray-500 hover:text-gray-700">Clear Signature</button>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeAdminSignaturePopup()"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Cancel</button>
+                        <button type="button" onclick="saveAdminSignature()"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save Signature</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager Signature Popup -->
+        <div id="managerSignaturePopup" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Manager Digital Signature</h3>
+                </div>
+                <div class="p-6">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Signature Name</label>
+                        <input type="text" id="managerSignatureName"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Enter your name">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Draw Your Signature</label>
+                        <div class="border border-gray-300 rounded-md">
+                            <canvas id="managerSignatureCanvas" width="300" height="150"
+                                class="w-full border rounded-md cursor-crosshair"></canvas>
+                        </div>
+                        <button type="button" onclick="clearManagerSignature()"
+                            class="mt-2 text-sm text-gray-500 hover:text-gray-700">Clear Signature</button>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeManagerSignaturePopup()"
+                            class="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">Cancel</button>
+                        <button type="button" onclick="saveManagerSignature()"
+                            class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">Save Signature</button>
                     </div>
                 </div>
             </div>
@@ -2104,19 +2272,36 @@
                 const isAdmin = sender === 'admin';
 
                 const messageDiv = document.createElement('div');
-                messageDiv.className = 'flex items-start space-x-3';
 
-                messageDiv.innerHTML = `
-                    <div class="w-8 h-8 ${isAdmin ? 'bg-red-100' : 'bg-blue-100'} rounded-full flex items-center justify-center">
-                        <i class="fas ${isAdmin ? 'fa-user-tie text-red-600' : 'fa-user text-blue-600'} text-sm"></i>
-                    </div>
-                    <div class="flex-1">
-                        <div class="bg-gray-100 rounded-lg p-3">
-                            <div class="text-xs text-gray-500 mb-1">${isAdmin ? 'Admin' : 'Vendor'} • ${timestamp}</div>
-                            <p class="text-sm text-gray-700">${message}</p>
+                if (isAdmin) {
+                    // QC Admin Reply (Left Side)
+                    messageDiv.className = 'flex justify-start';
+                    messageDiv.innerHTML = `
+                        <div class="max-w-md">
+                            <div class="bg-gray-200 text-gray-800 rounded-lg rounded-bl-sm px-4 py-3 shadow-sm">
+                                <p class="text-sm leading-relaxed">${message}</p>
+                            </div>
+                            <div class="text-left mt-1">
+                                <span class="text-xs text-gray-500">QC Admin</span>
+                                <span class="text-xs text-gray-400 ml-2">${timestamp}</span>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    // Vendor Message (Right Side)
+                    messageDiv.className = 'flex justify-end';
+                    messageDiv.innerHTML = `
+                        <div class="max-w-md">
+                            <div class="bg-blue-500 text-white rounded-lg rounded-br-sm px-4 py-3 shadow-sm">
+                                <p class="text-sm leading-relaxed">${message}</p>
+                            </div>
+                            <div class="text-right mt-1">
+                                <span class="text-xs text-gray-500">Ahmad Wijaya (PT Besi Kuat)</span>
+                                <span class="text-xs text-gray-400 ml-2">${timestamp}</span>
+                            </div>
+                        </div>
+                    `;
+                }
 
                 conversationList.appendChild(messageDiv);
             }
@@ -2130,11 +2315,10 @@
                     const replyMessage = formData.get('replyMessage').trim();
 
                     if (replyMessage) {
-                        // Add vendor reply to conversation
+                        // Add vendor message to conversation
                         const now = new Date();
                         const timestamp = 'Just now';
 
-                        addMessageToConversation(replyMessage, 'vendor', timestamp);
                         addMessageToMainConversation(replyMessage, 'vendor', timestamp);
 
                         // Store message (in real app, send to server)
@@ -2153,7 +2337,7 @@
                         closeReplyModal();
 
                         // Show success message
-                        alert('Reply sent successfully!');
+                        alert('Message sent successfully!');
 
                         console.log('Reply sent:', replyMessage);
                     }
@@ -2535,6 +2719,280 @@
                     countermeasure.verification = 'rejected';
                     renderCountermeasureTable();
                     renderCountermeasureFlowOutTable();
+                }
+            }
+
+            // Admin Approval Functions
+            let adminCanvas, adminCtx, adminIsDrawing = false;
+
+            function handleAdminApproval() {
+                // Show the admin signature popup
+                document.getElementById('adminSignaturePopup').classList.remove('hidden');
+                document.getElementById('adminSignaturePopup').classList.add('flex');
+                initializeAdminSignatureCanvas();
+
+                // Set current date
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('adminSignatureName').value = '';
+            }
+
+            function initializeAdminSignatureCanvas() {
+                adminCanvas = document.getElementById('adminSignatureCanvas');
+                adminCtx = adminCanvas.getContext('2d');
+                adminCtx.strokeStyle = '#000';
+                adminCtx.lineWidth = 2;
+                adminCtx.lineCap = 'round';
+
+                adminCanvas.addEventListener('mousedown', startAdminDrawing);
+                adminCanvas.addEventListener('mousemove', drawAdmin);
+                adminCanvas.addEventListener('mouseup', stopAdminDrawing);
+                adminCanvas.addEventListener('touchstart', handleAdminTouch);
+                adminCanvas.addEventListener('touchmove', handleAdminTouch);
+                adminCanvas.addEventListener('touchend', stopAdminDrawing);
+            }
+
+            function startAdminDrawing(e) {
+                adminIsDrawing = true;
+                const rect = adminCanvas.getBoundingClientRect();
+                adminCtx.beginPath();
+                adminCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            }
+
+            function drawAdmin(e) {
+                if (!adminIsDrawing) return;
+                const rect = adminCanvas.getBoundingClientRect();
+                adminCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                adminCtx.stroke();
+            }
+
+            function stopAdminDrawing() {
+                adminIsDrawing = false;
+            }
+
+            function handleAdminTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                adminCanvas.dispatchEvent(mouseEvent);
+            }
+
+            function clearAdminSignature() {
+                adminCtx.clearRect(0, 0, adminCanvas.width, adminCanvas.height);
+            }
+
+            function saveAdminSignature() {
+                const name = document.getElementById('adminSignatureName').value.trim();
+                if (!name) {
+                    alert('Please enter your name');
+                    return;
+                }
+
+                // Convert canvas to image
+                const signatureImage = adminCanvas.toDataURL();
+
+                // Update approval display
+                document.getElementById('adminApprovalName').textContent = name;
+                document.getElementById('adminApprovalDate').textContent = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('adminSignatureImage').src = signatureImage;
+
+                // Hide approval content and show signed content
+                document.getElementById('adminApprovalContent').classList.add('hidden');
+                document.getElementById('adminApprovalSigned').classList.remove('hidden');
+
+                // Update approval box styling
+                const approvalBox = document.getElementById('adminApprovalBox');
+                approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
+                approvalBox.onclick = null; // Remove click handler
+
+                // Show reset button
+                document.getElementById('adminResetButton').classList.remove('hidden');
+
+                // Close popup
+                closeAdminSignaturePopup();
+
+                alert('Admin approval completed successfully!');
+            }
+
+            function closeAdminSignaturePopup() {
+                document.getElementById('adminSignaturePopup').classList.add('hidden');
+                document.getElementById('adminSignaturePopup').classList.remove('flex');
+                clearAdminSignature();
+            }
+
+            function resetAdminApproval() {
+                if (confirm('Are you sure you want to reset the admin approval? This will clear the signature and allow you to sign again.')) {
+                    // Hide the approved content and show the click content
+                    document.getElementById('adminApprovalSigned').classList.add('hidden');
+                    document.getElementById('adminApprovalContent').classList.remove('hidden');
+
+                    // Reset the box styling to original state
+                    const approvalBox = document.getElementById('adminApprovalBox');
+                    approvalBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    approvalBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-blue-500', 'hover:bg-blue-50', 'cursor-pointer');
+                    approvalBox.onclick = handleAdminApproval; // Restore click handler
+
+                    // Hide reset button
+                    document.getElementById('adminResetButton').classList.add('hidden');
+
+                    // Clear stored data
+                    document.getElementById('adminApprovalName').textContent = 'Admin Name';
+                    document.getElementById('adminApprovalDate').textContent = 'Date & Time';
+                    document.getElementById('adminSignatureImage').src = '';
+
+                    alert('Admin approval has been reset.');
+                }
+            }
+
+            // Manager Approval Functions
+            let managerCanvas, managerCtx, managerIsDrawing = false;
+
+            function handleManagerApproval() {
+                // Show the manager signature popup
+                document.getElementById('managerSignaturePopup').classList.remove('hidden');
+                document.getElementById('managerSignaturePopup').classList.add('flex');
+                initializeManagerSignatureCanvas();
+
+                // Set current date
+                const currentDateTime = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('managerSignatureName').value = '';
+            }
+
+            function initializeManagerSignatureCanvas() {
+                managerCanvas = document.getElementById('managerSignatureCanvas');
+                managerCtx = managerCanvas.getContext('2d');
+                managerCtx.strokeStyle = '#000';
+                managerCtx.lineWidth = 2;
+                managerCtx.lineCap = 'round';
+
+                managerCanvas.addEventListener('mousedown', startManagerDrawing);
+                managerCanvas.addEventListener('mousemove', drawManager);
+                managerCanvas.addEventListener('mouseup', stopManagerDrawing);
+                managerCanvas.addEventListener('touchstart', handleManagerTouch);
+                managerCanvas.addEventListener('touchmove', handleManagerTouch);
+                managerCanvas.addEventListener('touchend', stopManagerDrawing);
+            }
+
+            function startManagerDrawing(e) {
+                managerIsDrawing = true;
+                const rect = managerCanvas.getBoundingClientRect();
+                managerCtx.beginPath();
+                managerCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            }
+
+            function drawManager(e) {
+                if (!managerIsDrawing) return;
+                const rect = managerCanvas.getBoundingClientRect();
+                managerCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                managerCtx.stroke();
+            }
+
+            function stopManagerDrawing() {
+                managerIsDrawing = false;
+            }
+
+            function handleManagerTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                managerCanvas.dispatchEvent(mouseEvent);
+            }
+
+            function clearManagerSignature() {
+                managerCtx.clearRect(0, 0, managerCanvas.width, managerCanvas.height);
+            }
+
+            function saveManagerSignature() {
+                const name = document.getElementById('managerSignatureName').value.trim();
+                if (!name) {
+                    alert('Please enter your name');
+                    return;
+                }
+
+                // Convert canvas to image
+                const signatureImage = managerCanvas.toDataURL();
+
+                // Update approval display
+                document.getElementById('managerApprovalName').textContent = name;
+                document.getElementById('managerApprovalDate').textContent = new Date().toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('managerSignatureImage').src = signatureImage;
+
+                // Hide approval content and show signed content
+                document.getElementById('managerApprovalContent').classList.add('hidden');
+                document.getElementById('managerApprovalSigned').classList.remove('hidden');
+
+                // Update approval box styling
+                const approvalBox = document.getElementById('managerApprovalBox');
+                approvalBox.classList.remove('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
+                approvalBox.classList.add('border-solid', 'border-green-400', 'bg-green-50');
+                approvalBox.onclick = null; // Remove click handler
+
+                // Show reset button
+                document.getElementById('managerResetButton').classList.remove('hidden');
+
+                // Close popup
+                closeManagerSignaturePopup();
+
+                alert('Manager approval completed successfully!');
+            }
+
+            function closeManagerSignaturePopup() {
+                document.getElementById('managerSignaturePopup').classList.add('hidden');
+                document.getElementById('managerSignaturePopup').classList.remove('flex');
+                clearManagerSignature();
+            }
+
+            function resetManagerApproval() {
+                if (confirm('Are you sure you want to reset the manager approval? This will clear the signature and allow you to sign again.')) {
+                    // Hide the approved content and show the click content
+                    document.getElementById('managerApprovalSigned').classList.add('hidden');
+                    document.getElementById('managerApprovalContent').classList.remove('hidden');
+
+                    // Reset the box styling to original state
+                    const approvalBox = document.getElementById('managerApprovalBox');
+                    approvalBox.classList.remove('border-solid', 'border-green-400', 'bg-green-50');
+                    approvalBox.classList.add('border-dashed', 'border-gray-300', 'hover:border-purple-500', 'hover:bg-purple-50', 'cursor-pointer');
+                    approvalBox.onclick = handleManagerApproval; // Restore click handler
+
+                    // Hide reset button
+                    document.getElementById('managerResetButton').classList.add('hidden');
+
+                    // Clear stored data
+                    document.getElementById('managerApprovalName').textContent = 'Manager Name';
+                    document.getElementById('managerApprovalDate').textContent = 'Date & Time';
+                    document.getElementById('managerSignatureImage').src = '';
+
+                    alert('Manager approval has been reset.');
                 }
             }
 
