@@ -84,12 +84,6 @@
               <div class="px-2">
                   <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 px-2">Management</h3>
 
-                  <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="ppic">
-                      <i class="fas fa-eye mr-3"></i>
-                      <span class="font-medium">PPIC View</span>
-                      <div class="tooltip absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap z-50">PPIC View</div>
-                  </a>
-
                   <a href="#" class="menu-item-hover flex items-center px-3 py-2 rounded-md text-gray-700 mb-1 relative group" data-page="user">
                       <i class="fas fa-users mr-3"></i>
                       <span class="font-medium">User</span>
