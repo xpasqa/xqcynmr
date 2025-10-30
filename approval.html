@@ -1083,13 +1083,21 @@
             <!-- Closed Report Button Section -->
             <div class="mt-8 mb-8">
                 <div class="text-center">
-                    <button id="closedReportBtn"
-                            onclick="handleClosedReport()"
-                            class="px-8 py-4 bg-gray-400 text-white rounded-lg font-semibold text-lg cursor-not-allowed opacity-50 transition-all duration-200"
-                            disabled>
-                        <i class="fas fa-lock mr-2"></i>
-                        Closed Report
-                    </button>
+                    <div class="flex gap-4">
+                        <button id="requestRevisionBtn"
+                                onclick="handleRequestRevision()"
+                                class="flex-1 px-8 py-4 bg-red-600 text-white rounded-lg font-semibold text-lg hover:bg-red-700 transition-all duration-200">
+                            <i class="fas fa-edit mr-2"></i>
+                            Request Revision
+                        </button>
+                        <button id="closedReportBtn"
+                                onclick="handleClosedReport()"
+                                class="flex-1 px-8 py-4 bg-gray-400 text-white rounded-lg font-semibold text-lg cursor-not-allowed opacity-50 transition-all duration-200"
+                                disabled>
+                            <i class="fas fa-lock mr-2"></i>
+                            Closed Report
+                        </button>
+                    </div>
                     <p id="closedReportStatus" class="text-sm text-gray-500 mt-2">
                         Waiting for both QC Admin and QC Manager approvals to activate
                     </p>
@@ -2842,6 +2850,29 @@
                         closedReportStatus.classList.remove('text-green-600');
                         closedReportStatus.classList.add('text-gray-600');
                     }
+                }
+            }
+
+            // Handle request revision action
+            function handleRequestRevision() {
+                if (confirm('Are you sure you want to request a revision for this report?')) {
+                    // Show success notification
+                    showNotification('Revision request has been sent successfully!', 'success');
+
+                    // Update button to show revision requested state
+                    const requestRevisionBtn = document.getElementById('requestRevisionBtn');
+                    requestRevisionBtn.disabled = true;
+                    requestRevisionBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    requestRevisionBtn.classList.add('bg-gray-400', 'cursor-not-allowed', 'opacity-50');
+                    requestRevisionBtn.innerHTML = '<i class="fas fa-clock mr-2"></i>Revision Requested';
+
+                    // Add revision note to the status
+                    const closedReportStatus = document.getElementById('closedReportStatus');
+                    closedReportStatus.textContent = 'Revision has been requested for this report.';
+                    closedReportStatus.classList.remove('text-gray-500');
+                    closedReportStatus.classList.add('text-orange-600');
+
+                    console.log('Revision requested');
                 }
             }
 
