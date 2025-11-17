@@ -68,7 +68,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">Created NCR</span>
                                 </div>
-                                <span class="text-lg font-bold text-gray-900">127</span>
+                                <span class="text-lg font-bold text-gray-900" id="createdCount">55</span>
                             </div>
                             <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                                 <div class="flex items-center">
@@ -77,7 +77,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">Process NCR</span>
                                 </div>
-                                <span class="text-lg font-bold text-gray-900" id="processCount">20</span>
+                                <span class="text-lg font-bold text-gray-900" id="processCount">4</span>
                             </div>
                             <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                                 <div class="flex items-center">
@@ -86,7 +86,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">Replied NCR</span>
                                 </div>
-                                <span class="text-lg font-bold text-gray-900" id="repliedCount">15</span>
+                                <span class="text-lg font-bold text-gray-900" id="repliedCount">3</span>
                             </div>
                             <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                                 <div class="flex items-center">
@@ -95,7 +95,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">Waiting NCR</span>
                                 </div>
-                                <span class="text-lg font-bold text-gray-900" id="waitingCount">20</span>
+                                <span class="text-lg font-bold text-gray-900" id="waitingCount">2</span>
                             </div>
                             <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
                                 <div class="flex items-center">
@@ -104,7 +104,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">Done NCR</span>
                                 </div>
-                                <span class="text-lg font-bold text-gray-900" id="doneCount">85</span>
+                                <span class="text-lg font-bold text-gray-900" id="doneCount">2</span>
                             </div>
                             <div class="flex items-center justify-between py-1.5">
                                 <div class="flex items-center">
@@ -113,7 +113,7 @@
                                     </div>
                                     <span class="text-sm font-medium text-gray-700">Total NCR</span>
                                 </div>
-                                <span class="text-lg font-bold text-gray-900" id="totalCount">212</span>
+                                <span class="text-lg font-bold text-gray-900" id="totalCount">16</span>
                             </div>
                         </div>
                     </div>
@@ -336,27 +336,16 @@
     <script>
         // NCR Data from dashboard
         const ncrData = [
-            // Created NCR (5 records)
-            { id: 1, status: "created" },
-            { id: 2, status: "created" },
-            { id: 3, status: "created" },
-            { id: 4, status: "created" },
-            { id: 5, status: "created" },
-            // Process NCR (4 records)
-            { id: 6, status: "process" },
-            { id: 7, status: "process" },
-            { id: 8, status: "process" },
-            { id: 9, status: "process" },
-            // Replied NCR (3 records)
-            { id: 10, status: "replied" },
-            { id: 11, status: "replied" },
-            { id: 12, status: "replied" },
-            // Waiting NCR (2 records)
-            { id: 13, status: "waiting" },
-            { id: 14, status: "waiting" },
-            // Done NCR (2 records)
-            { id: 15, status: "done" },
-            { id: 16, status: "done" }
+            // Created NCR (127 records)
+            ...Array(127).fill().map((_, i) => ({ id: i + 1, status: "created" })),
+            // Done NCR (85 records)
+            ...Array(85).fill().map((_, i) => ({ id: i + 128, status: "done" })),
+            // Process NCR (20 records)
+            ...Array(20).fill().map((_, i) => ({ id: i + 213, status: "process" })),
+            // Replied NCR (15 records)
+            ...Array(15).fill().map((_, i) => ({ id: i + 233, status: "replied" })),
+            // Waiting NCR (6 records)
+            ...Array(6).fill().map((_, i) => ({ id: i + 248, status: "waiting" }))
         ];
 
         // Monthly performance data
