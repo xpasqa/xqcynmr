@@ -592,10 +592,15 @@
             // Check if Chart.js is loaded
             if (typeof Chart !== 'undefined') {
                 console.log('Chart.js is loaded, initializing chart...');
-                // Small delay to ensure canvas is properly sized
+                // Longer delay to ensure canvas is properly sized
                 setTimeout(() => {
-                    initChart();
-                }, 100);
+                    try {
+                        initChart();
+                        console.log('Chart initialized successfully');
+                    } catch (error) {
+                        console.error('Error initializing chart:', error);
+                    }
+                }, 500);
             } else {
                 console.error('Chart.js not loaded!');
             }
