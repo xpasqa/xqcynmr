@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Inspection - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="components/header.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Physical Inspection</h2>
+                        <p class="text-lg text-gray-600 mt-1">Product visual and physical inspection checklist</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Inspector:</span>
+                            <span class="font-semibold text-blue-600 ml-2 text-lg">Budi Santoso</span>
+                        </div>
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Date:</span>
+                            <span class="font-semibold text-gray-800 ml-2 text-lg" id="currentDate"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Information -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-semibold text-gray-900">Product Information</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-base font-medium text-gray-700 mb-2">Product ID</label>
+                            <input type="text" value="YMR-2025-001234" readonly
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-base font-medium text-gray-700 mb-2">Product Type</label>
+                            <input type="text" value="Engine Block Assembly" readonly
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-base font-medium text-gray-700 mb-2">Batch Number</label>
+                            <input type="text" value="B2025-Q4-0456" readonly
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md bg-gray-50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inspection Sections -->
+            <form id="inspectionForm">
+                <!-- Top Section Inspection -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('topSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-medium text-gray-900">
+                                <i class="fas fa-arrow-up text-blue-600 mr-3"></i>
+                                Top Area Inspection
+                            </h2>
+                            <i id="topIcon"
+                                class="fas fa-chevron-up text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div id="topSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Visual Inspection -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Visual Inspection</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_surface_clean"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Surface cleanliness</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_no_scratches"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">No visible scratches</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_no_dents" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">No dents or deformation</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_paint_quality"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Paint/coating quality</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Measurement & Technical -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Measurement & Technical
+                                </h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_dimensions" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Dimensional accuracy</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_tolerances" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Within tolerances</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_mounting_holes"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Mounting holes alignment</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="top_markings" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Proper markings/labels</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="mt-6">
+                            <label class="block text-base font-medium text-gray-700 mb-2">Notes (Top Area)</label>
+                            <textarea name="top_notes" rows="3"
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md"
+                                placeholder="Any observations or issues found in the top area..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Section Inspection -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('bottomSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-medium text-gray-900">
+                                <i class="fas fa-arrow-down text-green-600 mr-3"></i>
+                                Bottom Area Inspection
+                            </h2>
+                            <i id="bottomIcon"
+                                class="fas fa-chevron-up text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div id="bottomSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Visual Inspection -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Visual Inspection</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_surface_clean"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Surface cleanliness</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_no_corrosion"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">No corrosion or rust</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_weld_quality"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Weld quality inspection</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_drainage"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Drainage holes clear</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Functional Tests -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Functional Tests</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_stability"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Base stability</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_leveling"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Proper leveling</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_sealing" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Gasket/seal integrity</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="bottom_fasteners"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Fastener torque check</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="mt-6">
+                            <label class="block text-base font-medium text-gray-700 mb-2">Notes (Bottom Area)</label>
+                            <textarea name="bottom_notes" rows="3"
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md"
+                                placeholder="Any observations or issues found in the bottom area..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left Section Inspection -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('leftSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-medium text-gray-900">
+                                <i class="fas fa-arrow-left text-orange-600 mr-3"></i>
+                                Left Side Inspection
+                            </h2>
+                            <i id="leftIcon"
+                                class="fas fa-chevron-up text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div id="leftSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Visual Inspection -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Visual Inspection</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_panel_condition"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Side panel condition</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_connections"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Connection points</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_no_leaks" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">No fluid leaks</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_access_panels"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Access panels secure</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Component Check -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Component Check</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_wiring" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Wiring harness condition</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_brackets" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Mounting brackets</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_ventilation"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Ventilation openings</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="left_safety" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Safety features</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="mt-6">
+                            <label class="block text-base font-medium text-gray-700 mb-2">Notes (Left Side)</label>
+                            <textarea name="left_notes" rows="3"
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md"
+                                placeholder="Any observations or issues found on the left side..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section Inspection -->
+                <div class="bg-white rounded-lg shadow mb-8 toggle-container">
+                    <div class="px-6 py-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors"
+                        onclick="toggleSection('rightSection')">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-medium text-gray-900">
+                                <i class="fas fa-arrow-right text-purple-600 mr-3"></i>
+                                Right Side Inspection
+                            </h2>
+                            <i id="rightIcon"
+                                class="fas fa-chevron-up text-gray-400 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                    <div id="rightSection"
+                        class="p-6 overflow-hidden transition-all duration-300 ease-in-out toggle-section"
+                        style="max-height: none; padding-top: 1.5rem; padding-bottom: 1.5rem;">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Visual Inspection -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">Visual Inspection</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_panel_condition"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Side panel condition</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_exhaust" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Exhaust system check</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_cooling" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Cooling system condition</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_controls" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Control panel access</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- System Check -->
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold text-gray-800 border-b pb-2">System Check</h4>
+
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_fuel_system"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Fuel system integrity</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_electrical"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Electrical connections</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_filters" class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Filter accessibility</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="right_maintenance"
+                                            class="mr-3 h-5 w-5 text-blue-600">
+                                        <span class="text-base">Maintenance points</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="mt-6">
+                            <label class="block text-base font-medium text-gray-700 mb-2">Notes (Right Side)</label>
+                            <textarea name="right_notes" rows="3"
+                                class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md"
+                                placeholder="Any observations or issues found on the right side..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overall Assessment -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                        <h3 class="text-xl font-semibold text-gray-900">Overall Assessment</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-3">Final Inspection
+                                    Result</label>
+                                <div class="space-y-3">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="final_result" value="pass"
+                                            class="mr-3 h-5 w-5 text-green-600">
+                                        <span class="text-lg text-green-600 font-medium">PASS - Product meets all
+                                            quality standards</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="final_result" value="fail"
+                                            class="mr-3 h-5 w-5 text-red-600">
+                                        <span class="text-lg text-red-600 font-medium">FAIL - Product requires
+                                            corrective action</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="final_result" value="conditional"
+                                            class="mr-3 h-5 w-5 text-yellow-600">
+                                        <span class="text-lg text-yellow-600 font-medium">CONDITIONAL - Minor issues
+                                            noted</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-base font-medium text-gray-700 mb-2">Overall Notes &
+                                    Recommendations</label>
+                                <textarea name="overall_notes" rows="6"
+                                    class="w-full px-4 py-3 text-lg border border-gray-300 rounded-md"
+                                    placeholder="Summary of inspection findings and any recommendations..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end space-x-4">
+                    <button type="button"
+                        class="px-8 py-4 text-lg font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                        Save Draft
+                    </button>
+                    <button type="submit"
+                        class="px-8 py-4 text-lg font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 transition-colors">
+                        Complete Inspection
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // Toggle section collapse/expand functionality
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const icon = document.getElementById(sectionId.replace('Section', 'Icon'));
+            const container = section.parentElement;
+
+            if (section.classList.contains('collapsed')) {
+                // Expand
+                section.classList.remove('collapsed');
+                section.style.maxHeight = section.scrollHeight + 'px';
+                section.style.paddingTop = '1.5rem';
+                section.style.paddingBottom = '1.5rem';
+                section.style.marginBottom = '0';
+                container.style.marginBottom = '2rem';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+
+                // Reset maxHeight after animation
+                setTimeout(() => {
+                    section.style.maxHeight = 'none';
+                }, 300);
+            } else {
+                // Collapse
+                section.classList.add('collapsed');
+                section.style.maxHeight = section.scrollHeight + 'px';
+                // Force reflow
+                section.offsetHeight;
+                section.style.maxHeight = '0px';
+                section.style.paddingTop = '0';
+                section.style.paddingBottom = '0';
+                section.style.marginBottom = '0';
+                container.style.marginBottom = '2rem';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Set current date
+        function setCurrentDate() {
+            const today = new Date();
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            };
+            document.getElementById('currentDate').textContent = today.toLocaleDateString('en-US', options);
+        }
+
+        // Form submission handler
+        function handleInspectionSubmit(event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const inspectionData = {};
+
+            // Collect all form data
+            for (let [key, value] of formData.entries()) {
+                inspectionData[key] = value;
+            }
+
+            // Count checked items for each section
+            const sections = ['top', 'bottom', 'left', 'right'];
+            const sectionResults = {};
+
+            sections.forEach(section => {
+                const checkboxes = document.querySelectorAll(`input[type="checkbox"][name^="${section}_"]`);
+                const checkedBoxes = document.querySelectorAll(`input[type="checkbox"][name^="${section}_"]:checked`);
+
+                sectionResults[section] = {
+                    total: checkboxes.length,
+                    passed: checkedBoxes.length,
+                    percentage: Math.round((checkedBoxes.length / checkboxes.length) * 100)
+                };
+            });
+
+            // Calculate overall score
+            const totalChecks = Object.values(sectionResults).reduce((sum, section) => sum + section.total, 0);
+            const totalPassed = Object.values(sectionResults).reduce((sum, section) => sum + section.passed, 0);
+            const overallPercentage = Math.round((totalPassed / totalChecks) * 100);
+
+            // Show results
+            showInspectionResults(sectionResults, overallPercentage, inspectionData);
+        }
+
+        // Show inspection results
+        function showInspectionResults(sectionResults, overallPercentage, data) {
+            const resultsHtml = `
+                <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" id="inspectionModal">
+                    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+                        <div class="mt-3">
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold text-gray-900 mb-4">Inspection Complete</h3>
+                                <div class="mb-6">
+                                    <div class="text-4xl font-bold ${overallPercentage >= 90 ? 'text-green-600' : overallPercentage >= 70 ? 'text-yellow-600' : 'text-red-600'} mb-2">
+                                        ${overallPercentage}%
+                                    </div>
+                                    <div class="text-lg text-gray-600">Overall Inspection Score</div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <div class="text-center">
+                                        <i class="fas fa-arrow-up text-blue-600 text-xl mb-2"></i>
+                                        <div class="font-semibold">Top: ${sectionResults.top.percentage}%</div>
+                                        <div class="text-sm text-gray-600">${sectionResults.top.passed}/${sectionResults.top.total} checks</div>
+                                    </div>
+                                </div>
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <div class="text-center">
+                                        <i class="fas fa-arrow-down text-green-600 text-xl mb-2"></i>
+                                        <div class="font-semibold">Bottom: ${sectionResults.bottom.percentage}%</div>
+                                        <div class="text-sm text-gray-600">${sectionResults.bottom.passed}/${sectionResults.bottom.total} checks</div>
+                                    </div>
+                                </div>
+                                <div class="bg-orange-50 p-4 rounded-lg">
+                                    <div class="text-center">
+                                        <i class="fas fa-arrow-left text-orange-600 text-xl mb-2"></i>
+                                        <div class="font-semibold">Left: ${sectionResults.left.percentage}%</div>
+                                        <div class="text-sm text-gray-600">${sectionResults.left.passed}/${sectionResults.left.total} checks</div>
+                                    </div>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <div class="text-center">
+                                        <i class="fas fa-arrow-right text-purple-600 text-xl mb-2"></i>
+                                        <div class="font-semibold">Right: ${sectionResults.right.percentage}%</div>
+                                        <div class="text-sm text-gray-600">${sectionResults.right.passed}/${sectionResults.right.total} checks</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mb-6">
+                                <div class="text-lg font-semibold mb-2">Final Result:</div>
+                                <div class="text-xl font-bold ${data.final_result === 'pass' ? 'text-green-600' : data.final_result === 'fail' ? 'text-red-600' : 'text-yellow-600'}">
+                                    ${data.final_result ? data.final_result.toUpperCase() : 'NOT SELECTED'}
+                                </div>
+                            </div>
+
+                            <div class="flex justify-center space-x-4">
+                                <button onclick="printReport()" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                                    <i class="fas fa-print mr-2"></i>Print Report
+                                </button>
+                                <button onclick="closeModal()" class="px-6 py-3 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-colors">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', resultsHtml);
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('inspectionModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Print report (placeholder)
+        function printReport() {
+            window.print();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            setCurrentDate();
+
+            // Add form submission handler
+            document.getElementById('inspectionForm').addEventListener('submit', handleInspectionSubmit);
+
+            // Add save draft functionality
+            document.querySelector('button[type="button"]').addEventListener('click', function () {
+                alert('Inspection draft saved successfully!');
+            });
+        });
+    </script>
+
+    <style>
+        /* Toggle section styling */
+        .toggle-container {
+            margin-bottom: 2rem !important;
+        }
+
+        .toggle-section {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .toggle-section.collapsed {
+            margin-bottom: 0 !important;
+        }
+
+        /* Ensure proper spacing for collapsed state */
+        .toggle-container:has(.collapsed) {
+            margin-bottom: 2rem !important;
+        }
+
+        /* Custom checkbox styling */
+        input[type="checkbox"]:checked {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        input[type="radio"]:checked {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+
+</body>
+
+</html>

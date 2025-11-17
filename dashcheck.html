@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Check Dashboard - Yanmar Quality Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'yanmar-red': '#DC2626',
+                        'yanmar-light': '#FEF2F2',
+                        'yanmar-dark': '#991B1B'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="components/header.js"></script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+    <!-- Main Content -->
+    <main id="mainContent" class="ml-16 pt-16 transition-all duration-100">
+        <div class="p-6">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Quality Check Dashboard</h2>
+                        <p class="text-lg text-gray-600 mt-1">Final product inspection results and quality control
+                            monitoring</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white px-4 py-2 rounded-lg shadow-sm border">
+                            <span class="text-base text-gray-500">Year:</span>
+                            <span class="font-semibold text-blue-600 ml-2 text-lg">2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Product Quality Summary -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-gray-900">Product Quality Summary</h3>
+                        <a href="#"
+                            class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2 text-xs"></i>
+                            View
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-check-circle text-green-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Good Products</span>
+                                </div>
+                                <span class="text-lg font-bold text-green-600" id="goodCount">1,247</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-red-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-times-circle text-red-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Not Good Products</span>
+                                </div>
+                                <span class="text-lg font-bold text-red-600" id="notGoodCount">89</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-list text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Total Inspected</span>
+                                </div>
+                                <span class="text-lg font-bold text-gray-900" id="totalInspected">1,336</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-percentage text-purple-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Quality Rate</span>
+                                </div>
+                                <span class="text-lg font-bold text-purple-600" id="qualityRate">93.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- QC Inspector Performance -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-blue-50 flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-gray-900">QC Inspector Performance</h3>
+                        <a href="#"
+                            class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2 text-xs"></i>
+                            View
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-green-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-green-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Budi Santoso</span>
+                                </div>
+                                <span class="text-base font-semibold text-green-600">156 items</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Andi Wijaya</span>
+                                </div>
+                                <span class="text-base font-semibold text-blue-600">142 items</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-orange-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-orange-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Sari Indah</span>
+                                </div>
+                                <span class="text-base font-semibold text-orange-600">138 items</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-user text-purple-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Roni Pratama</span>
+                                </div>
+                                <span class="text-base font-semibold text-purple-600">124 items</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-chart-line text-gray-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Average</span>
+                                </div>
+                                <span class="text-base font-bold text-gray-900" id="avgInspections">140 items</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Defect Categories -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="px-6 py-4 border-b border-gray-200 bg-red-50 flex items-center justify-between">
+                        <h3 class="text-xl font-semibold text-gray-900">Top Defect Categories</h3>
+                        <a href="#"
+                            class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2 text-xs"></i>
+                            View
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-red-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-bolt text-red-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Welding Defects</span>
+                                </div>
+                                <span class="text-base font-semibold text-red-600">28 cases</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-orange-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-ruler text-orange-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Dimensional</span>
+                                </div>
+                                <span class="text-base font-semibold text-orange-600">19 cases</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-yellow-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-paint-brush text-yellow-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Surface Finish</span>
+                                </div>
+                                <span class="text-base font-semibold text-yellow-600">15 cases</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5 border-b border-gray-100">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-blue-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-cogs text-blue-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Assembly</span>
+                                </div>
+                                <span class="text-base font-semibold text-blue-600">12 cases</span>
+                            </div>
+                            <div class="flex items-center justify-between py-1.5">
+                                <div class="flex items-center">
+                                    <div class="w-6 h-6 bg-purple-100 rounded flex items-center justify-center mr-2">
+                                        <i class="fas fa-tools text-purple-600 text-xs"></i>
+                                    </div>
+                                    <span class="text-base font-medium text-gray-700">Others</span>
+                                </div>
+                                <span class="text-base font-semibold text-purple-600">15 cases</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Chart Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Monthly Quality Trends Chart (Takes 2/3 width) -->
+                <div class="lg:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="mb-6 flex items-start justify-between">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-gray-900">Monthly Quality Trends</h3>
+                            <p class="text-lg text-gray-600 mt-1">Product inspection results: Good vs Not Good by month
+                            </p>
+                        </div>
+                        <a href="#"
+                            class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2 text-xs"></i>
+                            View
+                        </a>
+                    </div>
+                    <div class="chart-container" style="height: 400px;">
+                        <canvas id="qualityChart"></canvas>
+                    </div>
+
+                    <!-- Chart Legend -->
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <div class="flex flex-wrap gap-6 justify-center">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-green-500 rounded mr-2"></div>
+                                <span class="text-base text-gray-700">Good Products</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 bg-red-500 rounded mr-2"></div>
+                                <span class="text-base text-gray-700">Not Good Products</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Quality Statistics Table -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
+                        <h3 class="text-xl font-semibold text-gray-900">Monthly Quality Summary</h3>
+                    </div>
+                    <div class="max-h-96 overflow-y-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 sticky top-0">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Month
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Good
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Not Good
+                                    </th>
+                                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Rate
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="qualityTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Product quality data
+        const qualityData = [
+            // Good products (1,247 items)
+            ...Array.from({ length: 1247 }, (_, i) => ({
+                id: i + 1,
+                status: "good",
+                inspector: ["Budi Santoso", "Andi Wijaya", "Sari Indah", "Roni Pratama"][Math.floor(Math.random() * 4)],
+                date: new Date(2025, Math.floor(Math.random() * 10), Math.floor(Math.random() * 28) + 1)
+            })),
+            // Not good products (89 items)
+            ...Array.from({ length: 89 }, (_, i) => ({
+                id: i + 1248,
+                status: "not_good",
+                inspector: ["Budi Santoso", "Andi Wijaya", "Sari Indah", "Roni Pratama"][Math.floor(Math.random() * 4)],
+                defect: ["welding", "dimensional", "surface", "assembly", "others"][Math.floor(Math.random() * 5)],
+                date: new Date(2025, Math.floor(Math.random() * 10), Math.floor(Math.random() * 28) + 1)
+            }))
+        ];
+
+        // Monthly quality performance data
+        const monthlyQualityData = [
+            { month: 'January', good: 142, notGood: 8 },
+            { month: 'February', good: 156, notGood: 12 },
+            { month: 'March', good: 134, notGood: 6 },
+            { month: 'April', good: 148, notGood: 11 },
+            { month: 'May', good: 125, notGood: 7 },
+            { month: 'June', good: 139, notGood: 9 },
+            { month: 'July', good: 151, notGood: 8 },
+            { month: 'August', good: 128, notGood: 10 },
+            { month: 'September', good: 143, notGood: 9 },
+            { month: 'October', good: 81, notGood: 9 }
+        ];
+
+        // Inspector performance data
+        const inspectorData = [
+            { name: "Budi Santoso", inspected: 156, good: 149, notGood: 7, accuracy: 95.5 },
+            { name: "Andi Wijaya", inspected: 142, good: 135, notGood: 7, accuracy: 95.1 },
+            { name: "Sari Indah", inspected: 138, good: 131, notGood: 7, accuracy: 94.9 },
+            { name: "Roni Pratama", inspected: 124, good: 118, notGood: 6, accuracy: 95.2 }
+        ];
+
+        // Defect categories data
+        const defectData = [
+            { category: "Welding Defects", count: 28, icon: "fas fa-bolt", color: "red", percentage: 31.5 },
+            { category: "Dimensional", count: 19, icon: "fas fa-ruler", color: "orange", percentage: 21.3 },
+            { category: "Surface Finish", count: 15, icon: "fas fa-paint-brush", color: "yellow", percentage: 16.9 },
+            { category: "Assembly", count: 12, icon: "fas fa-cogs", color: "blue", percentage: 13.5 },
+            { category: "Others", count: 15, icon: "fas fa-tools", color: "purple", percentage: 16.9 }
+        ];
+
+        let qualityChart;
+
+        // Initialize quality chart
+        function initQualityChart() {
+            console.log('Initializing quality chart...');
+            const canvas = document.getElementById('qualityChart');
+            if (!canvas) {
+                console.error('Canvas element not found!');
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            console.log('Canvas context obtained, creating quality chart...');
+
+            qualityChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: monthlyQualityData.map(item => item.month.substr(0, 3)),
+                    datasets: [
+                        {
+                            label: 'Good Products',
+                            data: monthlyQualityData.map(item => item.good),
+                            backgroundColor: '#10b981',
+                            borderColor: '#059669',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                        },
+                        {
+                            label: 'Not Good Products',
+                            data: monthlyQualityData.map(item => item.notGood),
+                            backgroundColor: '#ef4444',
+                            borderColor: '#dc2626',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            borderSkipped: false,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: '#374151',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            callbacks: {
+                                title: function (context) {
+                                    return context[0].label + ' 2025';
+                                },
+                                label: function (context) {
+                                    return context.dataset.label + ': ' + context.parsed.y + ' items';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f3f4f6'
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: 12
+                                },
+                                callback: function (value) {
+                                    return value + ' items';
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Update quality summary counts
+        function updateQualitySummary() {
+            console.log('Updating quality summary...');
+            const goodCount = qualityData.filter(item => item.status === 'good').length;
+            const notGoodCount = qualityData.filter(item => item.status === 'not_good').length;
+            const totalInspected = qualityData.length;
+            const qualityRate = ((goodCount / totalInspected) * 100).toFixed(1);
+
+            console.log('Quality counts:', { goodCount, notGoodCount, totalInspected, qualityRate });
+
+            document.getElementById('goodCount').textContent = goodCount.toLocaleString();
+            document.getElementById('notGoodCount').textContent = notGoodCount.toLocaleString();
+            document.getElementById('totalInspected').textContent = totalInspected.toLocaleString();
+            document.getElementById('qualityRate').textContent = qualityRate + '%';
+        }
+
+        // Populate monthly quality table
+        function populateQualityTable() {
+            const tableBody = document.getElementById('qualityTableBody');
+            tableBody.innerHTML = monthlyQualityData.map(month => {
+                const total = month.good + month.notGood;
+                const rate = total > 0 ? Math.round((month.good / total) * 100) : 0;
+                return `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-3 text-base font-medium text-gray-900">${month.month.substr(0, 3)}</td>
+                        <td class="px-4 py-3 text-base text-green-600 font-semibold">${month.good}</td>
+                        <td class="px-4 py-3 text-base text-red-600 font-semibold">${month.notGood}</td>
+                        <td class="px-4 py-3 text-base text-gray-900">
+                            <div class="flex items-center">
+                                <span class="text-base font-semibold">${rate}%</span>
+                                <div class="ml-2 w-12 bg-gray-200 rounded-full h-1.5">
+                                    <div class="bg-gradient-to-r from-red-400 to-green-400 h-1.5 rounded-full" style="width: ${rate}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Calculate inspector averages
+        function updateInspectorAverages() {
+            const totalInspections = inspectorData.reduce((sum, inspector) => sum + inspector.inspected, 0);
+            const avgInspections = Math.round(totalInspections / inspectorData.length);
+
+            if (document.getElementById('avgInspections')) {
+                document.getElementById('avgInspections').textContent = avgInspections + ' items';
+            }
+        }
+
+        // Initialize everything when DOM is ready
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('DOM loaded, initializing quality dashboard...');
+
+            // Initialize basic data
+            updateQualitySummary();
+            updateInspectorAverages();
+            populateQualityTable();
+
+            // Check if Chart.js is loaded
+            if (typeof Chart !== 'undefined') {
+                console.log('Chart.js is loaded, initializing quality chart...');
+                // Small delay to ensure canvas is properly sized
+                setTimeout(() => {
+                    initQualityChart();
+                }, 100);
+            } else {
+                console.error('Chart.js not loaded!');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function () {
+            if (qualityChart) {
+                qualityChart.resize();
+            }
+        });
+    </script>
+
+    <style>
+        .quality-excellent {
+            color: #059669;
+            background-color: #d1fae5;
+        }
+
+        .quality-good {
+            color: #16a34a;
+            background-color: #dcfce7;
+        }
+
+        .quality-average {
+            color: #ca8a04;
+            background-color: #fef3c7;
+        }
+
+        .quality-poor {
+            color: #dc2626;
+            background-color: #fee2e2;
+        }
+
+        .chart-container {
+            position: relative;
+        }
+    </style>
+
+</body>
+
+</html>
